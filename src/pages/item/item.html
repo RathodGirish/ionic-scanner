@@ -12,7 +12,7 @@
 <ion-content class="page-content" padding *ngIf="info != null">
   <h3 color="white" class='page-title' style="margin-top:1%;">Add Item</h3>
   <div class="content-box">
-    <form (ngSubmit)="sendToPOS($event, posForm.value, posForm.valid)" #posForm="ngForm">
+    <form (ngSubmit)="addItem($event, posForm.value, posForm.valid)" #posForm="ngForm">
       <ion-row>
         <ion-col>
           <ion-list inset>
@@ -30,7 +30,7 @@
               <ion-row>
                 <ion-col col-1>
                 </ion-col>
-                <ion-col class="pad0" col-10 class="input-addon">
+                <ion-col class="pad0" col-9 class="input-addon">
                   <div>
                     <ion-input type="text" placeholder="UPC Code" name="plu_no" [(ngModel)]="newPosObject.plu_no"></ion-input>
                   </div>

@@ -3,17 +3,17 @@ import { Observable } from 'rxjs/Observable';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { GLOBAL_VARIABLE } from './constant';
- 
+
 @Injectable()
 export class APIService {
- constructor(@Inject(Http) private http: Http) { }
- 
+  constructor( @Inject(Http) private http: Http) { }
+
   public getDepartmentsByStoreId(storeId, callback) {
     if (storeId === null) {
       return Observable.throw("Please pass store ID");
     } else {
       this.http
-        .get(""+GLOBAL_VARIABLE.BASE_API_URL+"?action=department&store_id=" + storeId)
+        .get("" + GLOBAL_VARIABLE.BASE_API_URL + "?action=department&store_id=" + storeId)
         .map(res => res.json())
         .subscribe(
         data => {
@@ -31,10 +31,10 @@ export class APIService {
       return Observable.throw("Please pass store ID");
     } else {
       this.http
-        .get(""+GLOBAL_VARIABLE.BASE_API_URL+"?action=grocery_items&store_id=" + storeId)
+        .get("" + GLOBAL_VARIABLE.BASE_API_URL + "?action=grocery_items&store_id=" + storeId)
         .map(res => res.json())
         .subscribe(
-        data => { 
+        data => {
           console.log("item data :" + JSON.stringify(data));
           return callback(null, data);
         },
@@ -44,12 +44,12 @@ export class APIService {
     }
   }
 
- public getScanneItemsByStoreId(storeId, plu_no, callback) {
+  public getScanneItemsByStoreId(storeId, plu_no, callback) {
     if (storeId === null) {
       return Observable.throw("Please pass store ID");
     } else {
       this.http
-        .get(""+GLOBAL_VARIABLE.BASE_API_URL+"?action=barcode_items&store_id=" + storeId + "&plu_no=" + plu_no)
+        .get("" + GLOBAL_VARIABLE.BASE_API_URL + "?action=barcode_items&store_id=" + storeId + "&plu_no=" + plu_no)
         .map(res => res.json())
         .subscribe(
         data => {
@@ -61,30 +61,67 @@ export class APIService {
         });
     }
   }
- 
- public updateItem(itemId, price,inventory, callback) {
+
+  public updateItem(itemId, price, inventory, callback) {
     if (itemId === null) {
       return Observable.throw("Please pass item ID");
-    }  
-   else if (price === null) {
+    }
+    else if (price === null) {
       return Observable.throw("Please pass price");
-    } 
-   else if (inventory === null) {
+    }
+    else if (inventory === null) {
       return Observable.throw("Please pass inventory");
-    } 
+    }
     else {
       this.http
-        .get(""+GLOBAL_VARIABLE.BASE_API_URL+"?action=updateiteam&item_id=" + itemId + "&new_price=" + price+ "&update_inventory=" + inventory)
+        .get("" + GLOBAL_VARIABLE.BASE_API_URL + "?action=updateiteam&item_id=" + itemId + "&new_price=" + price + "&update_inventory=" + inventory)
         .map(res => res.json())
         .subscribe(
-        data => { 
+        data => {
           return callback(null, data);
         },
         err => {
           return callback(err, null);
         });
     }
-  } 
+  }
+
+  public addItem(store_id, plu_no, description, r_grocery_department_id, price, plu_tax, callback) {
+    console.log("store_id :"+store_id+" plu_no :"+plu_no+" description :"+description+" r_grocery_department_id :"+r_grocery_department_id+" price :"+price+" plu_tax :"+plu_tax);
+    if (store_id === null) {
+      return Observable.throw("Please pass store ID");
+    }
+    else if (price === null) {
+      return Observable.throw("Please pass price");
+    }
+    else if (plu_no === null) {
+      return Observable.throw("Please pass plu No");
+    }
+    else if (description === null) {
+      return Observable.throw("Please pass description");
+    }
+    else if (r_grocery_department_id === null) {
+      return Observable.throw("Please pass department_id");
+    }
+    else if (plu_tax === null) {
+      return Observable.throw("Please pass plu_tax");
+    }
+    else {
+      console.log(GLOBAL_VARIABLE.BASE_API_URL + "?data=Addnew&store_id =" + store_id  + "&plu_no=" + plu_no + "&description=" + description+ "&r_grocery_department_id=" + r_grocery_department_id+ "&price=" + price+ "&plu_tax=" + plu_tax);
+      this.http
+        .get("" + GLOBAL_VARIABLE.BASE_API_URL + "?data=Addnew&store_id =" + store_id  + "&plu_no=" + plu_no + "&description=" + description+ "&r_grocery_department_id=" + r_grocery_department_id+ "&price=" + price+ "&plu_tax=" + plu_tax)
+        .map(res => res.json())
+        .subscribe(
+        data => {
+          console.log("data : "+data);
+          return callback(null, data);
+        },
+        err => {
+          return callback(err, null);
+        });
+    }
+  }
+
 }
 
 

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NavController, AlertController, IonicPage, NavParams, LoadingController } from 'ionic-angular';
 import { AuthService } from '../../providers/auth-service';
 import { APIService } from '../../providers/api-service';
-// import { GLOBAL_VARIABLE } from '../../providers/constant';
 import { Http } from '@angular/http';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import 'rxjs/add/operator/map';
@@ -51,7 +50,7 @@ export class SearchPage {
           console.log("res Department :" + res);
           THIS.departmentList = res.message;
         }
-      }); 
+      });
 
     this.API_SERVICE.getGroceryItemsByStoreId(this.info
       .store_id, function (err, res) {
@@ -63,10 +62,7 @@ export class SearchPage {
           THIS.descriptionList = res.message;
         }
       });
-
     this.searchBy = this.navParams.get('searchBy');
-
-    // for scnner value assign
     if (this.searchBy == 'Barcode') {
       loader.dismiss();
 
@@ -90,16 +86,11 @@ export class SearchPage {
   public searchDescription(ev: any, searchBy: any) {
     let val = ev.target.value;
     let THIS = this;
-    // Show the results
     this.showList = true;
-
-    // if the value is an empty string don't filter the descriptionList
     if (val && val.trim() != '') {
       console.log("descriptionList :" + THIS.descriptionList);
-      // Filter the descriptionList 
       this.newDescriptionList = THIS.descriptionList.filter((item) => {
         if (searchBy == 'Barcode') {
-          console.log("searchBy :" + searchBy);
           return (item.plu_no.toLowerCase().indexOf(val.toLowerCase()) > -1);
         }
         else {
@@ -108,12 +99,12 @@ export class SearchPage {
       });
 
     } else {
-      // hide the results when the query is empty
       this.showList = false;
     }
   }
 
   public selectDesc(event: any, item: any, searchBy: any) {
+
     if (event != null) {
       event.stopPropagation();
     }
@@ -125,11 +116,8 @@ export class SearchPage {
     else {
       this.posObject.description = item.description;
     }
-
     let department_id = item.dept_id;
-    console.log("department_id :" + department_id);
-
-    // department name
+    alert("department_id :" + department_id);
     this.posObject.dName = this.getDepartmentNameByid(department_id);
   }
 
@@ -145,7 +133,6 @@ export class SearchPage {
       .map(res => res.json())
       .subscribe(
       data => {
-        // console.log('response data  ' + JSON.stringify(data));
         callback(null, data);
       },
       err => {
@@ -176,14 +163,19 @@ export class SearchPage {
     }
   }
 
-  async scanBarcode(search: any) {
+  async scanBarcode() {
     const results = await this.barcode.scan();
-    alert("search :" + search);
+    let THIS = this;
     if (results.text) {
       const plu_no = '0' + results.text;
-      this.nav.setRoot(SearchPage, {
-        searchBy: search,
-        plu_no: plu_no
+      this.API_SERVICE.getScanneItemsByStoreId(this.info.store_id, plu_no, function (err, res) {
+        if (err) {
+          THIS.showError('ERROR! :' + err);
+        }
+        else {
+          let i = JSON.parse(JSON.stringify(res.message));
+          THIS.selectDesc(null, i[0], THIS.searchBy);
+        }
       });
     }
   }
