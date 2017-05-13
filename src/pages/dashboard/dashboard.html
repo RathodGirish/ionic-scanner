@@ -1,0 +1,68 @@
+<ion-header>
+  
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Logo here</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="card-background-page">
+  <h2 color="white" class='page-title'>Common tasks</h2>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-6 class='card-col'>
+        <ion-card (click)="redirectPage('priceBook')">
+          <div class="card-title">Manage Pricebook</div>
+          <img src="assets/img/pricebook.png" class="mrT10 img-responsive imageIcone" />
+        </ion-card>
+      </ion-col>
+      <ion-col col-6 class='card-col'>
+        <ion-card (click)="redirectPage('ScratchOffReadings')">
+          <div class="card-title">Scratch-off readings</div>
+          <img src="assets/img/lottery.png" class="mrT10 img-responsive imageIcone"/>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-6 class='card-col'>
+        <ion-card>
+        </ion-card>
+      </ion-col>
+      <ion-col col-6 class='card-col'>
+        <ion-card>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-6 class='card-col'>
+        <ion-card>
+        </ion-card>
+      </ion-col>
+      <ion-col col-6 class='card-col'>
+        <ion-card>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    
+  </ion-grid>
+</ion-content>
+
+
+
+
+<!--
+<ion-content padding class="card-background-page">
+  <h2 color="white">Explore</h2>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <div>1 of 2</div>
+      </ion-col>
+      <ion-col>
+        <div>2 of 2</div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>-->

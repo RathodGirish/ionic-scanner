@@ -1,0 +1,177 @@
+.header-title{
+    font-size: 16px;
+    display: block;
+}
+
+.pointer{
+    cursor: pointer;
+}
+
+.menu-inner{
+    .content, .item-block {
+        background-color: map-get($colors, dark);
+        color: map-get($colors, light);
+        box-shadow: 1px !important;
+    }
+
+    .activeHightlight {
+        background-color: #33CC99;
+    }
+
+    .item-inner{
+        border: 0px !important;
+    }
+}
+
+.text-center{
+    text-align: center;
+}
+
+.page-title{
+    margin-left: 10px; 
+}
+
+.mrT5{
+    margin-top: 5px;
+}
+
+.mrB5{
+    margin-bottom: 5px;
+}
+
+.mrT10{
+    margin-top: 10px;
+}
+
+.mrB10{
+    margin-bottom: 10px;
+}
+
+.pad0{
+    padding: 0px;
+}
+
+.inner-addon{
+    background-color: white; padding: 0px !important;
+    margin-top: 10px;
+
+    .left-addon, .right-addon{
+        margin-top:3px;
+    }
+
+    
+}
+
+
+
+.page-content {
+    background: #CCCCCC;
+
+    .logo-row {
+        padding-top: 50px;
+        padding-bottom: 20px;
+    }
+
+    .content-box {
+        // padding: 20px 20px 0px 20px;
+        padding: 20px 2px 0px;
+    }
+
+    ion-row {
+        align-items: center;
+        text-align: center;
+    }
+
+    ion-item {
+        // border-radius: 30px !important;
+        padding-left: 12px !important;
+        font-size: 0.9em;
+        margin-top: 10px;
+        border: 1px solid #ffffff;
+        border-bottom: 0px !important;
+        box-shadow: none !important;
+        min-height: 30px;
+    }
+
+    .text-input-md{
+        margin: 8px;
+    }
+
+    ion-item ion-input,ion-item .label {
+        
+        padding-left:16px !important;
+    }
+
+    .has-icon{
+        width: 50%;
+    }
+
+    .input-icon{
+        width: 30%;
+    }
+
+    .item-block{
+        min-height: 30px;
+    }
+
+    .autocomplete-item{
+        padding-left: 6px !important;
+        font-size: 0.6em;
+        margin-bottom: 0px !important;
+        margin-top: 0px !important;
+        border: 1px solid #aaa !important;
+        box-shadow: 1px !important;
+    }
+
+    .searchbar-md .searchbar-search-icon{
+        left: 0px !important;
+    }
+
+    .searchbar-input{
+        padding-left: 25px !important;
+        font-size: 1.6em;
+    }
+
+    .autocomplete-list{
+        left: 0px;
+        position: absolute;
+        width: 100%;
+        z-index: 100;
+    }
+
+    .radius-0{
+        border-radius: 0px !important;
+    }
+
+    .action-col {
+        margin: 0px 16px 0px 16px;
+        padding-bottom: 20px;
+    }
+
+    .item-inner {
+        border-bottom-color: #ffffff !important;
+        box-shadow: none !important;
+    }
+
+    .success-btn {
+        background: #51CFB1;
+        border-radius: 30px !important;
+        border: 1px solid #ffffff;
+    }
+
+    .primary-btn {
+        color: #ffffff;
+        font-size: 0.8em;
+    }
+
+    .searchbar-md{
+        padding: 0px !important;
+    }
+
+    .label-md{
+        margin: 1px 8px 1px 0 !important;
+    }
+}
+
+
+
