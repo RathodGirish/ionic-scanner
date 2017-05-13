@@ -48,7 +48,7 @@ export class LoginPage {
       err => {
         console.log("ERROR!: ", err);
       }
-      );
+    );
 
   }
 

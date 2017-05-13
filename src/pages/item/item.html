@@ -17,22 +17,13 @@
         <ion-col>
           <ion-list inset>
 
-            <!--<ion-item>
-              <ion-input type="text" placeholder="UPC Code" name="plu_no" [(ngModel)]="newPosObject.plu_no"></ion-input>-->
-            <!--<ion-icon name="camera" item-right (click)='scanBarcode()'></ion-icon>-->
-            <!--</ion-item>
-            <ion-item>-->
-            <!--<ion-input type="text" placeholder="UPC Code" name="plu_no" [(ngModel)]="newPosObject.plu_no"></ion-input>-->
-            <!--<ion-icon name="camera" item-right (click)='scanBarcode()'></ion-icon>
-            </ion-item>-->
-
             <ion-grid class="inner-addon">
               <ion-row>
                 <ion-col col-1>
                 </ion-col>
                 <ion-col class="pad0" col-9 class="input-addon">
                   <div>
-                    <ion-input type="text" placeholder="UPC Code" name="plu_no" [(ngModel)]="newPosObject.plu_no"></ion-input>
+                    <ion-input type="text" placeholder="UPC Code" name="plu_no" [(ngModel)]="newPosObject.plu_no" required="true"></ion-input>
                   </div>
                 </ion-col>
                 <ion-col class="pad0" class="right-addon">
@@ -50,11 +41,6 @@
               <ion-input type="text" placeholder="Description" name="description" [(ngModel)]="newPosObject.description" required="true"></ion-input>
             </ion-item>
 
-            <!--<ion-item>
-              <ion-icon name="search" item-left></ion-icon>
-              <ion-input type="text" placeholder="Department" name="department" [(ngModel)]="newPosObject.department" (input)="searchDepartment($event)"></ion-input>
-            </ion-item>-->
-
             <ion-grid class="inner-addon">
               <ion-row>
                 <ion-col col-1 class="pad0 left-addon">
@@ -64,7 +50,7 @@
                 </ion-col>
                 <ion-col class="pad0" col-11 class="input-addon">
                   <div>
-                    <ion-input type="text" placeholder="Department" name="department" [(ngModel)]="newPosObject.department" (input)="searchDepartment($event)"></ion-input>
+                    <ion-input type="text" placeholder="Department" name="r_grocery_department_id" [(ngModel)]="newPosObject.r_grocery_department_id" (input)="searchDepartment($event)"></ion-input>
                   </div>
                 </ion-col>
               </ion-row>
@@ -81,16 +67,26 @@
             <ion-item>
               <ion-col col-1>
               </ion-col>
-              <ion-input type="number" placeholder="Price" name="new_price" [(ngModel)]="newPosObject.new_price" required="true"></ion-input>
+              <ion-input type="number" placeholder="Price" name="price" [(ngModel)]="newPosObject.price" required="true"></ion-input>
             </ion-item>
 
             <ion-item>
               <ion-col col-1>
               </ion-col>
-              <ion-label>Tax</ion-label>
-              <ion-select name="tax" [(ngModel)]="newPosObject.tax">
-                <ion-option value="Y">Taxable</ion-option>
-                <ion-option value="N">Non Taxable</ion-option>
+              <ion-label>Is Taxable</ion-label>
+              <ion-select name="plu_tax" [(ngModel)]="newPosObject.plu_tax">
+                <ion-option value="1">Taxable</ion-option>
+                <ion-option value="0">Non Taxable</ion-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item>
+              <ion-col col-1>
+              </ion-col>
+              <ion-label>SaveTo</ion-label>
+              <ion-select name="save_to" [(ngModel)]="newPosObject.save_to">
+                <ion-option value="backoffice">Backoffice</ion-option>
+                <ion-option value="pos">Pos</ion-option>
               </ion-select>
             </ion-item>
 

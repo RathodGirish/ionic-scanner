@@ -11,6 +11,7 @@ import 'rxjs/add/operator/map';
   selector: 'page-search',
   templateUrl: 'search.html'
 })
+
 export class SearchPage {
   public searchBy = '';
   public plu_no = '';
@@ -117,7 +118,6 @@ export class SearchPage {
       this.posObject.description = item.description;
     }
     let department_id = item.dept_id;
-    alert("department_id :" + department_id);
     this.posObject.dName = this.getDepartmentNameByid(department_id);
   }
 

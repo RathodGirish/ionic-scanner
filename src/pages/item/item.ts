@@ -3,6 +3,7 @@ import { IonicPage, AlertController, NavController, NavParams } from 'ionic-angu
 import { AuthService } from '../../providers/auth-service';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { APIService } from '../../providers/api-service';
+import { CommonService } from '../../providers/common-service';
 
 @IonicPage()
 @Component({
@@ -11,12 +12,12 @@ import { APIService } from '../../providers/api-service';
 })
 export class Item {
   info: any = {};
-  public newPosObject = { "plu_no": '', "department": '' };
+  public newPosObject = { "plu_no": '', 'description': '', "r_grocery_department_id": '',  'plu_tax': 1, 'save_to':'backoffice'};
   public showList: boolean = false;
   public departmentList = [];
   public newDepartmentList = [];
   public selectedItem_dept_Id :string;
-  constructor(private barcode: BarcodeScanner, public navCtrl: NavController, public navParams: NavParams, private auth: AuthService, private alertCtrl: AlertController, public API_SERVICE: APIService, ) {
+  constructor(private barcode: BarcodeScanner, public navCtrl: NavController, public navParams: NavParams, private auth: AuthService, private alertCtrl: AlertController, public API_SERVICE: APIService, public commonService: CommonService) {
     let THIS = this;
     this.info = this.auth.getUserInfo();
     if (this.info == null) {
@@ -77,7 +78,7 @@ export class Item {
   public selectDepartment(event: any, dep: any) {
     event.stopPropagation();
     this.initializeDepartmentList();
-    this.newPosObject.department = dep.department_name;
+    this.newPosObject.r_grocery_department_id = dep.department_name;
     this.selectedItem_dept_Id = dep.dept_id;
     console.log("selectedItem_dept_Id : "+this.selectedItem_dept_Id);
   }
@@ -89,17 +90,19 @@ export class Item {
   public addItem(event: any, pos: any, isValid: boolean) {
     event.preventDefault();
     let THIS = this;
-    console.log(' pos ' + JSON.stringify(pos) + ' isValid ' + isValid);
+    
+    pos.r_grocery_department_id = THIS.selectedItem_dept_Id;
+    // alert(' pos ' + JSON.stringify(pos) + ' isValid ' + isValid);
+
     if (isValid) {
-      this.API_SERVICE.addItem(this.info.store_id, pos.plu_no, pos.description,this.selectedItem_dept_Id,pos.new_price,pos.new_price, function (err, res) {
+      this.API_SERVICE.addItem(this.info.store_id, pos.plu_no, pos.description,this.selectedItem_dept_Id,pos.new_price,pos.new_price,pos.save_to, function (err, res) {
         if (err) {
           console.log("ERROR!: ", err);
-          THIS.showError('ERROR!: ' + err);
-        }
-        else {
+          THIS.commonService.showErrorAlert('ERROR!: ' + err);
+        } else {
           if (res.status == 1) {
-            THIS.showSucess('Item Added Successfully');
-            THIS.navCtrl.setRoot('PricebookPage');
+            THIS.commonService.showSucessAlert('Item Added Successfully');
+            THIS.navCtrl.setRoot('Item');
           } else {
             THIS.showError('Fail to Add Item');
           }
@@ -107,15 +110,4 @@ export class Item {
       });
     }
   }
-
-
-  public showSucess(text) {
-    let alert = this.alertCtrl.create({
-      title: 'Success',
-      subTitle: text,
-      buttons: ['OK']
-    });
-    alert.present(prompt);
-  }
-
 }
