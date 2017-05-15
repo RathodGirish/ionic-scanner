@@ -1,4 +1,5 @@
 import { AuthService } from './../providers/auth-service';
+import { CommonService } from './../providers/common-service';
 import { APIService } from './../providers/api-service';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -6,7 +7,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
-import {HttpModule} from '@angular/http';
+import { HttpModule } from '@angular/http';
 import { SearchPage } from '../pages/search/search';
  
 import { MyApp } from './app.component';
@@ -32,7 +33,7 @@ import { MyApp } from './app.component';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthService,
     BarcodeScanner,
-    APIService
+    APIService,CommonService
   ]
 })
 export class AppModule {}

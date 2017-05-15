@@ -3,6 +3,7 @@ import { NavController, AlertController, IonicPage,MenuController  } from 'ionic
 import { AuthService } from '../../providers/auth-service';
 import { SearchPage } from '../search/search';
 import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner';
+
 @IonicPage()
 @Component({
   selector: 'page-home',
@@ -14,7 +15,7 @@ export class PricebookPage {
   info: any = {};
   barcodeResult;
   options: BarcodeScannerOptions;
-  constructor(menu: MenuController,private barcode: BarcodeScanner, private nav: NavController, private auth: AuthService, private alertCtrl: AlertController ) {
+  constructor(menu: MenuController, private auth: AuthService, private barcode: BarcodeScanner, private nav: NavController, private alertCtrl: AlertController ) {
      menu.enable(true);
     this.info = this.auth.getUserInfo();
     console.log(' info ' + JSON.stringify(this.info));
@@ -39,12 +40,6 @@ export class PricebookPage {
   public searchBy(search: any) {
     this.nav.setRoot(SearchPage, {
       searchBy: search
-    });
-  }
-
-  public logout() {
-    this.auth.logout().subscribe(succ => {
-      this.nav.setRoot('LoginPage');
     });
   }
 

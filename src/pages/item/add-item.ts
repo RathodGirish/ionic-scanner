@@ -3,13 +3,8 @@ import { IonicPage, AlertController, NavController, NavParams } from 'ionic-angu
 import { AuthService } from '../../providers/auth-service';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { APIService } from '../../providers/api-service';
+import { CommonService } from '../../providers/common-service';
 
-/**
- * Generated class for the Item page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
   selector: 'page-item',
@@ -17,11 +12,12 @@ import { APIService } from '../../providers/api-service';
 })
 export class Item {
   info: any = {};
-  public newPosObject = { "plu_no": '',"department":'' };
+  public newPosObject = { "plu_no": '', 'description': '', "r_grocery_department_id": '',  'plu_tax': 1, 'save_to':'backoffice'};
   public showList: boolean = false;
   public departmentList = [];
   public newDepartmentList = [];
-  constructor(private barcode: BarcodeScanner, public navCtrl: NavController, public navParams: NavParams, private auth: AuthService, private alertCtrl: AlertController, public API_SERVICE: APIService, ) {
+  public selectedItem_dept_Id :string;
+  constructor(private barcode: BarcodeScanner, public navCtrl: NavController, public navParams: NavParams, private auth: AuthService, private alertCtrl: AlertController, public API_SERVICE: APIService, public commonService: CommonService) {
     let THIS = this;
     this.info = this.auth.getUserInfo();
     if (this.info == null) {
@@ -57,7 +53,7 @@ export class Item {
 
 
   async scanBarcode() {
-    const results = await this.barcode.scan(); 
+    const results = await this.barcode.scan();
     if (results.text) {
       this.newPosObject.plu_no = results.text;
     }
@@ -81,12 +77,37 @@ export class Item {
 
   public selectDepartment(event: any, dep: any) {
     event.stopPropagation();
-    this.initializeDepartmentList();  
-    this.newPosObject.department = dep.department_name; 
+    this.initializeDepartmentList();
+    this.newPosObject.r_grocery_department_id = dep.department_name;
+    this.selectedItem_dept_Id = dep.dept_id;
+    console.log("selectedItem_dept_Id : "+this.selectedItem_dept_Id);
   }
 
   public initializeDepartmentList() {
     this.newDepartmentList = [];
   }
 
+  public addItem(event: any, pos: any, isValid: boolean) {
+    event.preventDefault();
+    let THIS = this;
+    
+    pos.r_grocery_department_id = THIS.selectedItem_dept_Id;
+    // alert(' pos ' + JSON.stringify(pos) + ' isValid ' + isValid);
+
+    if (isValid) {
+      this.API_SERVICE.addItem(this.info.store_id, pos.plu_no, pos.description,this.selectedItem_dept_Id,pos.new_price,pos.new_price,pos.save_to, function (err, res) {
+        if (err) {
+          console.log("ERROR!: ", err);
+          THIS.commonService.showErrorAlert('ERROR!: ' + err);
+        } else {
+          if (res.status == 1) {
+            THIS.commonService.showSucessAlert('Item Added Successfully');
+            THIS.navCtrl.setRoot('Item');
+          } else {
+            THIS.showError('Fail to Add Item');
+          }
+        }
+      });
+    }
+  }
 }
