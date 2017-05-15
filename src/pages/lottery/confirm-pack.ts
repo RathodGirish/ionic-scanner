@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, AlertController, NavController, NavParams } from 'ionic-angular';
 import { AuthService } from '../../providers/auth-service';
+import { CommonService } from '../../providers/common-service';
+import { AddGame } from './add-game';
 
 /**
  * Generated class for the Lottery page.
@@ -15,26 +17,25 @@ import { AuthService } from '../../providers/auth-service';
 })
 export class confirmPack {
   info: any;
-  public confirmPack = {};
-  constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthService, private alertCtrl: AlertController) {
+  public confirmPackObject = {};
+  constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthService, private alertCtrl: AlertController, public commonService: CommonService) {
     this.info = this.auth.getUserInfo();
     if (this.info == null) {
-      this.showError('Please login first');
+      this.commonService.showErrorAlert('Please login first');
       this.navCtrl.setRoot('LoginPage');
     }
   }
 
-  ionViewDidLoad() {
+  public ionViewDidLoad() {
     console.log('ionViewDidLoad Lottery');
   }
 
-  public showError(text) {
-    let alert = this.alertCtrl.create({
-      title: 'Fail',
-      subTitle: text,
-      buttons: ['OK']
+  public confirmPack(){
+    this.navCtrl.push(AddGame, {
+      id: "123",
+      name: "Carl"
     });
-    alert.present(prompt);
   }
+
 
 }

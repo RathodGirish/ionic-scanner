@@ -129,6 +129,10 @@ form .input-addon{
     border: 1px solid #ddd;
 }
 
+.text-bold{
+    font-weight: bold;
+}
+
 .inner-addon{
     background-color: white; padding: 0px !important;
     margin-top: 10px;
@@ -254,6 +258,10 @@ form .label-ios,form .datetime-ios {
 
     .label-md{
         margin: 1px 8px 1px 0 !important;
+    }
+
+    ion-icon{
+        width: 100%;
     }
 }
 

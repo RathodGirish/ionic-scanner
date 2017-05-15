@@ -10,10 +10,10 @@ import { AuthService } from '../../providers/auth-service';
  */
 @IonicPage()
 @Component({
-  selector: 'page-lottery',
-  templateUrl: 'add-pack.html',
+  selector: 'add-game',
+  templateUrl: 'add-game.html',
 })
-export class addPack {
+export class AddGame {
   info: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthService, private alertCtrl: AlertController) {
     this.info = this.auth.getUserInfo();
