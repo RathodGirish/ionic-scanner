@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { Lottery } from './lottery';
+import { confirmPack } from './confirm-pack';
 
 @NgModule({
   declarations: [
-    Lottery,
+    confirmPack,
   ],
   imports: [
-    IonicPageModule.forChild(Lottery),
+    IonicPageModule.forChild(confirmPack),
   ],
   exports: [
-    Lottery
+    confirmPack
   ]
 })
-export class LotteryModule {}
+export class confirmPackModule {}

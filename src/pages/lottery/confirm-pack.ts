@@ -11,10 +11,11 @@ import { AuthService } from '../../providers/auth-service';
 @IonicPage()
 @Component({
   selector: 'page-lottery',
-  templateUrl: 'lottery.html',
+  templateUrl: 'confirm-pack.html',
 })
-export class Lottery {
+export class confirmPack {
   info: any;
+  public confirmPack = {};
   constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthService, private alertCtrl: AlertController) {
     this.info = this.auth.getUserInfo();
     if (this.info == null) {

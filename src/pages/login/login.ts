@@ -37,6 +37,7 @@ export class LoginPage {
       .map(res => res.json())
       .subscribe(
       data => {
+        console.log("data :"+JSON.stringify(data));
         console.log('login data  ' + data);
         if (data.status == 'Success') {
           this.auth.setCurrentUser(data.Data, this.loginCredentials.email);

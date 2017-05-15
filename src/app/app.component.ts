@@ -26,7 +26,7 @@ export class MyApp {
       { title: 'Dashboard', component: 'Dashboard' },
       { title: 'Update Price', component: 'PricebookPage' },
       { title: 'Add Item', component: 'Item' },
-      { title: 'Lottery/Lotto', component: 'Lottery' }
+      { title: 'Lottery/Lotto', component: 'confirmPack' }
     ];
     this.activePage = this.sidebarMenus[0];
   }

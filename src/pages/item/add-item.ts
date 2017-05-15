@@ -13,7 +13,7 @@ import { APIService } from '../../providers/api-service';
 @IonicPage()
 @Component({
   selector: 'page-item',
-  templateUrl: 'item.html',
+  templateUrl: 'add-item.html',
 })
 export class Item {
   info: any = {};
