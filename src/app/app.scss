@@ -34,6 +34,16 @@ ion-card{
     margin-left: 10px; 
 }
 
+.mrTB10{
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.mrLR10{
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
 .mrT5{
     margin-top: 5px;
 }
@@ -50,8 +60,73 @@ ion-card{
     margin-bottom: 10px;
 }
 
+.mrT15{
+    margin-top: 15px;
+}
+
+.mrB15{
+    margin-bottom: 15px;
+}
+
+.mrL5{
+    margin-left: 5px;
+}
+
+.mrL10  {
+    margin-left: 10px;
+}
+
 .pad0{
     padding: 0px;
+}
+
+.pad10{
+    padding: 10px;
+}
+
+.pad15{
+    padding: 15px;
+}
+
+.fs10{
+    font-size: 10px;
+}
+
+.fs15{
+    font-size: 15px;
+}
+
+.fs20{
+    font-size: 20px;
+}
+
+.fs25{
+    font-size: 25px;
+}
+
+.fs30{
+    font-size: 30px;
+}
+
+.text-blue{
+    color: #5b2596 !important;
+}
+
+.text-gray{
+    color: #333 !important;
+}
+
+.blue-card{
+    background-color: #EAFAF1;
+    // width: 95%;
+}
+
+.icon-border-div{
+    border: 1px solid #ddd;
+}
+
+form .input-addon{
+    border: 1px solid #ddd;
 }
 
 .inner-addon{
@@ -61,17 +136,15 @@ ion-card{
     .left-addon, .right-addon{
         margin-top:3px;
     }
-
-    
 }
 
-form .label-ios {
+form .label-ios,form .datetime-ios {
     margin: 2px 8px 3px 0;
     font-size: 14px;
 }
 
-ion-input{
-    border: 2px;
+.border-for-textbox{
+    border: 1px;
     border-style: ridge;
 }
 
@@ -93,8 +166,7 @@ ion-input{
         text-align: center;
     }
 
-    ion-item, {
-    ion-item, {
+    ion-item {
         // border-radius: 30px !important;
         padding-left: 12px !important;
         font-size: 0.9em;

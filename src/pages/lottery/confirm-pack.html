@@ -11,23 +11,46 @@
 
 
 <ion-content padding>
-  <h3 color="white" class='page-title' style="margin-top:1%;margin-bottom: 15%;">Confirm scratch-off packs</h3>
+  <h3 color="white" class='page-title'>Confirm scratch-off packs</h3>
   <form (ngSubmit)="sendToPOS($event, posForm.value, posForm.valid)" #posForm="ngForm">
     <ion-card>
       <!--<form>-->
-      <ion-item>
+      <!--<ion-item>
         <ion-col col-1>
         </ion-col>
         <ion-label>Store</ion-label>
         <ion-select name="store" [(ngModel)]="confirmPack.store">
           <ion-option value="IMS">IMS</ion-option>
         </ion-select>
-      </ion-item>
+      </ion-item>-->
 
       <ion-item>
         <ion-label>Confirm Date</ion-label>
         <ion-datetime displayFormat="MM/DD/YYYY" name="confirmDate" [(ngModel)]="confirmPack.confirmDate"></ion-datetime>
       </ion-item>
+
+
+      <!--<ion-grid>
+        <ion-row>
+          <ion-item>
+            <ion-label text-left>Confirm Date</ion-label>
+          </ion-item>
+        </ion-row>
+        <ion-row>
+          <ion-datetime displayFormat="MM/DD/YYYY" name="confirmDate" [(ngModel)]="confirmPack.confirmDate"></ion-datetime> 
+          <ion-icon name="calendar" class='input-icon mrT5'></ion-icon>-->
+
+      <!--<ion-col col-1>
+          </ion-col>-->
+      <!--<ion-col col-9>
+
+          </ion-col>-->
+      <!--<ion-col class="pad0" class="right-addon">
+            <div class="pointer">
+            </div>
+          </ion-col>-->
+      <!--</ion-row>
+      </ion-grid>-->
 
       <ion-grid class="inner-addon">
         <ion-row>
@@ -36,53 +59,26 @@
           </ion-item>
         </ion-row>
 
-        <ion-row>
-          <ion-col col-1>
-          </ion-col>
-          <ion-col class="pad0" col-9 class="input-addon">
+        <ion-row class="mrLR10">
+          <ion-col class="pad0" col-10 class="input-addon">
             <div>
               <ion-input type="text" placeholder=" Type game # and pack #" name="pack" [(ngModel)]="confirmPack.pack"></ion-input>
             </div>
           </ion-col>
-          <ion-col class="pad0 icon-border-display" class="right-addon">
+          <ion-col class="icon-border-div" col-2>
             <div class="pointer">
-              <ion-icon name="camera" class='input-icon mrT10'></ion-icon>
+              <ion-icon name="camera" class='input-icon mrT5 mrL5 fs30 pad5'></ion-icon>
             </div>
           </ion-col>
         </ion-row>
       </ion-grid>
 
-      <!--<ion-grid class="inner-addon">
-        <ion-row>
-          <ion-item>
-            <ion-label text-left>Scan or type ticket's code</ion-label>
-          </ion-item>
-        </ion-row>
-        <ion-row>
-          <ion-col col-1>
-          </ion-col>
-          <ion-col class="pad0" col-9 class="input-addon">
-            <div>
-              <ion-input type="text" placeholder=" Type game # and pack #" name="pack" [(ngModel)]="confirmPack.pack"></ion-input>
-            </div>
-          </ion-col>
-          <ion-col class="pad0" class="right-addon">
-            <div class="pointer">
-              <ion-icon name="camera" class='input-icon mrT5'></ion-icon>
-            </div>
-          </ion-col>
-        </ion-row>
-      </ion-grid>-->
-
       <ion-grid>
         <ion-row>
           <ion-col col-1>
-
-          </ion-col>
-          <ion-col col-1>
             <ion-checkbox checked="true" [(ngModel)]="confirmPack.scanEnable" name="Y"></ion-checkbox>
           </ion-col>
-          <ion-col col-8>
+          <ion-col col-9>
             <p class="chkboxLable">Enable continuous scan</p>
           </ion-col>
         </ion-row>
@@ -101,16 +97,43 @@
     <ion-grid>
       <ion-row>
         <ion-col text-center>
-          1 of 2
+          <p>1</p>
+          <p>Entered</p>
         </ion-col>
         <ion-col text-center>
-          2 of 2
+          <p>$250.00</p>
+          <p>$ Pack Cost</p>
         </ion-col>
       </ion-row>
     </ion-grid>
   </ion-card>
 
-  <ion-card class="card-height">
+  <!--<ion-card class="card-height">
     <h4 text-left class="font-weight-card-inside-h4">No readings found.</h4>
+  </ion-card>-->
+
+  <ion-card class="blue-card pad10">
+    <ion-row>
+      <ion-col col-5>
+        <p class='text-blue'>Loose Change</p>
+        <p class="text-gray">Pack 1111-222222</p>
+      </ion-col>
+
+      <ion-col class="pad0" col-3 text-right class="input-addon">
+        <p class='text-blue'>$1</p>
+        <p class='text-gray'>Per Ti..</p>
+      </ion-col>
+
+      <ion-col class="pad0" col-3 text-right class="input-addon">
+        <p class="text-blue">$250</p>
+        <p class="text-gray">Park C....</p>
+      </ion-col>
+
+      <ion-col col-1 class="icon-border-display">
+        <ion-icon name="trash" class='input-icon fs30'></ion-icon>
+      </ion-col>
+
+    </ion-row>
   </ion-card>
+
 </ion-content>
