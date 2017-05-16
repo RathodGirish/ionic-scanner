@@ -39,9 +39,9 @@ export class confirmPack {
       }
 
       let currentDate = this.commonService.getFormattedDateYMD(Date.now());
-
-      // THIS.API_SERVICE.getConfirmPackByDate(currentDate, GLOBAL_VARIABLE.CONFIRM_PACK_STATUS, function (err, res) {
-      THIS.API_SERVICE.getConfirmPackByDate("2017-05-15", GLOBAL_VARIABLE.CONFIRM_PACK_STATUS, function (err, res) {
+      this.confirmPackObject.confirmDate=currentDate;
+      THIS.API_SERVICE.getConfirmPackByDate(currentDate, GLOBAL_VARIABLE.CONFIRM_PACK_STATUS, function (err, res) {
+      // THIS.API_SERVICE.getConfirmPackByDate("2017-05-15", GLOBAL_VARIABLE.CONFIRM_PACK_STATUS, function (err, res) {
         if (err) {
           console.log("ERROR!: ", err.message);
           THIS.isPacksFound = false;
