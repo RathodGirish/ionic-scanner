@@ -136,8 +136,6 @@ export class APIService {
     }
   }
 
-
-
   public getConfirmPackByDate(date, status, callback) {
     console.log("date :"+date);
     console.log("status :"+status);
@@ -168,6 +166,26 @@ export class APIService {
         .subscribe(
         data => {
           console.log('confirmPack  ' + JSON.stringify(data));
+          if (this.commonService.isSuccess(data.status)) {
+            return callback(null, data);
+          } else {
+            return callback(data, null);
+          }
+        },
+        err => {
+          console.log("ERROR!: ", err);
+          return callback(err, null);
+        }
+      );
+  }
+
+  public addGame(body, options, callback){
+      this.http
+        .post(GLOBAL_VARIABLE.BASE_API_URL + GLOBAL_VARIABLE.ADD_NEW_GAME, body, options)
+        .map(res => res.json())
+        .subscribe(
+        data => {
+          console.log('addGame  ' + JSON.stringify(data));
           if (this.commonService.isSuccess(data.status)) {
             return callback(null, data);
           } else {

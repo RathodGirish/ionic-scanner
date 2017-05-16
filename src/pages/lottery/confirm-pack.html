@@ -12,7 +12,7 @@
 
 <ion-content padding>
   <h3 color="white" class='page-title'>Confirm scratch-off packs</h3>
-  <form (ngSubmit)="confirmPack($event, posForm.value, posForm.valid)" #posForm="ngForm">
+  <form (ngSubmit)="confirmPack($event, confirmPackForm.value, confirmPackForm.valid)" #confirmPackForm="ngForm">
     <ion-card>
 
       <ion-item>
@@ -54,7 +54,7 @@
 
       <ion-item>
         <ion-row>
-          <button ion-button class="success-btn" full type="submit" [disabled]="!posForm.valid">Confirm Pack</button>
+          <button ion-button class="success-btn" full type="submit" [disabled]="!confirmPackForm.valid">Confirm Pack</button>
         </ion-row>
       </ion-item>
 

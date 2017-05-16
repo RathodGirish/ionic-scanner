@@ -16,35 +16,72 @@
     <h3 color="secondary"><b>New Game</b> The game you scanned is new to you store.Please provide basic information about this game.</h3>
   </ion-card>
 
-  <form (ngSubmit)="addGame($event, posForm.value, posForm.valid)" #posForm="ngForm">
+  <form (ngSubmit)="addGame($event, addGameForm.value, addGameForm.valid)" #addGameForm="ngForm">
     <ion-item>
-      <ion-label  stacked>Game Number</ion-label>
-      <ion-input type="number" placeholder="Game Number" name="gameNumber" [(ngModel)]="addGameObj.gameNumber"></ion-input>
+      <ion-label>State</ion-label>
+      <ion-select name="state" [(ngModel)]="addGameObj.state">
+        <ion-option value="TX">TX</ion-option>
+        <ion-option value="NJ">NJ</ion-option>
+      </ion-select>
     </ion-item>
+    
+    <ion-row>
+      <ion-col col-6>
+        <ion-item>
+          <ion-label stacked>Game Number</ion-label>
+          <ion-input type="number" placeholder="Game Number" name="game_no" [(ngModel)]="addGameObj.game_no" required></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-6>
+        <ion-item>
+          <ion-label stacked>Ticket value</ion-label>
+          <ion-input type="number" placeholder="Ticket value" name="value" [(ngModel)]="addGameObj.value" required></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
 
-    <ion-item>
-      <ion-label   stacked>Ticket value</ion-label>
-      <ion-input type="text" placeholder="Ticket value" name="ticketValue" [(ngModel)]="addGameObj.ticketValue"></ion-input>
-    </ion-item>
+    
+    <ion-row>
+      <ion-item>
+        <ion-label stacked>Name</ion-label>
+        <ion-input type="text" placeholder="Game Name" name="game_name" [(ngModel)]="addGameObj.game_name" required></ion-input>
+      </ion-item>
+    </ion-row>
 
-    <ion-item>
-      <ion-label   stacked>Name</ion-label>
-      <ion-input type="text" placeholder="Name" name="name"[(ngModel)]="addGameObj.name"></ion-input>
-    </ion-item>
+    <ion-row>
+      <ion-col col-6>
+        <ion-item>
+          <ion-label stacked>Start ticket number</ion-label>
+          <ion-input type="number" placeholder="Start ticket number" name="start_ticket" [(ngModel)]="addGameObj.start_ticket" required></ion-input>
+        </ion-item>
+      </ion-col>
 
-    <ion-item>
-      <ion-label  stacked>First ticket number</ion-label>
-      <ion-input type="text" placeholder="First ticket number" name="firstTicketNumber" [(ngModel)]="addGameObj.firstTicketNumber"></ion-input>
-    </ion-item>
+      <ion-col col-6>
+        <ion-item>
+          <ion-label stacked>End ticket number</ion-label>
+          <ion-input type="number" placeholder="End ticket number" name="end_ticket" [(ngModel)]="addGameObj.end_ticket" required></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
 
-    <ion-item>
-      <ion-label   stacked>Ticket Per pack</ion-label>
-      <ion-input type="text" placeholder="Name" name = "ticketPerPack" [(ngModel)]="addGameObj.ticketPerPack"></ion-input>
-    </ion-item>
+    <ion-row>
+      <ion-col col-6>
+        <ion-item>
+          <ion-label stacked>Tickets Pack</ion-label>
+          <ion-input type="number" placeholder="Tickets Pack" name="tickets_pack" [(ngModel)]="addGameObj.tickets_pack" required></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-6>
+        <ion-item>
+          <ion-label stacked>Ticket Per Pack</ion-label>
+          <ion-input type="number" placeholder="Ticket Per Pack" name="pack_value" [(ngModel)]="addGameObj.pack_value" required></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
 
-      <ion-row>
-        <button ion-button class="success-btn" full type="submit" [disabled]="!posForm.valid">Confirm Pack</button>
-      </ion-row>
+    <ion-row>
+      <button ion-button class="success-btn" full type="submit" [disabled]="!addGameForm.valid">Add New Game</button>
+    </ion-row>
   </form>
 
 </ion-content>
