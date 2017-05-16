@@ -1,20 +1,21 @@
 import { Component } from '@angular/core';
-import { IonicPage, AlertController, NavController, NavParams } from 'ionic-angular';
+import { NavController, AlertController, IonicPage, NavParams, LoadingController } from 'ionic-angular';
 import { AuthService } from '../../providers/auth-service';
+import { APIService } from '../../providers/api-service';
+import { Http } from '@angular/http';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import 'rxjs/add/operator/map';
 
-/**
- * Generated class for the Lottery page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+
 @IonicPage()
 @Component({
-  selector: 'add-game',
-  templateUrl: 'add-game.html',
+  selector: 'page-add-game',
+  templateUrl: 'add-game.html'
 })
-export class AddGame {
+
+export class AddGamePage {
   info: any;
+  public addGameObj = {};
   constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthService, private alertCtrl: AlertController) {
     this.info = this.auth.getUserInfo();
     if (this.info == null) {

@@ -13,7 +13,7 @@ export class LoginPage {
   loginCredentials = { email: 'texonoil@gmail.com', password: 'tex@123', type: 'company' };
   // loginCredentials = { email: '', password: '', type: 'company' };
   typeList: any[] = [{ value: 1, text: 'option 1', checked: false }, { value: 2, text: 'option 2', checked: false }];
-
+  
   constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private http: Http, public menuController: MenuController) {
     this.menuController.swipeEnable(false, 'sideMenu');
   }

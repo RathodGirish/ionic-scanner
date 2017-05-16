@@ -88,7 +88,7 @@ export class APIService {
   }
 
   public addItem(store_id, plu_no, description, r_grocery_department_id, price, plu_tax, save_to, callback) {
-    console.log("store_id :"+store_id+" plu_no :"+plu_no+" description :"+description+" r_grocery_department_id :"+r_grocery_department_id+" price :"+price+" plu_tax :"+plu_tax);
+    console.log("store_id :" + store_id + " plu_no :" + plu_no + " description :" + description + " r_grocery_department_id :" + r_grocery_department_id + " price :" + price + " plu_tax :" + plu_tax);
     if (store_id === null) {
       return Observable.throw("Please pass store ID");
     } else if (price === null) {
@@ -131,21 +131,25 @@ export class APIService {
           console.log("ERROR!: ", err);
           return callback(err, null);
         }
-      );
-      
-      // console.log(GLOBAL_VARIABLE.BASE_API_URL + "?data=Addnew&store_id =" + store_id  + "&plu_no=" + plu_no + "&description=" + description+ "&r_grocery_department_id=" + r_grocery_department_id+ "&price=" + price+ "&plu_tax=" + plu_tax);
-      // this.http
-      //   .get("" + GLOBAL_VARIABLE.BASE_API_URL + "?data=Addnew&store_id =" + store_id  + "&plu_no=" + plu_no + "&description=" + description+ "&r_grocery_department_id=" + r_grocery_department_id+ "&price=" + price+ "&plu_tax=" + plu_tax)
-      //   .map(res => res.json())
-      //   .subscribe(
-      //   data => {
-      //     console.log("data : "+data);
-      //     return callback(null, data);
-      //   },
-      //   err => {
-      //     return callback(err, null);
-      //   });
+        );
+
     }
+  }
+
+
+
+  public getConfirmPackByDate(date, status, callback) {
+    console.log("date :"+date);
+    // this.http
+    //   .get("" + GLOBAL_VARIABLE.BASE_API_URL + "?action=getLatestConfirmedPack&date=" + date + "&status=" + status)
+    //   .map(res => res.json())
+    //   .subscribe(
+    //   data => {
+    //     return callback(null, data);
+    //   },
+    //   err => {
+    //     return callback(err, null);
+    //   });
   }
 
 }

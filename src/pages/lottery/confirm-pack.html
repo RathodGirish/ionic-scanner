@@ -20,7 +20,6 @@
         <ion-datetime displayFormat="MM/DD/YYYY" name="confirmDate" [(ngModel)]="confirmPackObject.confirmDate"></ion-datetime>
       </ion-item>
 
-
       <ion-grid class="inner-addon">
         <ion-row>
           <ion-item>
@@ -36,7 +35,7 @@
           </ion-col>
           <ion-col class="icon-border-div" col-2>
             <div class="pointer">
-              <ion-icon name="camera" text-center class='input-icon mrT5 fs30 pad5'></ion-icon>
+              <ion-icon name="camera" text-center class='input-icon mrT5 fs30 pad5' (click)="scanBarcode()"></ion-icon>
             </div>
           </ion-col>
         </ion-row>

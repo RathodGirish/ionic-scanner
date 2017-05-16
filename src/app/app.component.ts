@@ -26,7 +26,8 @@ export class MyApp {
       { title: 'Dashboard', component: 'Dashboard' },
       { title: 'Update Price', component: 'PricebookPage' },
       { title: 'Add Item', component: 'Item' },
-      { title: 'Lottery/Lotto', component: 'confirmPack' }
+      { title: 'Lottery/Lotto', component: 'confirmPack' },
+      // { title: 'Add Game', component: 'AddGamePage' }
     ];
     this.activePage = this.sidebarMenus[0];
   }
@@ -35,9 +36,7 @@ export class MyApp {
     this.menuController.swipeEnable(false, 'sideMenu');
   }
 
-  public openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
+  public openPage(page) { 
     this.nav.setRoot(page.component);
     this.activePage = page;
   }

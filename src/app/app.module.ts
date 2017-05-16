@@ -9,13 +9,15 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { HttpModule } from '@angular/http';
 import { SearchPage } from '../pages/search/search';
+import { AddGamePage } from '../pages/addGame/add-game';
  
 import { MyApp } from './app.component';
 
 @NgModule({
   declarations: [
     MyApp,
-    SearchPage
+    SearchPage,
+    AddGamePage
   ],
   imports: [
     BrowserModule,
@@ -25,7 +27,8 @@ import { MyApp } from './app.component';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    SearchPage
+    SearchPage,
+    AddGamePage
   ],
   providers: [
     StatusBar,

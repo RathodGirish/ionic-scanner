@@ -1,4 +1,5 @@
 export const GLOBAL_VARIABLE = Object.freeze({
     BASE_API_URL: 'http://192.169.176.227/backofficeweb/',
-    ADD_ITEM: '?data=Addnew'
+    ADD_ITEM: '?data=Addnew',
+    CONFIRM_PACK_STATUS:'confirm'
 });

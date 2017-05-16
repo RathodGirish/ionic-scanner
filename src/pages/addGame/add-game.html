@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      <span class='header-title pull-left'>Welcome, {{info.username}}!</span>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-card class="blue-card pad10">
+    <h3 color="secondary"><b>New Game</b> The game you scanned is new to you store.Please provide basic information about this game.</h3>
+  </ion-card>
+
+  <form (ngSubmit)="addGame($event, posForm.value, posForm.valid)" #posForm="ngForm">
+    <ion-item>
+      <ion-label  stacked>Game Number</ion-label>
+      <ion-input type="number" placeholder="Game Number" name="gameNumber" [(ngModel)]="addGameObj.gameNumber"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label   stacked>Ticket value</ion-label>
+      <ion-input type="text" placeholder="Ticket value" name="ticketValue" [(ngModel)]="addGameObj.ticketValue"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label   stacked>Name</ion-label>
+      <ion-input type="text" placeholder="Name" name="name"[(ngModel)]="addGameObj.name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label  stacked>First ticket number</ion-label>
+      <ion-input type="text" placeholder="First ticket number" name="firstTicketNumber" [(ngModel)]="addGameObj.firstTicketNumber"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label   stacked>Ticket Per pack</ion-label>
+      <ion-input type="text" placeholder="Name" name = "ticketPerPack" [(ngModel)]="addGameObj.ticketPerPack"></ion-input>
+    </ion-item>
+
+      <ion-row>
+        <button ion-button class="success-btn" full type="submit" [disabled]="!posForm.valid">Confirm Pack</button>
+      </ion-row>
+  </form>
+
+</ion-content>
