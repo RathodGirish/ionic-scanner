@@ -140,16 +140,45 @@ export class APIService {
 
   public getConfirmPackByDate(date, status, callback) {
     console.log("date :"+date);
-    // this.http
-    //   .get("" + GLOBAL_VARIABLE.BASE_API_URL + "?action=getLatestConfirmedPack&date=" + date + "&status=" + status)
-    //   .map(res => res.json())
-    //   .subscribe(
-    //   data => {
-    //     return callback(null, data);
-    //   },
-    //   err => {
-    //     return callback(err, null);
-    //   });
+    console.log("status :"+status);
+    console.log("" + GLOBAL_VARIABLE.BASE_API_URL + "?action=getLatestConfirmedPack&date=" + date + "&status=" + status);
+
+    this.http
+      .get("" + GLOBAL_VARIABLE.BASE_API_URL + "?action=getLatestConfirmedPack&date=" + date + "&status=" + status)
+      .map(res => res.json())
+      .subscribe(
+      data => {
+          console.log('getConfirmPackByDate  ' + JSON.stringify(data));
+          if (data.status == '1') {
+            return callback(null, data);
+          } else {
+            return callback(data, null);
+          }
+      },
+      err => {
+        console.log("ERROR!: ", err);
+        return callback(err, null);
+      });
+  }
+
+  public confirmPack(body, options, callback){
+      this.http
+        .post(GLOBAL_VARIABLE.BASE_API_URL + GLOBAL_VARIABLE.CONFIRM_PACK, body, options)
+        .map(res => res.json())
+        .subscribe(
+        data => {
+          console.log('confirmPack  ' + JSON.stringify(data));
+          if (this.commonService.isSuccess(data.status)) {
+            return callback(null, data);
+          } else {
+            return callback(data, null);
+          }
+        },
+        err => {
+          console.log("ERROR!: ", err);
+          return callback(err, null);
+        }
+      );
   }
 
 }

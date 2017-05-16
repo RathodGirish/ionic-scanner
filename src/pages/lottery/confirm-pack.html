@@ -17,7 +17,7 @@
 
       <ion-item>
         <ion-label>Confirm Date</ion-label>
-        <ion-datetime displayFormat="MM/DD/YYYY" name="confirmDate" [(ngModel)]="confirmPackObject.confirmDate"></ion-datetime>
+        <ion-datetime displayFormat="MM/DD/YYYY" name="confirmDate" [(ngModel)]="confirmPackObject.confirmDate" required></ion-datetime>
       </ion-item>
 
       <ion-grid class="inner-addon">
@@ -30,11 +30,11 @@
         <ion-row class="mrLR10">
           <ion-col class="pad0" col-10 class="input-addon">
             <div>
-              <ion-input type="text" placeholder=" Type game # and pack #" name="pack" [(ngModel)]="confirmPackObject.pack"></ion-input>
+              <ion-input type="number" placeholder=" Type game # and pack #" name="ticketCode" [(ngModel)]="confirmPackObject.ticketCode" required></ion-input>
             </div>
           </ion-col>
           <ion-col class="icon-border-div" col-2>
-            <div class="pointer">
+            <div class="pointer" text-center>
               <ion-icon name="camera" text-center class='input-icon mrT5 fs30 pad5' (click)="scanBarcode()"></ion-icon>
             </div>
           </ion-col>
@@ -43,7 +43,7 @@
 
       <ion-grid>
         <ion-row>
-          <ion-col col-1>
+          <ion-col col-10>
             <ion-checkbox checked="true" [(ngModel)]="confirmPackObject.scanEnable" name="Y"></ion-checkbox>
           </ion-col>
           <ion-col col-9>
@@ -61,43 +61,68 @@
     </ion-card>
   </form>
 
-  <ion-card>
+  <ion-card *ngIf="packs.length > 0">
     <ion-grid>
       <ion-row>
         <ion-col text-center>
-          <p>1</p>
+          <p>{{packCount}}</p>
           <p>Entered</p>
         </ion-col>
         <ion-col text-center>
-          <p>$250.00</p>
+          <p>${{sumOfPacks}}</p>
           <p>$ Pack Cost</p>
         </ion-col>
       </ion-row>
     </ion-grid>
   </ion-card>
 
-  <ion-card class="blue-card pad10">
-    <ion-row>
-      <ion-col col-5>
-        <p class='text-blue text-bold'>Loose Change</p>
-        <p class="text-gray">Pack 1111-222222</p>
-      </ion-col>
+  <ng-container *ngIf="packs.length > 0">
+    <ion-card class="blue-card pad10" *ngFor="let p of packs">
+      <ion-row >
+        <ion-col col-5>
+          <p class='text-blue text-bold overflow-ellipsis'>{{p.gamename}}</p>
+          <!--<p class="text-gray">Pack {{p.game_no}}-{{p.pack_no}}</p>-->
+        </ion-col>
 
-      <ion-col class="pad0" col-3 text-right class="input-addon">
-        <p class='text-blue text-bold'>$1</p>
-        <p class='text-gray'>Per Ti.</p>
-      </ion-col>
+        <ion-col class="pad0" col-3 text-right class="input-addon">
+          <p class='text-blue text-bold'>${{p.ticket_value}}</p>
+          <!--<p class='text-gray'>Per Ticket</p>-->
+        </ion-col>
 
-      <ion-col class="pad0" col-3 text-right class="input-addon">
-        <p class="text-blue text-bold">$250</p>
-        <p class="text-gray">Park C.</p>
-      </ion-col>
+        <ion-col class="pad0" col-3 text-right class="input-addon">
+          <p class="text-blue text-bold">${{p.face_value}}</p>
+          <!--<p class="text-gray">Per Pack</p>-->
+        </ion-col>
 
-      <ion-col col-1 class="icon-border-display">
-        <ion-icon name="trash" class='input-icon fs30'></ion-icon>
-      </ion-col>
+        <ion-col col-1 class="icon-border-display">
+          <ion-icon name="trash" class='input-icon fs30'></ion-icon>
+        </ion-col>
 
-    </ion-row>
+      </ion-row>
+
+      <ion-row >
+        <ion-col col-5>
+          <!--<p class='text-blue text-bold'>{{p.gamename}}</p>-->
+          <p class="text-gray overflow-ellipsis">Pack {{p.game_no}}-{{p.pack_no}}</p>
+        </ion-col>
+
+        <ion-col class="pad0" col-3 text-right class="input-addon">
+          <!--<p class='text-blue text-bold'>${{p.ticket_value}}</p>-->
+          <p class='text-gray overflow-ellipsis'>Per Ticket</p>
+        </ion-col>
+
+        <ion-col class="pad0" col-3 text-right class="input-addon">
+          <!--<p class="text-blue text-bold">${{p.face_value}}</p>-->
+          <p class="text-gray overflow-ellipsis">Per Pack</p>
+        </ion-col>
+
+      </ion-row>
+    </ion-card>
+  </ng-container>
+
+  <ion-card class="pad10" color="danger" *ngIf="isPacksFound == false">
+    <h3 >No Records found..</h3>
   </ion-card>
+
 
 </ion-content>

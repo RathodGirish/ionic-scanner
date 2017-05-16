@@ -34,6 +34,10 @@ ion-card{
     margin-left: 10px; 
 }
 
+// .mrg0  {
+//     margin: 0px;
+// }
+
 .mrTB10{
     margin-bottom: 10px;
     margin-top: 10px;
@@ -75,6 +79,8 @@ ion-card{
 .mrL10  {
     margin-left: 10px;
 }
+
+
 
 .pad0{
     padding: 0px;
@@ -131,6 +137,14 @@ form .input-addon{
 
 .text-bold{
     font-weight: bold;
+}
+
+.overflow-ellipsis{
+    text-overflow: ellipsis;
+    width: 100%;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .inner-addon{
