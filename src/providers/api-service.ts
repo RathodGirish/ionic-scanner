@@ -142,7 +142,7 @@ export class APIService {
     console.log("" + GLOBAL_VARIABLE.BASE_API_URL + "?action=getLatestConfirmedPack&date=" + date + "&status=" + status);
 
     this.http
-      .get("" + GLOBAL_VARIABLE.BASE_API_URL + "?action=getLatestConfirmedPack&date=" + date + "&status=" + status)
+      .get("" + GLOBAL_VARIABLE.BASE_API_URL + GLOBAL_VARIABLE.GET_LATEST_PACK_BY_DATE + "&date=" + date + "&status=" + status)
       .map(res => res.json())
       .subscribe(
       data => {
