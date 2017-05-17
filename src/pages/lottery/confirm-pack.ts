@@ -14,7 +14,7 @@ import { APIService } from '../../providers/api-service';
   templateUrl: 'confirm-pack.html',
 })
 
-export class confirmPack {
+export class ConfirmPackPage {
   info: any;
   public confirmPackObject = { "ticketCode": "", "confirmDate": "", "scan_ticket_code": "", "status": "confirm"};
 
@@ -32,6 +32,7 @@ export class confirmPack {
         public API_SERVICE: APIService) {
 
       this.info = this.auth.getUserInfo();
+      console.log(' this.info ' + JSON.stringify(this.info));
       let THIS = this;
       if (this.info == null) {
         this.commonService.showErrorAlert('Please login first');
@@ -71,7 +72,7 @@ export class confirmPack {
     let THIS = this;
     THIS.commonService.showLoading();
     console.log('confirmPackObject ' + JSON.stringify(this.confirmPackObject));
-
+    // THIS.navCtrl.push(AddGamePage);
     THIS.commonService.getGameNoAndPackNo(THIS.confirmPackObject.ticketCode, function(err, game_no, pack_no){
       let body = new FormData();
       body.append('game_no', game_no);
@@ -88,7 +89,7 @@ export class confirmPack {
       let options = new RequestOptions({ headers: headers });
 
       THIS.API_SERVICE.confirmPack(body, options, function (err, res) {
-          if (err) {
+          if (err || res.message == 'notfound') {
             console.log("ERROR!: ", err);
             THIS.commonService.showErrorAlert('ERROR!: ' + err.message);
             THIS.navCtrl.push(AddGamePage);

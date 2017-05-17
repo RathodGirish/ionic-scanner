@@ -10,7 +10,7 @@ import { CommonService } from '../../providers/common-service';
   selector: 'page-item',
   templateUrl: 'add-item.html',
 })
-export class Item {
+export class AddItemPage {
   info: any = {};
   public newPosObject = { "plu_no": '', 'description': '', "r_grocery_department_id": '',  'plu_tax': 1, 'save_to':'backoffice'};
   public showList: boolean = false;

@@ -41,7 +41,12 @@
         </ion-row>
       </ion-grid>
 
-      <ion-grid>
+      <ion-row class="chkboxform mrT10">
+          <ion-checkbox color="primary" checked="false" [(ngModel)]="confirmPackObject.scanEnable" name="Y"></ion-checkbox>
+          <p class="chkboxLable">Enable continuous scan</p>
+      </ion-row>
+
+      <!--<ion-grid>
         <ion-row>
           <ion-col col-10>
             <ion-checkbox checked="true" [(ngModel)]="confirmPackObject.scanEnable" name="Y"></ion-checkbox>
@@ -50,7 +55,7 @@
             <p class="chkboxLable">Enable continuous scan</p>
           </ion-col>
         </ion-row>
-      </ion-grid>
+      </ion-grid>-->
 
       <ion-item>
         <ion-row>

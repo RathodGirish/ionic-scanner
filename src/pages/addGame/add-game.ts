@@ -39,15 +39,16 @@ export class AddGamePage {
     let body = new FormData();
     body.append('state', THIS.addGameObj.state);
     body.append('game_no', THIS.addGameObj.game_no);
+    body.append('game_name', THIS.addGameObj.game_name);
     body.append('value', THIS.addGameObj.value);
     body.append('tickets_pack', THIS.addGameObj.tickets_pack);
     body.append('start_ticket', THIS.addGameObj.start_ticket);
     body.append('end_ticket', THIS.addGameObj.end_ticket);
     body.append('corporation', THIS.addGameObj.corporation);
+    body.append('status', THIS.addGameObj.status);
     body.append('store', THIS.info.store_id);
     body.append('company_id', THIS.info.company_id);
     body.append('pack_value', THIS.addGameObj.pack_value);
-    
 
     console.log('body ' + JSON.stringify(body));
 

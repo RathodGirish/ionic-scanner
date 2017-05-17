@@ -12,7 +12,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
   public info: any = {};
  
-  public sidebarMenus: Array<{title: string, component: any}>;
+  public sidebarMenus: Array<{title: string, component: any, hasSubMenu: any, subMenus: any}>;
  
   constructor(private auth: AuthService, platform: Platform, splashScreen: SplashScreen, public menuController: MenuController) {
     platform.ready().then(() => {
@@ -23,10 +23,11 @@ export class MyApp {
     // this.menuController.enable(false);
     console.log(' auth ' + JSON.stringify(auth));
     this.sidebarMenus = [
-      { title: 'Dashboard', component: 'Dashboard' },
-      { title: 'Update Price', component: 'PricebookPage' },
-      { title: 'Add Item', component: 'Item' },
-      { title: 'Lottery/Lotto', component: 'confirmPack' },
+      { title: 'Dashboard', component: 'Dashboard', hasSubMenu: false, subMenus: [] },
+      { title: 'Update Price', component: 'PricebookPage', hasSubMenu: false, subMenus: [] },
+      { title: 'Add Item', component: 'AddItemPage', hasSubMenu: false, subMenus: [] },
+      // { title: 'Lottery/Lotto', component: 'ActivatePackPage', hasSubMenu: false },
+      { title: 'Lottery/Lotto', component: 'ConfirmPackPage', hasSubMenu: true, subMenus: ["Confirm Pack", "Activate Pack"] },
       // { title: 'Add Game', component: 'AddGamePage' }
     ];
     this.activePage = this.sidebarMenus[0];
@@ -36,8 +37,8 @@ export class MyApp {
     this.menuController.swipeEnable(false, 'sideMenu');
   }
 
-  public openPage(page) { 
-    this.nav.setRoot(page.component);
+  public openPage(page, flag) { 
+    this.nav.setRoot(page);
     this.activePage = page;
   }
 

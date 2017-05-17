@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      <span class='header-title pull-left'>Welcome, {{info.username}}!</span>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <h3 color="white" class='page-title'>Activate scratch-off packs</h3>
+  <form (ngSubmit)="ActivatePack($event, ActivatePackForm.value, ActivatePackForm.valid)" #ActivatePackForm="ngForm">
+    <ion-card>
+
+      <ion-item>
+        <ion-label>Activate Date</ion-label>
+        <ion-datetime displayFormat="MM/DD/YYYY" name="activateDate" [(ngModel)]="ActivatePackObject.activateDate" required></ion-datetime>
+      </ion-item>
+
+      <ion-grid class="inner-addon">
+        <ion-row>
+          <ion-item>
+            <ion-label text-left>Scan or type ticket's code</ion-label>
+          </ion-item>
+        </ion-row>
+
+        <ion-row class="mrLR10">
+          <ion-col class="pad0" col-10 class="input-addon">
+            <div>
+              <ion-input type="number" placeholder=" Type game # and pack #" name="ticketCode" [(ngModel)]="ActivatePackObject.ticketCode" required></ion-input>
+            </div>
+          </ion-col>
+          <ion-col class="icon-border-div" col-2>
+            <div class="pointer" text-center>
+              <ion-icon name="camera" text-center class='input-icon mrT5 fs30 pad5' (click)="scanBarcode()"></ion-icon>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-row class="chkboxform mrT10">
+          <ion-checkbox color="primary" checked="false" [(ngModel)]="ActivatePackObject.scanEnable" name="Y"></ion-checkbox>
+          <p class="chkboxLable">Enable continuous scan</p>
+      </ion-row>
+
+      <ion-item>
+        <ion-row>
+          <button ion-button class="success-btn" full type="submit" [disabled]="!ActivatePackForm.valid">Activate Pack</button>
+        </ion-row>
+      </ion-item>
+
+    </ion-card>
+  </form>
+
+  <ion-card class="pad10" color="danger" *ngIf="isPacksFound == false">
+    <h3 >No Records found..</h3>
+  </ion-card>
+
+
+</ion-content>

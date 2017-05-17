@@ -7,9 +7,33 @@
 
   <ion-content>
     <ion-list>
-      <button menuClose ion-item *ngFor="let p of sidebarMenus" [class.activeHightlight]="checkActive(p)" (click)="openPage(p)">
-        {{p.title}}
+      <!--<button menuClose ion-item *ngFor="let menu of sidebarMenus" [class.activeHightlight]="checkActive(menu)" (click)="openPage(menu)">
+        <span *ngIf="menu.hasSubMenu != true">{{menu.title}}</span>
+        <span *ngIf="menu.hasSubMenu == true">{{menu.title}}</span>
       </button>
+      <button menuClose ion-item (click)="logout()">
+       Logout
+      </button>-->
+      <button menuClose ion-item (click)="openPage('Dashboard', false)">
+       Dashboard
+      </button>
+      <button menuClose ion-item (click)="openPage('PricebookPage', false)">
+       Update Price
+      </button>
+      <button menuClose ion-item (click)="openPage('AddItemPage', false)">
+       Add Item
+      </button>
+      <button menuClose ion-item (click)="openPage('ConfirmPackPage', true)">
+       Lottery
+      </button>
+      <ion-list class="sub-menus-list">
+        <button menuClose ion-item (click)="openPage('ConfirmPackPage', true)">
+          ConfirmPackPage
+        </button>
+         <button menuClose ion-item (click)="openPage('ActivatePackPage', true)">
+          ActivatePackPage
+        </button>
+      </ion-list>
       <button menuClose ion-item (click)="logout()">
        Logout
       </button>

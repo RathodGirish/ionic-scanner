@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { confirmPack } from './confirm-pack';
+import { ConfirmPackPage } from './confirm-pack';
 // import { AddGameModule } from './add-game.module';
 
 
 @NgModule({
   declarations: [
-    confirmPack
+    ConfirmPackPage
   ],
   imports: [
-    IonicPageModule.forChild(confirmPack)
+    IonicPageModule.forChild(ConfirmPackPage)
   ],
   exports: [
-    confirmPack
+    ConfirmPackPage
   ]
 })
-export class confirmPackModule {}
+export class ConfirmPackModule {}

@@ -3,5 +3,5 @@ export const GLOBAL_VARIABLE = Object.freeze({
     ADD_ITEM: '?data=Addnew',
     CONFIRM_PACK_STATUS:'confirm',
     CONFIRM_PACK:'?data=ActiveNconfirmPack',
-    ADD_NEW_GAME:'?data=addnewiteam'
+    ADD_NEW_GAME:'?data=addnewgame'
 });
