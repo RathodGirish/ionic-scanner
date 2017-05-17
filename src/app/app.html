@@ -7,25 +7,12 @@
 
   <ion-content>
     <ion-list>
-      <!--<button menuClose ion-item *ngFor="let menu of sidebarMenus" [class.activeHightlight]="checkActive(menu)" (click)="openPage(menu)">
-        <span *ngIf="menu.hasSubMenu != true">{{menu.title}}</span>
-        <span *ngIf="menu.hasSubMenu == true">{{menu.title}}</span>
-      </button>
-      <button menuClose ion-item (click)="logout()">
-       Logout
-      </button>-->
       <button menuClose ion-item (click)="openPage('Dashboard', false)">
        Dashboard
       </button>
-      <!--<button menuClose ion-item (click)="openPage('PricebookPage', false)">
-       Update Price
-      </button>
-      <button menuClose ion-item (click)="openPage('AddItemPage', false)">
-       Add Item
-      </button>-->
 
       <button ion-item (click)="toggleSubMenu('Pricebook')">
-       Pricebook <ion-icon name="ios-arrow-forward" class='mrL5 pull-right' ></ion-icon>
+       Pricebook <ion-icon *ngIf="!togglePricebookSubMenu" name="ios-arrow-forward" class='mrL5 pull-right'></ion-icon> <ion-icon *ngIf="togglePricebookSubMenu" name="ios-arrow-down" class='mrL5 pull-right'></ion-icon>
       </button>
       <ion-list class="sub-menus-list" [class.hide]="!togglePricebookSubMenu">
         <button menuClose ion-item (click)="openPage('AddItemPage', false); toggleSubMenu('Pricebook');">
@@ -37,18 +24,21 @@
       </ion-list>
 
       <button ion-item (click)="toggleSubMenu('Lottery')">
-       Lottery <ion-icon name="ios-arrow-forward" class='mrL5 pull-right' ></ion-icon>
+       Lottery <ion-icon *ngIf="!toggleLotterySubMenu" name="ios-arrow-forward" class='mrL5 pull-right'></ion-icon> <ion-icon *ngIf="toggleLotterySubMenu" name="ios-arrow-down" class='mrL5 pull-right'></ion-icon>
       </button>
       <ion-list class="sub-menus-list" [class.hide]="!toggleLotterySubMenu">
         <button menuClose ion-item (click)="openPage('ConfirmPackPage', true); toggleSubMenu('Lottery')">
-          ConfirmPackPage
+          Confirm Pack 
         </button>
-         <button menuClose ion-item (click)="openPage('ActivatePackPage', true); toggleSubMenu('Lottery')">
-          ActivatePackPage
+        <button menuClose ion-item (click)="openPage('ActivatePackPage', true); toggleSubMenu('Lottery')">
+          Activate Pack 
         </button>
+        <!--<button menuClose ion-item (click)="openPage('EnterPackPage', true); toggleSubMenu('Lottery')">
+          Enter Pack 
+        </button>-->
       </ion-list>
-      <button menuClose ion-item (click)="logout()">
-       Logout
+      <button  ion-item (click)="logout()">
+         Logout
       </button>
 
     </ion-list>

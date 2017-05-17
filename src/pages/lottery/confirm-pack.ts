@@ -41,7 +41,7 @@ export class ConfirmPackPage {
 
       let currentDate = this.commonService.getFormattedDateYMD(Date.now());
       this.confirmPackObject.confirmDate=currentDate;
-      THIS.API_SERVICE.getConfirmPackByDate(currentDate, GLOBAL_VARIABLE.CONFIRM_PACK_STATUS, function (err, res) {
+      THIS.API_SERVICE.getLatestPackByDate(currentDate, GLOBAL_VARIABLE.CONFIRM_PACK_STATUS, function (err, res) {
         if (err) {
           console.log("ERROR!: ", err.message);
           THIS.isPacksFound = false;
@@ -89,8 +89,10 @@ export class ConfirmPackPage {
       let options = new RequestOptions({ headers: headers });
 
       THIS.API_SERVICE.confirmPack(body, options, function (err, res) {
-          if (err || res.message == 'notfound') {
-            console.log("ERROR!: ", err);
+          if (err && err.message == 'notfound') {
+            THIS.commonService.showAlert('No Record Found');
+            THIS.navCtrl.push(AddGamePage);
+          } else if (err) {
             THIS.commonService.showErrorAlert('ERROR!: ' + err.message);
             THIS.navCtrl.push(AddGamePage);
           } else {

@@ -2,7 +2,8 @@ import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { GLOBAL_VARIABLE } from './constant';
+// import { GLOBAL_VARIABLE } from './constant';
+import { API_URL } from './api-url';
 import { CommonService } from './common-service';
 
 @Injectable()
@@ -14,7 +15,7 @@ export class APIService {
       return Observable.throw("Please pass store ID");
     } else {
       this.http
-        .get("" + GLOBAL_VARIABLE.BASE_API_URL + "?action=department&store_id=" + storeId)
+        .get("" + API_URL.BASE_API_URL + API_URL.GET_DEPARTMENT_BY_STORE_ID +"&store_id=" + storeId)
         .map(res => res.json())
         .subscribe(
         data => {
@@ -32,7 +33,7 @@ export class APIService {
       return Observable.throw("Please pass store ID");
     } else {
       this.http
-        .get("" + GLOBAL_VARIABLE.BASE_API_URL + "?action=grocery_items&store_id=" + storeId)
+        .get("" + API_URL.BASE_API_URL + API_URL.GET_GROCERY_ITEM_BY_STORE_ID +"&store_id=" + storeId)
         .map(res => res.json())
         .subscribe(
         data => {
@@ -50,7 +51,7 @@ export class APIService {
       return Observable.throw("Please pass store ID");
     } else {
       this.http
-        .get("" + GLOBAL_VARIABLE.BASE_API_URL + "?action=barcode_items&store_id=" + storeId + "&plu_no=" + plu_no)
+        .get("" + API_URL.BASE_API_URL + API_URL.GET_SCANNE_ITEM_BY_STORE_ID +"&store_id=" + storeId + "&plu_no=" + plu_no)
         .map(res => res.json())
         .subscribe(
         data => {
@@ -75,7 +76,7 @@ export class APIService {
     }
     else {
       this.http
-        .get("" + GLOBAL_VARIABLE.BASE_API_URL + "?action=updateiteam&item_id=" + itemId + "&new_price=" + price + "&update_inventory=" + inventory)
+        .get("" + API_URL.BASE_API_URL + API_URL.UPDATE_ITEM +"&item_id=" + itemId + "&new_price=" + price + "&update_inventory=" + inventory)
         .map(res => res.json())
         .subscribe(
         data => {
@@ -116,7 +117,7 @@ export class APIService {
       let options = new RequestOptions({ headers: headers });
 
       this.http
-        .post(GLOBAL_VARIABLE.BASE_API_URL + GLOBAL_VARIABLE.ADD_ITEM, body, options)
+        .post(API_URL.BASE_API_URL + API_URL.ADD_ITEM, body, options)
         .map(res => res.json())
         .subscribe(
         data => {
@@ -131,18 +132,14 @@ export class APIService {
           console.log("ERROR!: ", err);
           return callback(err, null);
         }
-        );
-
+      );
     }
   }
 
-  public getConfirmPackByDate(date, status, callback) {
-    console.log("date :"+date);
-    console.log("status :"+status);
-    console.log("" + GLOBAL_VARIABLE.BASE_API_URL + "?action=getLatestConfirmedPack&date=" + date + "&status=" + status);
+  public getLatestPackByDate(date, status, callback) { 
 
     this.http
-      .get("" + GLOBAL_VARIABLE.BASE_API_URL + GLOBAL_VARIABLE.GET_LATEST_PACK_BY_DATE + "&date=" + date + "&status=" + status)
+      .get("" + API_URL.BASE_API_URL + API_URL.GET_LATEST_PACK_BY_DATE + "&date=" + date + "&status=" + status)
       .map(res => res.json())
       .subscribe(
       data => {
@@ -161,7 +158,7 @@ export class APIService {
 
   public confirmPack(body, options, callback){
       this.http
-        .post(GLOBAL_VARIABLE.BASE_API_URL + GLOBAL_VARIABLE.CONFIRM_PACK, body, options)
+        .post(API_URL.BASE_API_URL + API_URL.CONFIRM_PACK, body, options)
         .map(res => res.json())
         .subscribe(
         data => {
@@ -178,10 +175,29 @@ export class APIService {
         }
       );
   }
+  
+  public activePack(body, options, callback){
+      this.http
+        .post(API_URL.BASE_API_URL + API_URL.ACTIVATE_PACK, body, options)
+        .map(res => res.json())
+        .subscribe(
+        data => {
+          if (this.commonService.isSuccess(data.status)) {
+            return callback(null, data);
+          } else {
+            return callback(data, null);
+          }
+        },
+        err => {
+          console.log("ERROR!: ", err);
+          return callback(err, null);
+        }
+      );
+  }
 
   public addGame(body, options, callback){
       this.http
-        .post(GLOBAL_VARIABLE.BASE_API_URL + GLOBAL_VARIABLE.ADD_NEW_GAME, body, options)
+        .post(API_URL.BASE_API_URL + API_URL.ADD_NEW_GAME, body, options)
         .map(res => res.json())
         .subscribe(
         data => {

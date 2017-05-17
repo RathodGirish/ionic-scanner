@@ -35,6 +35,15 @@ export class CommonService {
         alert.present(prompt);
     }
 
+    public showAlert(text) {
+        let alert = this.alertCtrl.create({
+            title: '',
+            subTitle: text,
+            buttons: ['OK']
+        });
+        alert.present(prompt);
+    }
+
     public showLoading() {
         this.loading = this.loadingCtrl.create({
             content: 'Please wait...',

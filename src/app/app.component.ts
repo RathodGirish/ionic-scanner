@@ -28,7 +28,7 @@ export class MyApp {
       { title: 'Dashboard', component: 'Dashboard', hasSubMenu: false, subMenus: [] },
       { title: 'Update Price', component: 'PricebookPage', hasSubMenu: false, subMenus: [] },
       { title: 'Add Item', component: 'AddItemPage', hasSubMenu: false, subMenus: [] },
-      { title: 'Lottery/Lotto', component: 'ConfirmPackPage', hasSubMenu: true, subMenus: ["Confirm Pack", "Activate Pack"] },
+      { title: 'Lottery/Lotto', component: 'ConfirmPackPage', hasSubMenu: true, subMenus: [] },
     ];
     this.activePage = this.sidebarMenus[0];
   }

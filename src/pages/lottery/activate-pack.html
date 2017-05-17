@@ -19,7 +19,10 @@
         <ion-label>Activate Date</ion-label>
         <ion-datetime displayFormat="MM/DD/YYYY" name="activateDate" [(ngModel)]="ActivatePackObject.activateDate" required></ion-datetime>
       </ion-item>
-
+      <ion-item>
+        <ion-label stacked>Bin no</ion-label>
+        <ion-input type="number" placeholder=" Bin no" name="bin_no" [(ngModel)]="ActivatePackObject.bin_no"></ion-input>
+      </ion-item>
       <ion-grid class="inner-addon">
         <ion-row>
           <ion-item>
@@ -30,7 +33,8 @@
         <ion-row class="mrLR10">
           <ion-col class="pad0" col-10 class="input-addon">
             <div>
-              <ion-input type="number" placeholder=" Type game # and pack #" name="ticketCode" [(ngModel)]="ActivatePackObject.ticketCode" required></ion-input>
+              <ion-input type="number" placeholder=" Type game # and pack #" name="ticketCode" [(ngModel)]="ActivatePackObject.ticketCode"
+                required></ion-input>
             </div>
           </ion-col>
           <ion-col class="icon-border-div" col-2>
@@ -42,8 +46,8 @@
       </ion-grid>
 
       <ion-row class="chkboxform mrT10">
-          <ion-checkbox color="primary" checked="false" [(ngModel)]="ActivatePackObject.scanEnable" name="Y"></ion-checkbox>
-          <p class="chkboxLable">Enable continuous scan</p>
+        <ion-checkbox color="primary" checked="false" [(ngModel)]="ActivatePackObject.scanEnable" name="Y"></ion-checkbox>
+        <p class="chkboxLable">Enable continuous scan</p>
       </ion-row>
 
       <ion-item>
@@ -55,8 +59,46 @@
     </ion-card>
   </form>
 
+  <ng-container *ngIf="packs.length > 0">
+    <ion-card class="blue-card pad10" *ngFor="let p of packs">
+      <ion-row>
+        <ion-col col-5>
+          <p class='text-blue text-bold overflow-ellipsis'>{{p.gamename}}</p>
+        </ion-col>
+
+        <ion-col class="pad0" col-3 text-right class="input-addon">
+          <p class='text-blue text-bold'>${{p.ticket_value}}</p>
+        </ion-col>
+
+        <ion-col class="pad0" col-3 text-right class="input-addon">
+          <p class="text-blue text-bold">${{p.face_value}}</p>
+        </ion-col>
+
+        <ion-col col-1 class="icon-border-display">
+          <ion-icon name="trash" class='input-icon fs30'></ion-icon>
+        </ion-col>
+
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-5>
+          <p class="text-gray overflow-ellipsis">Pack {{p.game_no}}-{{p.pack_no}}</p>
+        </ion-col>
+
+        <ion-col class="pad0" col-3 text-right class="input-addon">
+          <p class='text-gray overflow-ellipsis'>Per Ticket</p>
+        </ion-col>
+
+        <ion-col class="pad0" col-3 text-right class="input-addon">
+          <p class="text-gray overflow-ellipsis">Per Pack</p>
+        </ion-col>
+
+      </ion-row>
+    </ion-card>
+  </ng-container>
+
   <ion-card class="pad10" color="danger" *ngIf="isPacksFound == false">
-    <h3 >No Records found..</h3>
+    <h3>No Records found..</h3>
   </ion-card>
 
 
