@@ -8,6 +8,8 @@ import { AuthService } from '../providers/auth-service';
 })
 export class MyApp {
   public rootPage:any = 'LoginPage';
+  public toggleLotterySubMenu = false;
+  public togglePricebookSubMenu = false;
   public activePage:any;
   @ViewChild(Nav) nav: Nav;
   public info: any = {};
@@ -26,9 +28,7 @@ export class MyApp {
       { title: 'Dashboard', component: 'Dashboard', hasSubMenu: false, subMenus: [] },
       { title: 'Update Price', component: 'PricebookPage', hasSubMenu: false, subMenus: [] },
       { title: 'Add Item', component: 'AddItemPage', hasSubMenu: false, subMenus: [] },
-      // { title: 'Lottery/Lotto', component: 'ActivatePackPage', hasSubMenu: false },
       { title: 'Lottery/Lotto', component: 'ConfirmPackPage', hasSubMenu: true, subMenus: ["Confirm Pack", "Activate Pack"] },
-      // { title: 'Add Game', component: 'AddGamePage' }
     ];
     this.activePage = this.sidebarMenus[0];
   }
@@ -40,6 +40,14 @@ export class MyApp {
   public openPage(page, flag) { 
     this.nav.setRoot(page);
     this.activePage = page;
+  }
+
+  public toggleSubMenu(value : any){
+    if(value == 'Lottery'){
+      this.toggleLotterySubMenu = !this.toggleLotterySubMenu;
+    } else if(value == 'Pricebook'){
+      this.togglePricebookSubMenu = !this.togglePricebookSubMenu;
+    }
   }
 
   public logout() {

@@ -17,20 +17,33 @@
       <button menuClose ion-item (click)="openPage('Dashboard', false)">
        Dashboard
       </button>
-      <button menuClose ion-item (click)="openPage('PricebookPage', false)">
+      <!--<button menuClose ion-item (click)="openPage('PricebookPage', false)">
        Update Price
       </button>
       <button menuClose ion-item (click)="openPage('AddItemPage', false)">
        Add Item
+      </button>-->
+
+      <button ion-item (click)="toggleSubMenu('Pricebook')">
+       Pricebook <ion-icon name="ios-arrow-forward" class='mrL5 pull-right' ></ion-icon>
       </button>
-      <button menuClose ion-item (click)="openPage('ConfirmPackPage', true)">
-       Lottery
+      <ion-list class="sub-menus-list" [class.hide]="!togglePricebookSubMenu">
+        <button menuClose ion-item (click)="openPage('AddItemPage', false); toggleSubMenu('Pricebook');">
+          Add Item
+        </button>
+        <button menuClose ion-item (click)="openPage('PricebookPage', false); toggleSubMenu('Pricebook')">
+          Update Price
+        </button>
+      </ion-list>
+
+      <button ion-item (click)="toggleSubMenu('Lottery')">
+       Lottery <ion-icon name="ios-arrow-forward" class='mrL5 pull-right' ></ion-icon>
       </button>
-      <ion-list class="sub-menus-list">
-        <button menuClose ion-item (click)="openPage('ConfirmPackPage', true)">
+      <ion-list class="sub-menus-list" [class.hide]="!toggleLotterySubMenu">
+        <button menuClose ion-item (click)="openPage('ConfirmPackPage', true); toggleSubMenu('Lottery')">
           ConfirmPackPage
         </button>
-         <button menuClose ion-item (click)="openPage('ActivatePackPage', true)">
+         <button menuClose ion-item (click)="openPage('ActivatePackPage', true); toggleSubMenu('Lottery')">
           ActivatePackPage
         </button>
       </ion-list>
