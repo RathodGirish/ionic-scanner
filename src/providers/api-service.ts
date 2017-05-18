@@ -15,7 +15,7 @@ export class APIService {
       return Observable.throw("Please pass store ID");
     } else {
       this.http
-        .get("" + API_URL.BASE_API_URL + API_URL.GET_DEPARTMENT_BY_STORE_ID +"&store_id=" + storeId)
+        .get("" + API_URL.BASE_API_URL + API_URL.GET_DEPARTMENT_BY_STORE_ID + "&store_id=" + storeId)
         .map(res => res.json())
         .subscribe(
         data => {
@@ -33,7 +33,7 @@ export class APIService {
       return Observable.throw("Please pass store ID");
     } else {
       this.http
-        .get("" + API_URL.BASE_API_URL + API_URL.GET_GROCERY_ITEM_BY_STORE_ID +"&store_id=" + storeId)
+        .get("" + API_URL.BASE_API_URL + API_URL.GET_GROCERY_ITEM_BY_STORE_ID + "&store_id=" + storeId)
         .map(res => res.json())
         .subscribe(
         data => {
@@ -51,11 +51,12 @@ export class APIService {
       return Observable.throw("Please pass store ID");
     } else {
       this.http
-        .get("" + API_URL.BASE_API_URL + API_URL.GET_SCANNE_ITEM_BY_STORE_ID +"&store_id=" + storeId + "&plu_no=" + plu_no)
+        .get("" + API_URL.BASE_API_URL + API_URL.GET_SCANNE_ITEM_BY_STORE_ID + "&store_id=" + storeId + "&plu_no=" + plu_no)
         .map(res => res.json())
         .subscribe(
         data => {
           console.log("barcode_items data :" + JSON.stringify(data));
+          alert("JSON.stringify(data) :" + JSON.stringify(data))
           return callback(null, data);
         },
         err => {
@@ -76,7 +77,7 @@ export class APIService {
     }
     else {
       this.http
-        .get("" + API_URL.BASE_API_URL + API_URL.UPDATE_ITEM +"&item_id=" + itemId + "&new_price=" + price + "&update_inventory=" + inventory)
+        .get("" + API_URL.BASE_API_URL + API_URL.UPDATE_ITEM + "&item_id=" + itemId + "&new_price=" + price + "&update_inventory=" + inventory)
         .map(res => res.json())
         .subscribe(
         data => {
@@ -132,23 +133,23 @@ export class APIService {
           console.log("ERROR!: ", err);
           return callback(err, null);
         }
-      );
+        );
     }
   }
 
-  public getLatestPackByDate(date, status, callback) { 
+  public getLatestPackByDate(date, status, callback) {
 
     this.http
       .get("" + API_URL.BASE_API_URL + API_URL.GET_LATEST_PACK_BY_DATE + "&date=" + date + "&status=" + status)
       .map(res => res.json())
       .subscribe(
       data => {
-          console.log('getConfirmPackByDate  ' + JSON.stringify(data));
-          if (data.status == '1') {
-            return callback(null, data);
-          } else {
-            return callback(data, null);
-          }
+        console.log('getConfirmPackByDate  ' + JSON.stringify(data));
+        if (data.status == '1') {
+          return callback(null, data);
+        } else {
+          return callback(data, null);
+        }
       },
       err => {
         console.log("ERROR!: ", err);
@@ -156,62 +157,81 @@ export class APIService {
       });
   }
 
-  public confirmPack(body, options, callback){
-      this.http
-        .post(API_URL.BASE_API_URL + API_URL.CONFIRM_PACK, body, options)
-        .map(res => res.json())
-        .subscribe(
-        data => {
-          console.log('confirmPack  ' + JSON.stringify(data));
-          if (this.commonService.isSuccess(data.status)) {
-            return callback(null, data);
-          } else {
-            return callback(data, null);
-          }
-        },
-        err => {
-          console.log("ERROR!: ", err);
-          return callback(err, null);
+  public getScatchReport(startDate,endDate, storeId, callback) {
+
+    this.http
+      .get("" + API_URL.BASE_API_URL + API_URL.GET_SCATCH_REPORT + "&start_date=" + startDate + "&end_date=" + endDate+ "&store_id=" + storeId)
+      .map(res => res.json())
+      .subscribe(
+      data => {
+        if (data.status == '1') {
+          return callback(null, data);
+        } else {
+          return callback(data, null);
         }
-      );
+      },
+      err => {
+        console.log("ERROR!: ", err);
+        return callback(err, null);
+      });
   }
-  
-  public activePack(body, options, callback){
-      this.http
-        .post(API_URL.BASE_API_URL + API_URL.ACTIVATE_PACK, body, options)
-        .map(res => res.json())
-        .subscribe(
-        data => {
-          if (this.commonService.isSuccess(data.status)) {
-            return callback(null, data);
-          } else {
-            return callback(data, null);
-          }
-        },
-        err => {
-          console.log("ERROR!: ", err);
-          return callback(err, null);
+
+  public confirmPack(body, options, callback) {
+    this.http
+      .post(API_URL.BASE_API_URL + API_URL.CONFIRM_PACK, body, options)
+      .map(res => res.json())
+      .subscribe(
+      data => {
+        console.log('confirmPack  ' + JSON.stringify(data));
+        if (this.commonService.isSuccess(data.status)) {
+          return callback(null, data);
+        } else {
+          return callback(data, null);
         }
+      },
+      err => {
+        console.log("ERROR!: ", err);
+        return callback(err, null);
+      }
       );
   }
 
-  public addGame(body, options, callback){
-      this.http
-        .post(API_URL.BASE_API_URL + API_URL.ADD_NEW_GAME, body, options)
-        .map(res => res.json())
-        .subscribe(
-        data => {
-          console.log('addGame  ' + JSON.stringify(data));
-          if (this.commonService.isSuccess(data.status)) {
-            return callback(null, data);
-          } else {
-            return callback(data, null);
-          }
-        },
-        err => {
-          console.log("ERROR!: ", err);
-          return callback(err, null);
+  public activePack(body, options, callback) {
+    this.http
+      .post(API_URL.BASE_API_URL + API_URL.ACTIVATE_PACK, body, options)
+      .map(res => res.json())
+      .subscribe(
+      data => {
+        if (this.commonService.isSuccess(data.status)) {
+          return callback(null, data);
+        } else {
+          return callback(data, null);
         }
+      },
+      err => {
+        console.log("ERROR!: ", err);
+        return callback(err, null);
+      }
+      );
+  }
+
+  public addGame(body, options, callback) {
+    this.http
+      .post(API_URL.BASE_API_URL + API_URL.ADD_NEW_GAME, body, options)
+      .map(res => res.json())
+      .subscribe(
+      data => {
+        console.log('addGame  ' + JSON.stringify(data));
+        if (this.commonService.isSuccess(data.status)) {
+          return callback(null, data);
+        } else {
+          return callback(data, null);
+        }
+      },
+      err => {
+        console.log("ERROR!: ", err);
+        return callback(err, null);
+      }
       );
   }
 

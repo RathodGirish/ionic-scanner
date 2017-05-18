@@ -174,6 +174,7 @@ export class SearchPage {
         }
         else {
           let i = JSON.parse(JSON.stringify(res.message));
+          alert("i :"+JSON.stringify(res.message));
           THIS.selectDesc(null, i[0], THIS.searchBy);
         }
       });

@@ -97,8 +97,17 @@ export class ActivatePackPage {
             }
           }
         });
-    });
+    }); 
 
   }
+
+async scanBarcode() {
+    const results = await this.barcode.scan();
+    if (results.text) {
+      this.ActivatePackObject.ticketCode = results.text;
+    }
+    // alert(' results.text ' + results.text );
+  }
+
 
 }

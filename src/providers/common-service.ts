@@ -63,6 +63,7 @@ export class CommonService {
     public getFormattedDateYMD(date) {
         // let year = 
         var d = new Date(date); 
+        // console.log('getFormattedDateYMD ' + date + ' 1 ' +d);
         var RD = d.getFullYear() + "-" + ((d.getMonth() + 1)>9?(d.getMonth() + 1):"0"+(d.getMonth() + 1)) + "-" + (d.getDate()>9?(d.getDate()):"0"+d.getDate()); 
         return RD;
     }
