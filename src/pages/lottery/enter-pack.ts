@@ -11,7 +11,9 @@ import { CommonService } from '../../providers/common-service';
 
 export class EnterPackPage {
   info: any;
-  constructor(public navCtrl: NavController, private auth: AuthService,public commonService: CommonService) {
+  public enterPackObject = {};
+
+  constructor(public navCtrl: NavController, private auth: AuthService, public commonService: CommonService) {
     this.info = this.auth.getUserInfo();
     console.log(' this.info ' + JSON.stringify(this.info));
     // let THIS = this;

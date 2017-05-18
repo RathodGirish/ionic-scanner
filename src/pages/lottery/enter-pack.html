@@ -1,4 +1,3 @@
-
 <ion-header>
   <ion-navbar>
     <button ion-button menuToggle>
@@ -11,6 +10,120 @@
 </ion-header>
 
 <ion-content padding>
-  
-hello 
+  <h3 color="white" class='page-title'>Enter scratch-off packs</h3>
+  <form (ngSubmit)="enterPack($event, enterPackForm.value, enterPackForm.valid)" #enterPackForm="ngForm">
+    <ion-card>
+
+      <ion-item>
+        <ion-label>Enter Date</ion-label>
+        <ion-datetime displayFormat="MM/DD/YYYY" name="enterDate" [(ngModel)]="enterPackObject.enterDate" required></ion-datetime>
+      </ion-item>
+
+      <ion-grid class="inner-addon">
+        <ion-row>
+          <ion-item>
+            <ion-label text-left>Scan or type ticket's code</ion-label>
+          </ion-item>
+        </ion-row>
+
+        <ion-row class="mrLR10">
+          <ion-col class="pad0" col-10 class="input-addon">
+            <div>
+              <ion-input type="number" placeholder=" Type game # and pack #" name="ticketCode" [(ngModel)]="enterPackObject.ticketCode"
+                required></ion-input>
+            </div>
+          </ion-col>
+          <ion-col class="icon-border-div" col-2>
+            <div class="pointer" text-center>
+              <ion-icon name="camera" text-center class='input-icon mrT5 fs30 pad5' (click)="scanBarcode()"></ion-icon>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-row class="chkboxform mrT10">
+        <ion-checkbox color="primary" checked="false" [(ngModel)]="enterPackObject.scanEnable" name="Y"></ion-checkbox>
+        <p class="chkboxLable">Enable continuous scan</p>
+      </ion-row> 
+      <ion-item>
+        <ion-row>
+          <button ion-button class="success-btn" full type="submit" [disabled]="!enterPackForm.valid">Enter Pack</button>
+        </ion-row>
+      </ion-item>
+
+    </ion-card>
+  </form>
+
+  <ion-card >
+    <ion-grid>
+      <ion-row>
+        <ion-col text-center>
+          <p>1</p>
+          <p>Entered</p>
+        </ion-col>
+        <ion-col text-center>
+          <p>0</p>
+          <p>Sold</p>
+        </ion-col>
+        <ion-col text-center>
+          <p>$0.00</p>
+          <p>$ Solid</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+
+ <ion-card >
+    <ion-grid>
+      <ion-row>
+        <ion-col text-center>
+          <p>Holiday Riches</p>
+          <p>Pack 1136-1001</p>
+        </ion-col>
+        <ion-col text-center>
+          <button ion-button>Sold</button> 
+        </ion-col> 
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+
+  <ng-container>
+    <ion-card class="blue-card pad10">
+      <ion-row>
+        <ion-col col-6>
+          <p class='text-blue text-bold overflow-ellipsis'>New York Cash</p>
+        </ion-col>
+
+        <ion-col class="pad0" col-3 text-right class="input-addon">
+          <p class='text-blue text-bold'>250</p>
+        </ion-col>
+
+        <ion-col class="pad0" col-3 text-right class="input-addon">
+          <p class="text-blue text-bold">$0</p>
+        </ion-col> 
+
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-5>
+          <p class="text-gray overflow-ellipsis">Pack 819-1001</p>
+        </ion-col>
+
+        <ion-col class="pad0" col-3 text-right class="input-addon">
+          <p class='text-gray overflow-ellipsis'></p>
+        </ion-col>
+
+        <ion-col class="pad0" col-3 text-right class="input-addon">
+          <p class="text-gray overflow-ellipsis"></p>
+        </ion-col>
+
+      </ion-row>
+    </ion-card>
+  </ng-container>
+
+  <!--<ion-card class="pad10" color="danger" *ngIf="isPacksFound == false">
+    <h3>No Records found..</h3>
+  </ion-card>-->
+
+
 </ion-content>
