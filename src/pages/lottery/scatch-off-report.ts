@@ -14,7 +14,7 @@ import { APIService } from '../../providers/api-service';
 export class ScatchOffReportPage {
   info: any;
   isDataFound;
-  public Object = { "startDate": "", "endDate": "" };
+  public scatchSearchObject = { "start_date": "", "end_date": "" };
   public records = [];
   public sumOfTicketSoldAmount = 0;
   public sumOfTicketSoldCount = 0;
@@ -26,36 +26,48 @@ export class ScatchOffReportPage {
     private alertCtrl: AlertController,
     public commonService: CommonService,
     public API_SERVICE: APIService) {
-  
-    this.info = this.auth.getUserInfo();
-    console.log(' this.info ' + JSON.stringify(this.info));
+
+    let THIS = this;
+    THIS.info = THIS.auth.getUserInfo();
+    console.log(' THIS.info ' + JSON.stringify(THIS.info));
 
     if (this.info == null) {
-      this.commonService.showErrorAlert('Please login first');
-      this.navCtrl.setRoot('LoginPage');
+      THIS.commonService.showErrorAlert('Please login first');
+      THIS.navCtrl.setRoot('LoginPage');
     }
-    this.Object.startDate = this.commonService.getFormattedDateYMD(Date.now() - 86400000);
-    this.Object.endDate = this.commonService.getFormattedDateYMD(Date.now());
+    THIS.scatchSearchObject.start_date = this.commonService.getFormattedDateYMD(Date.now() - 86400000);
+    THIS.scatchSearchObject.end_date = this.commonService.getFormattedDateYMD(Date.now());
+    THIS.getScatchOffReading();
+  }
+
+  public getScatchOffReading() {
     let THIS = this;
-    THIS.API_SERVICE.getScatchReport(this.Object.startDate,this.Object.endDate,this.info.store_id , function (err, res) {
+    THIS.commonService.showSimpleLoading();
+    THIS.records = [];
+    THIS.API_SERVICE.getScatchReport(THIS.scatchSearchObject.start_date,      THIS.scatchSearchObject.end_date, THIS.info.store_id, function (err, res) {
+      THIS.commonService.hideSimpleLoading();
       if (err) {
         console.log("ERROR!: ", err.message);
         THIS.isDataFound = false;
       } else {
-
-        THIS.records = JSON.parse(JSON.stringify(res.message)); 
-        console.log("JSON.stringify(res.message) :"+JSON.stringify(res.message));
+        THIS.records = JSON.parse(JSON.stringify(res.message));
+        console.log("JSON.stringify(res.message) :" + JSON.stringify(res.message));
         for (let i = 0; i < THIS.records.length; i++) {
           THIS.sumOfTicketSoldAmount += parseInt(THIS.records[i].today_sold_value);
           THIS.sumOfTicketSoldCount += parseInt(THIS.records[i].today_sold);
         }
         THIS.isDataFound = true;
-
       }
     });
-
   }
 
-
-
+  public dateChanged(value: any){
+    let THIS = this;
+    let diff: any = <any>(new Date(THIS.scatchSearchObject.start_date).getTime()) - <any>(new Date(THIS.scatchSearchObject.end_date).getTime());
+    if(diff <= 0){
+      THIS.getScatchOffReading();
+    } else {
+      THIS.commonService.showAlert('End date should greater than start date');
+    }
+  }
 }

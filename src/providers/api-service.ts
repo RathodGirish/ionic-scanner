@@ -157,10 +157,10 @@ export class APIService {
       });
   }
 
-  public getScatchReport(startDate,endDate, storeId, callback) {
+  public getScatchReport(start_date, end_date, storeId, callback) {
 
     this.http
-      .get("" + API_URL.BASE_API_URL + API_URL.GET_SCATCH_REPORT + "&start_date=" + startDate + "&end_date=" + endDate+ "&store_id=" + storeId)
+      .get("" + API_URL.BASE_API_URL + API_URL.GET_SCATCH_REPORT + "&start_date=" + start_date + "&end_date=" + end_date+ "&store_id=" + storeId)
       .map(res => res.json())
       .subscribe(
       data => {

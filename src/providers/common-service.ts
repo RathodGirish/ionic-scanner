@@ -52,6 +52,18 @@ export class CommonService {
         this.loading.present();
     }
 
+    public showSimpleLoading() {
+        this.loading = this.loadingCtrl.create({
+            content: 'Loading...',
+            dismissOnPageChange: false
+        });
+        this.loading.present();
+    }
+
+     public hideSimpleLoading() {
+        this.loading.dismiss();
+    }
+
     public hideLoading() {
         this.loading = this.loadingCtrl.create({
             content: 'Please wait...',

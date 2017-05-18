@@ -9,22 +9,16 @@
   </ion-navbar>
 </ion-header>
 
-
 <ion-content padding>
-
   <ion-item>
     <ion-label>Start Date</ion-label>
-    <ion-datetime displayFormat="MM/DD/YYYY" name="startDate" [(ngModel)]="Object.startDate" required></ion-datetime>
+    <ion-datetime displayFormat="MM/DD/YYYY" name="start_date" [(ngModel)]="scatchSearchObject.start_date" (ionChange)="dateChanged('start_date')"></ion-datetime>
   </ion-item>
 
   <ion-item>
     <ion-label>End Date</ion-label>
-    <ion-datetime displayFormat="MM/DD/YYYY" name="endDate" [(ngModel)]="Object.endDate" required></ion-datetime>
+    <ion-datetime displayFormat="MM/DD/YYYY" name="end_date" [(ngModel)]="scatchSearchObject.end_date" (ionChange)="dateChanged('end_date')"></ion-datetime>
   </ion-item>
-  
-  <ion-item>
-  </ion-item>
-   
 
   <ion-row>
     <ion-col class="colTable">
@@ -38,39 +32,35 @@
     </ion-col>
   </ion-row>
 
-   <ion-row *ngIf="!isDataFound">
+  <ion-row *ngIf="!isDataFound">
     <ion-col text-center class="colTable">
       No Data found for Today..
     </ion-col>
   </ion-row>
 
- <ng-container *ngIf="isDataFound">
-  <ion-row *ngFor="let r of records">
-    <ion-col text-center class="colTable"> 
-      {{r.created}}
-    </ion-col>
-     <ion-col text-center class="colTable">
-       {{r.today_sold}}
-    </ion-col>
-    <ion-col text-center class="colTable">
-    {{r.today_sold_value}}
-    </ion-col>
-  </ion-row>
- </ng-container>
-   
-
+  <ng-container *ngIf="isDataFound">
+    <ion-row *ngFor="let r of records">
+      <ion-col text-center class="colTable">
+        {{r.created}}
+      </ion-col>
+      <ion-col text-center class="colTable">
+        {{r.today_sold}}
+      </ion-col>
+      <ion-col text-center class="colTable">
+        {{r.today_sold_value}}
+      </ion-col>
+    </ion-row>
+  </ng-container>
 
   <ion-row *ngIf="isDataFound">
     <ion-col class="colTable">
-     <strong>Total</strong>
+      <strong>Total</strong>
     </ion-col>
     <ion-col text-center class="colTable">
-     <strong>$ {{sumOfTicketSoldCount}}</strong>
+      <strong>$ {{sumOfTicketSoldCount}}</strong>
     </ion-col>
     <ion-col text-center class="colTable">
-   <strong>$ {{sumOfTicketSoldAmount}}</strong>
+      <strong>$ {{sumOfTicketSoldAmount}}</strong>
     </ion-col>
   </ion-row>
-
-   
 </ion-content>
