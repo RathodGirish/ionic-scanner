@@ -69,7 +69,6 @@
         ]
     },
     "config": {
-        "ionic_sorce_map":"source-map"
+        "ionic_sorce_map": "source-map"
     }
-   
 }

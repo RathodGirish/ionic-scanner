@@ -41,7 +41,7 @@ export class ConfirmPackPage {
 
       let currentDate = this.commonService.getFormattedDateYMD(Date.now());
       this.confirmPackObject.confirmDate=currentDate;
-      THIS.API_SERVICE.getLatestPackByDate(currentDate, GLOBAL_VARIABLE.CONFIRM_PACK_STATUS, function (err, res) {
+      THIS.API_SERVICE.getLatestPackByDate(this.info.store_id,this.info.company_id,currentDate, GLOBAL_VARIABLE.CONFIRM_PACK_STATUS, function (err, res) {
         if (err) {
           console.log("ERROR!: ", err.message);
           THIS.isPacksFound = false;
@@ -81,6 +81,7 @@ export class ConfirmPackPage {
       body.append('scan_ticket_code', THIS.confirmPackObject.ticketCode);
       body.append('packdate', THIS.confirmPackObject.confirmDate);
       body.append('status', THIS.confirmPackObject.status);
+      body.append('company_id', THIS.info.company_id);
 
       console.log('body ' + JSON.stringify(body));
       console.log('game_no ' + JSON.stringify(game_no) + ' | pack_no  ' + pack_no);
@@ -98,7 +99,7 @@ export class ConfirmPackPage {
           } else {
             if (THIS.commonService.isSuccess(res.status)) {
               THIS.commonService.showSucessAlert('Pack Confirmed Successfully');
-              THIS.navCtrl.setRoot('confirmPack');
+              THIS.navCtrl.setRoot('ConfirmPackPage');
             } else {
               THIS.commonService.showErrorAlert('Fail to Confirm Pack');
               THIS.navCtrl.push(AddGamePage);

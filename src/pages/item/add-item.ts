@@ -25,14 +25,15 @@ export class AddItemPage {
       this.navCtrl.setRoot('LoginPage');
     }
 
-    this.API_SERVICE.getDepartmentsByStoreId(parseInt(this.info
-      .store_id), function (err, res) {
+    this.API_SERVICE.getDepartmentsByStoreId(parseInt(this.info.store_id),parseInt(this.info
+      .company_id), function (err, res) {
         if (err) {
           console.log("ERROR!: ", err);
         }
         else {
-          console.log("res Department :" + res);
+          console.log("res Department :" + JSON.stringify(res));
           THIS.departmentList = res.message;
+          console.log(JSON.stringify(res.message));
         }
       });
   }
@@ -66,7 +67,7 @@ export class AddItemPage {
     this.showList = true;
 
     if (val && val.trim() != '') {
-      console.log("descriptionList :" + THIS.departmentList);
+      console.log("departmentList :" + THIS.departmentList);
       this.newDepartmentList = THIS.departmentList.filter((dep) => {
         return (dep.department_name.toLowerCase().indexOf(val.toLowerCase()) > -1);
       });
@@ -95,7 +96,7 @@ export class AddItemPage {
     // alert(' pos ' + JSON.stringify(pos) + ' isValid ' + isValid);
 
     if (isValid) {
-      this.API_SERVICE.addItem(this.info.store_id, pos.plu_no, pos.description,this.selectedItem_dept_Id,pos.new_price,pos.new_price,pos.save_to, function (err, res) {
+      this.API_SERVICE.addItem(this.info.store_id,this.info.company_id, pos.plu_no, pos.description,this.selectedItem_dept_Id,pos.new_price,pos.new_price,pos.save_to, function (err, res) {
         if (err) {
           console.log("ERROR!: ", err);
           THIS.commonService.showErrorAlert('ERROR!: ' + err);

@@ -15,7 +15,7 @@ import 'rxjs/add/operator/map';
 
 export class AddGamePage {
   info: any;
-  public addGameObj = { "state": "TX", "game_no": "", "game_name": "", "value": "", "tickets_pack": "", "start_ticket": "", "end_ticket": "", "corporation": 0, "store": "", "status": "Ready to sale", "company_id": "", "pack_value": "" };
+  public addGameObj = { "state": "TX", "game_no": "", "game_name": "", "value": "", "tickets_pack": "", "start_ticket": "", "end_ticket": "", "corporation": '0', "store": "", "status": "Ready to sale", "company_id": "", "pack_value": "" };
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -59,14 +59,14 @@ export class AddGamePage {
         if (err) {
           console.log("ERROR!: ", err);
           THIS.commonService.showErrorAlert('ERROR!: ' + err.message);
-          THIS.navCtrl.setRoot('confirmPack');
+          THIS.navCtrl.setRoot('ConfirmPackPage');
         } else {
           if (THIS.commonService.isSuccess(res.status)) {
             THIS.commonService.showSucessAlert('Game Added Successfully');
-            THIS.navCtrl.setRoot('confirmPack');
+            THIS.navCtrl.setRoot('ConfirmPackPage');
           } else {
             THIS.commonService.showErrorAlert('Fail to Add New Game');
-            THIS.navCtrl.setRoot('confirmPack');
+            THIS.navCtrl.setRoot('ConfirmPackPage');
           }
         }
       });

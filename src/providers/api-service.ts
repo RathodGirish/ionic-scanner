@@ -2,7 +2,6 @@ import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
-// import { GLOBAL_VARIABLE } from './constant';
 import { API_URL } from './api-url';
 import { CommonService } from './common-service';
 
@@ -10,12 +9,16 @@ import { CommonService } from './common-service';
 export class APIService {
   constructor( @Inject(Http) private http: Http, public commonService: CommonService) { }
 
-  public getDepartmentsByStoreId(storeId, callback) {
+  public getDepartmentsByStoreId(storeId, company_id, callback) { 
     if (storeId === null) {
       return Observable.throw("Please pass store ID");
-    } else {
+    } else if (company_id === null) {
+      return Observable.throw("Please pass company ID");
+    }
+    else {
+    console.log("" + API_URL.BASE_API_URL + API_URL.GET_DEPARTMENT_BY_STORE_ID + "&store_id=" + storeId+ "&company_id=" + company_id);
       this.http
-        .get("" + API_URL.BASE_API_URL + API_URL.GET_DEPARTMENT_BY_STORE_ID + "&store_id=" + storeId)
+        .get("" + API_URL.BASE_API_URL + API_URL.GET_DEPARTMENT_BY_STORE_ID + "&store_id=" + storeId+ "&company_id=" + company_id)
         .map(res => res.json())
         .subscribe(
         data => {
@@ -28,12 +31,17 @@ export class APIService {
     }
   }
 
-  public getGroceryItemsByStoreId(storeId, callback) {
+  public getGroceryItemsByStoreId(storeId,company_id, callback) {
     if (storeId === null) {
       return Observable.throw("Please pass store ID");
-    } else {
+    } 
+   else if (company_id === null) {
+      return Observable.throw("Please pass Company ID");
+    } 
+    else {
+      console.log("getGroceryItemsByStoreId : " + API_URL.BASE_API_URL + API_URL.GET_GROCERY_ITEM_BY_STORE_ID + "&store_id=" + storeId+ "&company_id=" + company_id);
       this.http
-        .get("" + API_URL.BASE_API_URL + API_URL.GET_GROCERY_ITEM_BY_STORE_ID + "&store_id=" + storeId)
+        .get("" + API_URL.BASE_API_URL + API_URL.GET_GROCERY_ITEM_BY_STORE_ID + "&store_id=" + storeId+ "&company_id=" + company_id)
         .map(res => res.json())
         .subscribe(
         data => {
@@ -46,12 +54,16 @@ export class APIService {
     }
   }
 
-  public getScanneItemsByStoreId(storeId, plu_no, callback) {
+  public getScanneItemsByStoreId(storeId,company_id, plu_no, callback) {
     if (storeId === null) {
       return Observable.throw("Please pass store ID");
-    } else {
+    } else if(company_id === null){
+      return Observable.throw("Please pass Company ID");
+    }
+    else {
+      console.log("getScanneItemsByStoreId : " + API_URL.BASE_API_URL + API_URL.GET_SCANNE_ITEM_BY_STORE_ID + "&store_id=" + storeId+ "&company_id=" + company_id + "&plu_no=" + plu_no);
       this.http
-        .get("" + API_URL.BASE_API_URL + API_URL.GET_SCANNE_ITEM_BY_STORE_ID + "&store_id=" + storeId + "&plu_no=" + plu_no)
+        .get("" + API_URL.BASE_API_URL + API_URL.GET_SCANNE_ITEM_BY_STORE_ID + "&store_id=" + storeId+ "&company_id=" + company_id + "&plu_no=" + plu_no)
         .map(res => res.json())
         .subscribe(
         data => {
@@ -89,10 +101,12 @@ export class APIService {
     }
   }
 
-  public addItem(store_id, plu_no, description, r_grocery_department_id, price, plu_tax, save_to, callback) {
+  public addItem(store_id, company_id, plu_no, description, r_grocery_department_id, price, plu_tax, save_to, callback) {
     console.log("store_id :" + store_id + " plu_no :" + plu_no + " description :" + description + " r_grocery_department_id :" + r_grocery_department_id + " price :" + price + " plu_tax :" + plu_tax);
     if (store_id === null) {
       return Observable.throw("Please pass store ID");
+    } else if (company_id === null) {
+      return Observable.throw("Please pass company id");
     } else if (price === null) {
       return Observable.throw("Please pass price");
     } else if (plu_no === null) {
@@ -113,6 +127,7 @@ export class APIService {
       body.append('price', price);
       body.append('plu_tax', plu_tax);
       body.append('save_to', save_to);
+      body.append('company_id', company_id);
 
       let headers = new Headers({});
       let options = new RequestOptions({ headers: headers });
@@ -137,10 +152,10 @@ export class APIService {
     }
   }
 
-  public getLatestPackByDate(date, status, callback) {
-
+  public getLatestPackByDate(store_id,company_id,date, status, callback) {
+    console.log("getLatestPackByDate : " + API_URL.BASE_API_URL + API_URL.GET_LATEST_PACK_BY_DATE + "&store_id=" + store_id+ "&company_id=" + company_id+ "&date=" + date + "&status=" + status);
     this.http
-      .get("" + API_URL.BASE_API_URL + API_URL.GET_LATEST_PACK_BY_DATE + "&date=" + date + "&status=" + status)
+      .get("" + API_URL.BASE_API_URL + API_URL.GET_LATEST_PACK_BY_DATE + "&store_id=" + store_id+ "&company_id=" + company_id+ "&date=" + date + "&status=" + status)
       .map(res => res.json())
       .subscribe(
       data => {
@@ -157,10 +172,10 @@ export class APIService {
       });
   }
 
-  public getScatchReport(start_date, end_date, storeId, callback) {
-
+  public getScatchReport(company_id,start_date, end_date, storeId, callback) {
+    console.log("getScatchReport : " + API_URL.BASE_API_URL + API_URL.GET_SCATCH_REPORT + "&company_id=" + company_id+ "&start_date=" + start_date + "&end_date=" + end_date + "&store_id=" + storeId)
     this.http
-      .get("" + API_URL.BASE_API_URL + API_URL.GET_SCATCH_REPORT + "&start_date=" + start_date + "&end_date=" + end_date+ "&store_id=" + storeId)
+      .get("" + API_URL.BASE_API_URL + API_URL.GET_SCATCH_REPORT + "&company_id=" + company_id+ "&start_date=" + start_date + "&end_date=" + end_date + "&store_id=" + storeId)
       .map(res => res.json())
       .subscribe(
       data => {

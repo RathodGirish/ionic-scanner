@@ -42,8 +42,7 @@ export class SearchPage {
       this.nav.setRoot('LoginPage');
     }
 
-    this.API_SERVICE.getDepartmentsByStoreId(parseInt(this.info
-      .store_id), function (err, res) {
+    this.API_SERVICE.getDepartmentsByStoreId(parseInt(this.info.store_id),parseInt(this.info.company_id), function (err, res) {
         if (err) {
           console.log("ERROR!: ", err);
         }
@@ -53,8 +52,7 @@ export class SearchPage {
         }
       });
 
-    this.API_SERVICE.getGroceryItemsByStoreId(this.info
-      .store_id, function (err, res) {
+    this.API_SERVICE.getGroceryItemsByStoreId(this.info.store_id,parseInt(this.info.company_id), function (err, res) {
         if (err) {
           console.log("ERROR!: ", err);
         }
@@ -90,15 +88,19 @@ export class SearchPage {
     this.showList = true;
     if (val && val.trim() != '') {
       console.log("descriptionList :" + THIS.descriptionList);
-      this.newDescriptionList = THIS.descriptionList.filter((item) => {
-        if (searchBy == 'Barcode') {
-          return (item.plu_no.toLowerCase().indexOf(val.toLowerCase()) > -1);
-        }
-        else {
-          return (item.description.toLowerCase().indexOf(val.toLowerCase()) > -1);
-        }
-      });
-
+      if(THIS.descriptionList && THIS.descriptionList != null){
+        this.newDescriptionList = THIS.descriptionList.filter((item) => {
+          if (searchBy == 'Barcode') {
+            return (item.plu_no.toLowerCase().indexOf(val.toLowerCase()) > -1);
+          }
+          else {
+            return (item.description.toLowerCase().indexOf(val.toLowerCase()) > -1);
+          }
+        });
+        
+      } else {
+        this.newDescriptionList = [];
+      }
     } else {
       this.showList = false;
     }
@@ -168,7 +170,7 @@ export class SearchPage {
     let THIS = this;
     if (results.text) {
       const plu_no = '0' + results.text;
-      this.API_SERVICE.getScanneItemsByStoreId(this.info.store_id, plu_no, function (err, res) {
+      this.API_SERVICE.getScanneItemsByStoreId(this.info.store_id,this.info.company_id, plu_no, function (err, res) {
         if (err) {
           THIS.showError('ERROR! :' + err);
         }

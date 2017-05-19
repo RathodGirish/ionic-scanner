@@ -7,6 +7,7 @@ export class User {
   id: string;
   role_id: string;
   store_id: string;
+  company_id: string;
   username: string;
   email: string;
   constructor() {

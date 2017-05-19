@@ -1,5 +1,5 @@
 <ion-content class="page-content" padding>
-  <p class="removePadding">Sing in using your username and password to manage your store</p>
+  <p class="removePadding">Sign in using your username and password to manage your store</p>
   <div class="content-box contentBoxPadding">
     <form (ngSubmit)="login()" #loginForm="ngForm">
       <ion-row>
@@ -8,8 +8,8 @@
             <ion-item>
               <ion-label>Type</ion-label>
               <ion-select name="type" [(ngModel)]="loginCredentials.type">
-                <ion-option value="company">company</ion-option>
-                <ion-option value="store">store</ion-option>
+                <ion-option value="company">Company</ion-option>
+                <ion-option value="store">Store</ion-option>
               </ion-select>
             </ion-item>
             <ion-item>

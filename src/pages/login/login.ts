@@ -10,12 +10,15 @@ import { AuthService } from '../../providers/auth-service';
 })
 export class LoginPage {
   loading: Loading;
-  loginCredentials = { email: 'texonoil@gmail.com', password: 'tex@123', type: 'company' };
+  // loginCredentials = { email: 'texonoil@gmail.com', password: 'tex@123', type: 'store' };
+  loginCredentials = { email: 'gettyrmg@gmail.com', password: 'test123', type: 'store' };
+  // loginCredentials = { email: 'stateroad@gmail.com', password: 'test123', type: 'store' };
+  
   // loginCredentials = { email: '', password: '', type: 'company' };
   typeList: any[] = [{ value: 1, text: 'option 1', checked: false }, { value: 2, text: 'option 2', checked: false }];
-  
   constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private http: Http, public menuController: MenuController) {
-    this.menuController.swipeEnable(false, 'sideMenu');
+  this.menuController.swipeEnable(false, 'sideMenu');
+
   }
 
   public createAccount() {
@@ -31,7 +34,6 @@ export class LoginPage {
     body.append('type', this.loginCredentials.type);
     let headers = new Headers({});
     let options = new RequestOptions({ headers: headers });
-
     this.http
       .post('http://192.169.176.227/backofficeweb/?data=login', body, options)
       .map(res => res.json())

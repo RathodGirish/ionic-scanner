@@ -18,6 +18,8 @@ export class ScatchOffReportPage {
   public records = [];
   public sumOfTicketSoldAmount = 0;
   public sumOfTicketSoldCount = 0;
+  public prevStartDate = "";  
+  public prevEndDate = "";  
 
   constructor(
     public navCtrl: NavController,
@@ -42,9 +44,13 @@ export class ScatchOffReportPage {
 
   public getScatchOffReading() {
     let THIS = this;
+    THIS.prevStartDate = THIS.scatchSearchObject.start_date;
+    THIS.prevEndDate = THIS.scatchSearchObject.end_date;
     THIS.commonService.showSimpleLoading();
     THIS.records = [];
-    THIS.API_SERVICE.getScatchReport(THIS.scatchSearchObject.start_date,      THIS.scatchSearchObject.end_date, THIS.info.store_id, function (err, res) {
+    THIS.sumOfTicketSoldAmount = null;
+    THIS.sumOfTicketSoldCount = null;
+    THIS.API_SERVICE.getScatchReport(THIS.info.company_id,THIS.scatchSearchObject.start_date,THIS.scatchSearchObject.end_date, THIS.info.store_id, function (err, res) {
       THIS.commonService.hideSimpleLoading();
       if (err) {
         console.log("ERROR!: ", err.message);
@@ -68,6 +74,8 @@ export class ScatchOffReportPage {
       THIS.getScatchOffReading();
     } else {
       THIS.commonService.showAlert('End date should greater than start date');
+      THIS.scatchSearchObject.start_date = THIS.prevStartDate;
+      THIS.scatchSearchObject.end_date = THIS.prevEndDate;
     }
   }
 }

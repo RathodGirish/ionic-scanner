@@ -40,7 +40,7 @@ export class ActivatePackPage {
     }
     let currentDate = this.commonService.getFormattedDateYMD(Date.now());
     this.ActivatePackObject.activateDate = currentDate;
-    THIS.API_SERVICE.getLatestPackByDate(currentDate, GLOBAL_VARIABLE.ACTIVATE_PACK_STATUS, function (err, res) {
+    THIS.API_SERVICE.getLatestPackByDate(this.info.store_id,this.info.company_id,currentDate, GLOBAL_VARIABLE.ACTIVATE_PACK_STATUS, function (err, res) {
       if (err) {
         console.log("ERROR!: ", err.message);
         THIS.isPacksFound = false;
@@ -72,6 +72,7 @@ export class ActivatePackPage {
       body.append('packdate', THIS.ActivatePackObject.activateDate);
       body.append('bin_no', THIS.ActivatePackObject.bin_no);
       body.append('status', THIS.ActivatePackObject.status);
+      body.append('company_id', THIS.info.company_id);
 
       console.log('body ' + JSON.stringify(body));
       console.log('game_no ' + JSON.stringify(game_no) + ' | pack_no  ' + pack_no);
