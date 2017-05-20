@@ -102,6 +102,7 @@ export class APIService {
   }
 
   public addItem(store_id, company_id, plu_no, description, r_grocery_department_id, price, plu_tax, save_to, callback) {
+    let THIS = this;
     console.log("store_id :" + store_id + " plu_no :" + plu_no + " description :" + description + " r_grocery_department_id :" + r_grocery_department_id + " price :" + price + " plu_tax :" + plu_tax);
     if (store_id === null) {
       return Observable.throw("Please pass store ID");
@@ -138,7 +139,7 @@ export class APIService {
         .subscribe(
         data => {
           console.log('addItem  ' + JSON.stringify(data));
-          if (data.status == '1') {
+          if (THIS.commonService.isSuccess(data.status)) {
             return callback(null, data);
           } else {
             return callback(data, null);
@@ -237,6 +238,29 @@ export class APIService {
       .subscribe(
       data => {
         console.log('addGame  ' + JSON.stringify(data));
+        if (this.commonService.isSuccess(data.status)) {
+          return callback(null, data);
+        } else {
+          return callback(data, null);
+        }
+      },
+      err => {
+        console.log("ERROR!: ", err);
+        return callback(err, null);
+      }
+      );
+  }
+
+  public dailyReadingOrSoldout(body, options, type, callback) {
+    let URL = "";
+    URL = (type == 'dailyreading')? API_URL.LOTTERY_DAILY_READING : API_URL.SOLD_OUT; 
+
+    this.http
+      .post(API_URL.BASE_API_URL + URL, body, options)
+      .map(res => res.json())
+      .subscribe(
+      data => {
+        console.log('dailyReadingOrSoldout  ' + JSON.stringify(data));
         if (this.commonService.isSuccess(data.status)) {
           return callback(null, data);
         } else {

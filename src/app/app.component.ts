@@ -10,7 +10,7 @@ export class MyApp {
   public rootPage:any = 'LoginPage';
   public toggleLotterySubMenu = false;
   public togglePricebookSubMenu = false;
-  public activePage:any;
+  public activePage:any = 'Dashboard';
   @ViewChild(Nav) nav: Nav;
   public info: any = {};
  
@@ -31,6 +31,7 @@ export class MyApp {
       { title: 'Lottery/Lotto', component: 'ConfirmPackPage', hasSubMenu: true, subMenus: [] },
     ];
     this.activePage = this.sidebarMenus[0];
+    this.activePage = 'Dashboard';
   }
 
   public ionViewDidEnter() {
@@ -38,8 +39,9 @@ export class MyApp {
   }
 
   public openPage(page, flag) { 
-    this.nav.setRoot(page);
     this.activePage = page;
+    console.log('activePage' + this.activePage);
+    this.nav.setRoot(page);
   }
 
   public toggleSubMenu(value : any){

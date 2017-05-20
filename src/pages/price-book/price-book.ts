@@ -6,8 +6,8 @@ import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-sca
 
 @IonicPage()
 @Component({
-  selector: 'page-home',
-  templateUrl: 'priceBook.html'
+  selector: 'price-book',
+  templateUrl: 'price-book.html'
 })
 export class PricebookPage {
   username = '';

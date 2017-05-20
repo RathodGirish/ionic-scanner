@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { PricebookPage } from './priceBook';
+import { PricebookPage } from './price-book';
 
 
 @NgModule({

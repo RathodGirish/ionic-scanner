@@ -10,7 +10,7 @@ import { APIService } from '../../providers/api-service';
 
 @IonicPage()
 @Component({
-  selector: 'page-lottery',
+  selector: 'page-confirm-pack',
   templateUrl: 'confirm-pack.html',
 })
 

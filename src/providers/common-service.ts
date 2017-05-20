@@ -96,6 +96,23 @@ export class CommonService {
         
     }
 
+    public getGameNoAndPackNoAndTodayReading(ticketCode: any, callback){
+        console.log(' ticketCode ' + ticketCode);
+        console.log(' var one = String(number).charAt(0); ' + String(ticketCode).charAt(0));
+        if(ticketCode){
+            let firstDigit = String(ticketCode).charAt(0);
+            let game_no = (parseInt(firstDigit) == 0)? ticketCode.substring(0,5) : ticketCode.substring(0,4);
+
+            let pack_no = (parseInt(firstDigit) == 0)? ticketCode.substring(5,11) : ticketCode.substring(4,11);
+            let today_reading = ticketCode.substring(11,14);
+
+            callback(null, game_no, pack_no, today_reading);
+        } else {
+            callback('Invalid ticketCode');
+        }
+        
+    }
+
 }
 
 

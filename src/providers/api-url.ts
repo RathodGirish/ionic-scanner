@@ -9,10 +9,12 @@ export const API_URL = Object.freeze({
 
     UPDATE_ITEM: '?action=updateiteam',
 
-    ADD_ITEM:'?data=Addnew',
+    ADD_ITEM:'?data=addnewitem',
     CONFIRM_PACK: '?data=PostConfirmPack',
     ACTIVATE_PACK: '?data=PostActivatePack',
-    ADD_NEW_GAME: '?data=addnewgame'
+    ADD_NEW_GAME: '?data=addnewgame',
+    LOTTERY_DAILY_READING : "?data=lottery_daily_readings",
+    SOLD_OUT : "?data=sold_out"
 });
 
 // ADD_ITEM: '?data=Addnew',

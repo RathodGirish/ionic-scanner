@@ -7,7 +7,7 @@ import { CommonService } from '../../providers/common-service';
 
 @IonicPage()
 @Component({
-  selector: 'page-item',
+  selector: 'page-add-item',
   templateUrl: 'add-item.html',
 })
 export class AddItemPage {
@@ -102,8 +102,8 @@ export class AddItemPage {
           THIS.commonService.showErrorAlert('ERROR!: ' + err);
         } else {
           if (res.status == 1) {
-            THIS.commonService.showSucessAlert('Item Added Successfully');
-            THIS.navCtrl.setRoot('Item');
+            THIS.commonService.showSucessAlert(res.message);
+            THIS.navCtrl.setRoot('AddItemPage');
           } else {
             THIS.showError('Fail to Add Item');
           }
