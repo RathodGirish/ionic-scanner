@@ -49,81 +49,60 @@
         <ion-row>
           <button ion-button class="success-btn" full type="submit" [disabled]="!enterPackForm.valid">Enter Pack</button>
         </ion-row>
+        <ion-row>
+          <button ion-button class="success-btn" (click)="finishDailyReading()" full type="button">Finish Daily Reading</button>
+        </ion-row>
       </ion-item>
 
     </ion-card>
   </form>
 
-  <ion-card >
+  <ion-card *ngIf="isDailyReadingsFound == true">
     <ion-grid>
       <ion-row>
         <ion-col text-center>
-          <p>1</p>
+          <p>{{allDailyReadingsCount}}</p>
           <p>Entered</p>
         </ion-col>
         <ion-col text-center>
-          <p>0</p>
+          <p>{{allTodaySold}}</p>
           <p>Sold</p>
         </ion-col>
         <ion-col text-center>
-          <p>$0.00</p>
-          <p>$ Solid</p>
+          <p>$ {{sumOfAllDailyReadings}}</p>
+          <p>$ Sold</p>
         </ion-col>
       </ion-row>
     </ion-grid>
   </ion-card>
 
- <ion-card >
-    <ion-grid>
-      <ion-row>
-        <ion-col text-center>
-          <p>Holiday Riches</p>
-          <p>Pack 1136-1001</p>
-        </ion-col>
-        <ion-col text-center>
-          <button ion-button>Sold</button> 
-        </ion-col> 
-      </ion-row>
-    </ion-grid>
-  </ion-card>
-
-  <ng-container>
-    <ion-card class="blue-card pad10">
-      <ion-row>
-        <ion-col col-6>
-          <p class='text-blue text-bold overflow-ellipsis'>New York Cash</p>
-        </ion-col>
-
-        <ion-col class="pad0" col-3 text-right class="input-addon">
-          <p class='text-blue text-bold'>250</p>
-        </ion-col>
-
-        <ion-col class="pad0" col-3 text-right class="input-addon">
-          <button ion-button round outline class="mrg0" style="height: 2.1rem;">$0</button>
-        </ion-col> 
-
-      </ion-row>
-
-      <ion-row>
+  <ng-container *ngIf="isDailyReadingsFound == true">
+    <ion-card class="blue-card pad10" *ngFor="let reading of allDailyReadings">
+      <ion-row >
         <ion-col col-5>
-          <p class="text-gray overflow-ellipsis">Pack 819-1001</p>
+          <p class='text-blue text-bold overflow-ellipsis'>{{reading.game_name}}</p>
         </ion-col>
 
         <ion-col class="pad0" col-3 text-right class="input-addon">
-          <p class='text-gray overflow-ellipsis'></p>
+          <p class='text-blue text-bold'>{{reading.today_sold}}</p>
         </ion-col>
 
         <ion-col class="pad0" col-3 text-right class="input-addon">
-          <p class="text-gray overflow-ellipsis"></p>
+          <p class="text-blue text-bold">$ {{reading.today_sold_value}}</p>
         </ion-col>
+      </ion-row>
 
+      <ion-row >
+        <ion-col col-5>
+          <p class="text-gray overflow-ellipsis">Pack: {{reading.game_no}}-{{reading.pack_no}}</p>
+        </ion-col>
       </ion-row>
     </ion-card>
   </ng-container>
 
-  <!--<ion-card class="pad10" color="danger" *ngIf="isPacksFound == false">
+  <ion-card class="pad10" color="danger" *ngIf="isDailyReadingsFound == false">
     <h3>No Records found..</h3>
-  </ion-card>-->
+  </ion-card>
 
 
 </ion-content>

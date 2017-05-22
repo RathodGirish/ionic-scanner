@@ -173,6 +173,52 @@ export class APIService {
       });
   }
 
+  public getDailyReadingsByDate(store_id, company_id, reading_date, callback){
+    let URL = API_URL.BASE_API_URL + API_URL.GET_DAILY_READING_BY_DATE + "&store_id=" + store_id+ "&company_id=" + company_id+ "&reading_date=" + reading_date;
+
+    console.log(' URL ' + URL);
+
+    console.log("getDailyReadingsByDate : " + URL);
+    this.http
+      .get(URL)
+      .map(res => res.json())
+      .subscribe(
+      data => {
+        console.log('getDailyReadingsByDate  ' + JSON.stringify(data));
+        if (data.status == '1') {
+          return callback(null, data);
+        } else {
+          return callback(data, null);
+        }
+      },
+      err => {
+        console.log("ERROR!: ", err);
+        return callback(err, null);
+      });
+  }
+
+  public getFinishDailyReadingsByDate(store_id, company_id, callback){
+      let URL = API_URL.BASE_API_URL + API_URL.GET_DAILY_FINISH_READING_BY_DATE + "&store_id=" + store_id+ "&company_id=" + company_id;
+
+    console.log("getFinishDailyReadingsByDate : " + URL);
+    this.http
+      .get(URL)
+      .map(res => res.json())
+      .subscribe(
+      data => {
+        console.log('getFinishDailyReadingsByDate  ' + JSON.stringify(data));
+        if (data.status == '1') {
+          return callback(null, data);
+        } else {
+          return callback(data, null);
+        }
+      },
+      err => {
+        console.log("ERROR!: ", err);
+        return callback(err, null);
+      });  
+  }
+
   public getScatchReport(company_id,start_date, end_date, storeId, callback) {
     console.log("getScatchReport : " + API_URL.BASE_API_URL + API_URL.GET_SCATCH_REPORT + "&company_id=" + company_id+ "&start_date=" + start_date + "&end_date=" + end_date + "&store_id=" + storeId)
     this.http
@@ -254,6 +300,7 @@ export class APIService {
   public dailyReadingOrSoldout(body, options, type, callback) {
     let URL = "";
     URL = (type == 'dailyreading')? API_URL.LOTTERY_DAILY_READING : API_URL.SOLD_OUT; 
+    console.log(' URL ' + URL + ' | body ' + body );
 
     this.http
       .post(API_URL.BASE_API_URL + URL, body, options)
@@ -271,7 +318,7 @@ export class APIService {
         console.log("ERROR!: ", err);
         return callback(err, null);
       }
-      );
+    );
   }
 
 }

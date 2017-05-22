@@ -12,24 +12,45 @@ import { APIService } from '../../providers/api-service';
 })
 
 export class EnterPackPage {
-  info: any;
+  public info: any;
   public enterPackObject = { "ticketCode": "", "status": "Counting", "enterDate": ""};
+  public isDailyReadingsFound;
+  public allDailyReadings = [];
+  public sumOfAllDailyReadings = 0;
+  public allDailyReadingsCount = 0;
+  public allTodaySold = 0;
 
   constructor(public navCtrl: NavController, 
     private auth: AuthService, 
     public commonService: CommonService,
     public API_SERVICE: APIService) {
 
-    this.info = this.auth.getUserInfo();
-    console.log(' this.info ' + JSON.stringify(this.info));
+    let THIS = this;
+    THIS.info = THIS.auth.getUserInfo();
+    console.log(' this.info ' + JSON.stringify(THIS.info));
     
     // let THIS = this;
-    if (this.info == null) {
-      this.commonService.showErrorAlert('Please login first');
-      this.navCtrl.setRoot('LoginPage');
+    if (THIS.info == null) {
+      THIS.commonService.showErrorAlert('Please login first');
+      THIS.navCtrl.setRoot('LoginPage');
     }
-    let currentDate = this.commonService.getFormattedDateYMD(Date.now());
-    this.enterPackObject.enterDate=currentDate;
+    let currentDate =THIS.commonService.getFormattedDateYMD(Date.now());
+    THIS.enterPackObject.enterDate=currentDate;
+
+    THIS.API_SERVICE.getDailyReadingsByDate(THIS.info.store_id, this.info.company_id, '2017-05-21', function (err, res) {
+      if (err) {
+        console.log("ERROR!: ", err.message);
+        THIS.isDailyReadingsFound = false;
+      } else {
+        THIS.allDailyReadings = JSON.parse(JSON.stringify(res.message)); 
+        THIS.allDailyReadingsCount = (THIS.allDailyReadings).length;
+        for(let i=0; i<THIS.allDailyReadings.length; i++){
+          THIS.sumOfAllDailyReadings += parseInt(THIS.allDailyReadings[i].today_sold_value);
+          THIS.allTodaySold += parseInt(THIS.allDailyReadings[i].today_sold);
+        }
+        THIS.isDailyReadingsFound = true;
+      }
+    });
   }
 
   public enterPack() {
@@ -72,6 +93,10 @@ export class EnterPackPage {
       }
       
     });
+  }
+
+  public finishDailyReading(){
+    this.navCtrl.setRoot('FinishDailyReadingsPage');
   }
 
 }

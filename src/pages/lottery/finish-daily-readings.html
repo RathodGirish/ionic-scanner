@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      <span class='header-title pull-left'>Finish Daily Readings</span>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+ <ng-container *ngIf="isFinishDailyReadingsFound == true">
+    <ion-card class="pad10" *ngFor="let reading of allFinishDailyReadings">
+      <ion-row >
+        <ion-col col-5 class="mrT10" >
+          <p class='text-blue text-bold overflow-ellipsis'>{{reading.game_name}}</p>
+        </ion-col>
+
+        <ion-col class="mrT10 input-addon" col-3 text-right>
+          <p class='text-blue text-bold'>$ {{reading.ticket_value}}</p>
+        </ion-col>
+
+        <ion-col col-4>
+           <button ion-button class="success-btn pull-right pad5 fs12" (click)="soldOut(reading)" type="button">Sold out</button>
+        </ion-col>
+      </ion-row>
+
+      <ion-row >
+        <ion-col col-5>
+          <p class="text-gray overflow-ellipsis">Pack {{reading.game_no}}-{{reading.pack_no}}</p>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+    
+  </ng-container>
+
+  <ion-card class="pad10" color="danger" *ngIf="isFinishDailyReadingsFound == false">
+    <h3>No Records found..</h3>
+  </ion-card>
+</ion-content>
