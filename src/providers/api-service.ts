@@ -9,6 +9,13 @@ import { CommonService } from './common-service';
 export class APIService {
   constructor( @Inject(Http) private http: Http, public commonService: CommonService) { }
 
+
+  public getAllStates(){
+    return [
+      {"code": "AL"}, {"code": "AK"}, {"code": "AS"}, {"code": "AZ"}, {"code": "AR"}, {"code": "CA"}, {"code": "CO"}, {"code": "CT"}, {"code": "DE"}, {"code": "DC"}, {"code": "FL"},{"code": "GA"}, {"code": "GU"}, {"code": "HI"}, {"code": "ID"}, {"code": "IL"}, {"code": "IN"}, {"code": "IA"}, {"code": "KS"}, {"code": "KY"}, {"code": "LA"}, {"code": "ME"}, {"code": "MD"}, {"code": "MH"}, {"code": "MA"},  {"code": "MI"}, {"code": "FM"}, {"code": "MN"}, {"code": "MS"}, {"code": "MO"}, {"code": "MT"}, {"code": "NE"}, {"code": "NV"}, {"code": "NH"}, {"code": "NJ"}, {"code": "NM"}, {"code": "NY"}, {"code": "NC"}, {"code": "ND"}, {"code": "MP"}, {"code": "OH"}, {"code": "OK"}, {"code": "OR"}, {"code": "PW"}, {"code": "PA"}, {"code": "PR"}, {"code": "RI"}, {"code": "SC"}, {"code": "SD"}, {"code": "TN"}, {"code": "TX"}, {"code": "UT"}, {"code": "VT"}, {"code": "VA"}, {"code": "VI"}, {"code": "WA"}, {"code": "WV"}, {"code": "WI"}, {"code": "WY"}
+    ];
+  }
+
   public getDepartmentsByStoreId(storeId, company_id, callback) { 
     if (storeId === null) {
       return Observable.throw("Please pass store ID");
@@ -284,6 +291,25 @@ export class APIService {
       .subscribe(
       data => {
         console.log('addGame  ' + JSON.stringify(data));
+        if (this.commonService.isSuccess(data.status)) {
+          return callback(null, data);
+        } else {
+          return callback(data, null);
+        }
+      },
+      err => {
+        console.log("ERROR!: ", err);
+        return callback(err, null);
+      }
+      );
+  }
+
+   public removeGameById(body, options, callback) {
+    this.http
+      .post(API_URL.BASE_API_URL + API_URL.REMOVE_GAME_BY_ID, body, options)
+      .map(res => res.json())
+      .subscribe(
+      data => {
         if (this.commonService.isSuccess(data.status)) {
           return callback(null, data);
         } else {

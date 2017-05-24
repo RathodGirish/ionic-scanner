@@ -19,9 +19,8 @@ export class Dashboard {
   public redirectPage(type : any){
     if(type=='priceBook'){ 
        this.navCtrl.setRoot('PricebookPage');
-    }
-    else if(type=='ScratchOffReadings'){
-
+    } else if(type=='ScratchOffReadings'){
+      this.navCtrl.setRoot('EnterPackPage');
     }
   }
 }

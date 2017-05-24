@@ -8,6 +8,7 @@ export const API_URL = Object.freeze({
     GET_SCATCH_REPORT: "?action=getScatchReport",
     GET_DAILY_READING_BY_DATE: "?action=getDailyReadings",
     GET_DAILY_FINISH_READING_BY_DATE: "?action=getFinishDailyReadings",
+    
 
     UPDATE_ITEM: '?action=updateiteam',
 
@@ -15,8 +16,7 @@ export const API_URL = Object.freeze({
     CONFIRM_PACK: '?data=PostConfirmPack',
     ACTIVATE_PACK: '?data=PostActivatePack',
     ADD_NEW_GAME: '?data=addnewgame',
+    REMOVE_GAME_BY_ID: '?data=removeGameById',
     LOTTERY_DAILY_READING : "?data=lottery_daily_readings",
     SOLD_OUT : "?data=sold_out"
 });
-
-// ADD_ITEM: '?data=Addnew',

@@ -40,6 +40,7 @@ export class ConfirmPackPage {
       }
 
       let currentDate = this.commonService.getFormattedDateYMD(Date.now());
+      // currentDate = '2017-05-23';
       this.confirmPackObject.confirmDate=currentDate;
       THIS.API_SERVICE.getLatestPackByDate(this.info.store_id,this.info.company_id,currentDate, GLOBAL_VARIABLE.CONFIRM_PACK_STATUS, function (err, res) {
         if (err) {
@@ -65,7 +66,7 @@ export class ConfirmPackPage {
     if (results.text) {
       this.confirmPackObject.ticketCode = results.text;
     }
-    alert(' results.text ' + results.text );
+    alert(results.text );
   }
 
   public confirmPack() {
@@ -108,4 +109,36 @@ export class ConfirmPackPage {
         });
     });
   }
+
+  public removeGameById(item : any){
+    let THIS = this;
+
+    let body = new FormData();
+    body.append('id', item.id);
+    THIS.commonService.showConfirmDialog('Remove Game', 'Are you sure to remove this record?', function(confirmresult){
+      console.log('confirmresult ' + JSON.stringify(confirmresult));
+
+      if(confirmresult == true){
+        let headers = new Headers({});
+        let options = new RequestOptions({ headers: headers });
+        THIS.commonService.showLoading();
+        THIS.API_SERVICE.removeGameById(body, options, function (err, res) {
+            if (err) {
+              console.log("ERROR!: ", err);
+              THIS.commonService.showErrorAlert('ERROR!: ' + err.message);
+              THIS.navCtrl.setRoot('ConfirmPackPage');
+            } else {
+              if (THIS.commonService.isSuccess(res.status)) {
+                THIS.commonService.showSucessAlert('Game Removed Successfully');
+                THIS.navCtrl.setRoot('ConfirmPackPage');
+              } else {
+                THIS.commonService.showErrorAlert('Fail to Remove Game');
+                THIS.navCtrl.setRoot('ConfirmPackPage');
+              }
+            }
+          });
+      }
+    });
+  }
+
 }

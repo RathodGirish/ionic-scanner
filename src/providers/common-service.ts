@@ -44,6 +44,31 @@ export class CommonService {
         alert.present(prompt);
     }
 
+     public showConfirmDialog(title, message, callback) {
+        let alert = this.alertCtrl.create({
+            title: title,
+            message: message,
+            buttons: [
+            {
+                text: 'No',
+                role: 'cancel',
+                handler: () => {
+                    console.log('No clicked');
+                    callback(false);
+                }
+            },
+            {
+                text: 'Yes',
+                handler: () => {
+                    console.log('Yes clicked');
+                    callback(true);
+                }
+            }
+            ]
+        });
+        alert.present();
+    }
+
     public showLoading() {
         this.loading = this.loadingCtrl.create({
             content: 'Please wait...',

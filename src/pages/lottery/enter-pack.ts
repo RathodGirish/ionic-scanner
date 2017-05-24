@@ -4,6 +4,7 @@ import { Headers, RequestOptions } from '@angular/http';
 import { AuthService } from '../../providers/auth-service';
 import { CommonService } from '../../providers/common-service';
 import { APIService } from '../../providers/api-service';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 @IonicPage()
 @Component({
@@ -20,7 +21,8 @@ export class EnterPackPage {
   public allDailyReadingsCount = 0;
   public allTodaySold = 0;
 
-  constructor(public navCtrl: NavController, 
+  constructor(private barcode: BarcodeScanner,
+  public navCtrl: NavController, 
     private auth: AuthService, 
     public commonService: CommonService,
     public API_SERVICE: APIService) {
@@ -63,12 +65,13 @@ export class EnterPackPage {
         THIS.navCtrl.setRoot('EnterPackPage');
       } else {
         let body = new FormData();
-        body.append('game_no', '8904');
-        body.append('pack_no', '0644721');
-        body.append('today_reading', '005');
-        body.append('store_id', '60');
+        body.append('game_no', game_no);
+        body.append('pack_no', pack_no);
+        body.append('today_reading', today_reading);
+        body.append('reading_date', THIS.enterPackObject.enterDate);
+        body.append('store_id', THIS.info.store_id);
         body.append('status', THIS.enterPackObject.status);
-        body.append('company_id', '10');
+        body.append('company_id', THIS.info.company_id);
 
         let headers = new Headers({});
         let options = new RequestOptions({ headers: headers });
@@ -95,9 +98,16 @@ export class EnterPackPage {
     });
   }
 
+  async scanBarcode() {
+    const results = await this.barcode.scan();
+    if (results.text) {
+      this.enterPackObject.ticketCode = results.text;
+    }
+    alert(results.text );
+  }
+
   public finishDailyReading(){
     this.navCtrl.setRoot('FinishDailyReadingsPage');
   }
-
 }
 

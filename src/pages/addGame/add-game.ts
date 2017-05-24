@@ -15,7 +15,9 @@ import 'rxjs/add/operator/map';
 
 export class AddGamePage {
   info: any;
-  public addGameObj = { "state": "TX", "game_no": "", "game_name": "", "value": "", "tickets_pack": "", "start_ticket": "", "end_ticket": "", "corporation": '0', "store": "", "status": "Ready to sale", "company_id": "", "pack_value": "" };
+  public addGameObj = { "state": "AL", "game_no": "", "game_name": "", "value": "", "tickets_pack": "", "start_ticket": "", "end_ticket": "", "corporation": '0', "store": "", "status": "Ready to sale", "company_id": "", "pack_value": "" };
+
+  public statesCodes = [];
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -29,6 +31,8 @@ export class AddGamePage {
       this.commonService.showErrorAlert('Please login first');
       this.navCtrl.setRoot('LoginPage');
     }
+
+    this.statesCodes = this.API_SERVICE.getAllStates();
   }
 
   public addGame() {
@@ -48,7 +52,7 @@ export class AddGamePage {
     body.append('status', THIS.addGameObj.status);
     body.append('store', THIS.info.store_id);
     body.append('company_id', THIS.info.company_id);
-    body.append('pack_value', THIS.addGameObj.pack_value);
+    // body.append('pack_value', THIS.addGameObj.pack_value);
 
     console.log('body ' + JSON.stringify(body));
 

@@ -18,10 +18,9 @@
 
   <form (ngSubmit)="addGame($event, addGameForm.value, addGameForm.valid)" #addGameForm="ngForm">
     <ion-item>
-      <ion-label>State</ion-label>
+      <ion-label>Select State</ion-label>
       <ion-select name="state" [(ngModel)]="addGameObj.state">
-        <ion-option value="TX">TX</ion-option>
-        <ion-option value="NJ">NJ</ion-option>
+        <ion-option  *ngFor="let state of statesCodes" value="{{state.code}}">{{state.code}}</ion-option>
       </ion-select>
     </ion-item>
     
@@ -71,12 +70,12 @@
           <ion-input type="number" placeholder="Tickets Pack" name="tickets_pack" [(ngModel)]="addGameObj.tickets_pack" required></ion-input>
         </ion-item>
       </ion-col>
-      <ion-col col-6>
+      <!--<ion-col col-6>
         <ion-item>
           <ion-label stacked>Ticket Per Pack</ion-label>
           <ion-input type="number" placeholder="Ticket Per Pack" name="pack_value" [(ngModel)]="addGameObj.pack_value" required></ion-input>
         </ion-item>
-      </ion-col>
+      </ion-col>-->
     </ion-row>
 
     <ion-row>
