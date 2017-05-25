@@ -25,6 +25,7 @@ export class SearchPage {
   public dName = "";
   public showList: boolean = false;
   public byScanner: boolean = false;
+  public isItemSelected = 1;
 
   public selectedItem = { "item_id": "", "plu_no": "", "price": "", "description": "" };
 
@@ -97,10 +98,18 @@ export class SearchPage {
             return (item.description.toLowerCase().indexOf(val.toLowerCase()) > -1);
           }
         });
-        
+
+        if(!THIS.newDescriptionList || THIS.newDescriptionList != null){
+          THIS.isItemSelected = 0;
+        }
+        console.log("newDescriptionList :" + THIS.newDescriptionList);
+        console.log("THIS.isItemSelected :" + THIS.isItemSelected);
       } else {
-        this.newDescriptionList = [];
+        THIS.newDescriptionList = [];
+        
+        
       }
+      
     } else {
       this.showList = false;
     }
@@ -112,11 +121,11 @@ export class SearchPage {
       event.stopPropagation();
     }
     this.initializeDescriptionItems();
+    this.isItemSelected = 1;
     this.selectedItem = item;
     if (searchBy == 'Barcode') {
       this.posObject.plu_no = item.plu_no;
-    }
-    else {
+    } else {
       this.posObject.description = item.description;
     }
     let department_id = item.dept_id;

@@ -14,7 +14,7 @@
  <ion-card>
   <ion-item>
     <ion-label>Date</ion-label>
-    <ion-datetime displayFormat="MM/DD/YYYY" name="created" [(ngModel)]="soldoutObject.created" required></ion-datetime>
+    <ion-datetime displayFormat="MM/DD/YYYY" name="created" [(ngModel)]="soldoutObject.created" (ionChange)="dateChanged('enterDate')" required></ion-datetime>
   </ion-item>
  </ion-card>
  <ng-container *ngIf="isFinishDailyReadingsFound == true">

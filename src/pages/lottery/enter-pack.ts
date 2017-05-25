@@ -14,7 +14,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 export class EnterPackPage {
   public info: any;
-  public enterPackObject = { "ticketCode": "", "status": "Counting", "enterDate": ""};
+  public enterPackObject = { "ticketCode": "", "status": "Counting", "enterDate": "" };
   public isDailyReadingsFound;
   public allDailyReadings = [];
   public sumOfAllDailyReadings = 0;
@@ -22,45 +22,32 @@ export class EnterPackPage {
   public allTodaySold = 0;
 
   constructor(private barcode: BarcodeScanner,
-  public navCtrl: NavController, 
-    private auth: AuthService, 
+    public navCtrl: NavController,
+    private auth: AuthService,
     public commonService: CommonService,
     public API_SERVICE: APIService) {
 
     let THIS = this;
     THIS.info = THIS.auth.getUserInfo();
     console.log(' this.info ' + JSON.stringify(THIS.info));
-    
+
     // let THIS = this;
     if (THIS.info == null) {
       THIS.commonService.showErrorAlert('Please login first');
       THIS.navCtrl.setRoot('LoginPage');
     }
-    let currentDate =THIS.commonService.getFormattedDateYMD(Date.now());
-    THIS.enterPackObject.enterDate=currentDate;
+    let currentDate = THIS.commonService.getFormattedDateYMD(Date.now());
+    THIS.enterPackObject.enterDate = currentDate;
+    THIS.getLatestDailyReadings(currentDate);
 
-    THIS.API_SERVICE.getDailyReadingsByDate(THIS.info.store_id, this.info.company_id, '2017-05-21', function (err, res) {
-      if (err) {
-        console.log("ERROR!: ", err.message);
-        THIS.isDailyReadingsFound = false;
-      } else {
-        THIS.allDailyReadings = JSON.parse(JSON.stringify(res.message)); 
-        THIS.allDailyReadingsCount = (THIS.allDailyReadings).length;
-        for(let i=0; i<THIS.allDailyReadings.length; i++){
-          THIS.sumOfAllDailyReadings += parseInt(THIS.allDailyReadings[i].today_sold_value);
-          THIS.allTodaySold += parseInt(THIS.allDailyReadings[i].today_sold);
-        }
-        THIS.isDailyReadingsFound = true;
-      }
-    });
   }
 
   public enterPack() {
     let THIS = this;
     THIS.commonService.showLoading();
-    THIS.commonService.getGameNoAndPackNoAndTodayReading(THIS.enterPackObject.ticketCode, function(err, game_no, pack_no, today_reading){
+    THIS.commonService.getGameNoAndPackNoAndTodayReading(THIS.enterPackObject.ticketCode, function (err, game_no, pack_no, today_reading) {
       console.log('game_no ' + JSON.stringify(game_no) + ' | pack_no  ' + pack_no + ' | today_reading ' + today_reading);
-      if(!game_no || !pack_no || !today_reading){
+      if (!game_no || !pack_no || !today_reading) {
         THIS.commonService.showAlert('Please enter proper Ticket Code');
         THIS.navCtrl.setRoot('EnterPackPage');
       } else {
@@ -76,25 +63,43 @@ export class EnterPackPage {
         let headers = new Headers({});
         let options = new RequestOptions({ headers: headers });
 
-        THIS.API_SERVICE.dailyReadingOrSoldout(body, options, 'dailyreading',function (err, res) {
-            if (err && err.message == 'notfound') {
-              THIS.commonService.showAlert('No Record Found');
-              THIS.navCtrl.setRoot('EnterPackPage');
-            } else if (err) {
-              THIS.commonService.showErrorAlert('ERROR!: ' + err.message);
+        THIS.API_SERVICE.dailyReadingOrSoldout(body, options, 'dailyreading', function (err, res) {
+          if (err && err.message == 'notfound') {
+            THIS.commonService.showAlert('No Record Found');
+            THIS.navCtrl.setRoot('EnterPackPage');
+          } else if (err) {
+            THIS.commonService.showErrorAlert('ERROR!: ' + err.message);
+            THIS.navCtrl.setRoot('EnterPackPage');
+          } else {
+            if (THIS.commonService.isSuccess(res.status)) {
+              THIS.commonService.showSucessAlert(res.message);
               THIS.navCtrl.setRoot('EnterPackPage');
             } else {
-              if (THIS.commonService.isSuccess(res.status)) {
-                THIS.commonService.showSucessAlert(res.message);
-                THIS.navCtrl.setRoot('EnterPackPage');
-              } else {
-                THIS.commonService.showErrorAlert('Fail to Confirm Pack');
-                THIS.navCtrl.setRoot('EnterPackPage');
-              }
+              THIS.commonService.showErrorAlert('Fail to Confirm Pack');
+              THIS.navCtrl.setRoot('EnterPackPage');
             }
-          });
+          }
+        });
       }
-      
+
+    });
+  }
+
+  public getLatestDailyReadings(currentDate: any) {
+    let THIS = this;
+    THIS.API_SERVICE.getDailyReadingsByDate(THIS.info.store_id, this.info.company_id, currentDate, function (err, res) {
+      if (err) {
+        console.log("ERROR!: ", err.message);
+        THIS.isDailyReadingsFound = false;
+      } else {
+        THIS.allDailyReadings = JSON.parse(JSON.stringify(res.message));
+        THIS.allDailyReadingsCount = (THIS.allDailyReadings).length;
+        for (let i = 0; i < THIS.allDailyReadings.length; i++) {
+          THIS.sumOfAllDailyReadings += parseInt(THIS.allDailyReadings[i].today_sold_value);
+          THIS.allTodaySold += parseInt(THIS.allDailyReadings[i].today_sold);
+        }
+        THIS.isDailyReadingsFound = true;
+      }
     });
   }
 
@@ -103,11 +108,16 @@ export class EnterPackPage {
     if (results.text) {
       this.enterPackObject.ticketCode = results.text;
     }
-    alert(results.text );
+    alert(results.text);
   }
 
-  public finishDailyReading(){
+  public finishDailyReading() {
     this.navCtrl.setRoot('FinishDailyReadingsPage');
   }
-}
 
+
+  public dateChanged(value: any) {
+    // console.log(); 
+    //this.getLatestDailyReadings(this.enterPackObject.enterDate);
+  }
+}

@@ -16,7 +16,7 @@
 
       <ion-item>
         <ion-label>Enter Date</ion-label>
-        <ion-datetime displayFormat="MM/DD/YYYY" name="enterDate" [(ngModel)]="enterPackObject.enterDate" required></ion-datetime>
+        <ion-datetime displayFormat="MM/DD/YYYY" name="enterDate" [(ngModel)]="enterPackObject.enterDate" (ionChange)="dateChanged('enterDate')"> required></ion-datetime>
       </ion-item>
 
       <ion-grid class="inner-addon">

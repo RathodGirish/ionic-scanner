@@ -35,23 +35,23 @@ export class FinishDailyReadingsPage {
       THIS.navCtrl.setRoot('LoginPage');
     }
 
-    let currentDate =THIS.commonService.getFormattedDateYMD(Date.now());
+    let currentDate = THIS.commonService.getFormattedDateYMD(Date.now());
     THIS.soldoutObject.created = currentDate;
 
-    THIS.API_SERVICE.getFinishDailyReadingsByDate(THIS.info.store_id,this.info.company_id, function (err, res) {
+    THIS.API_SERVICE.getFinishDailyReadingsByDate(THIS.info.store_id, this.info.company_id, function (err, res) {
       if (err) {
         console.log("ERROR!: ", err.message);
         THIS.isFinishDailyReadingsFound = false;
       } else {
-        THIS.allFinishDailyReadings = JSON.parse(JSON.stringify(res.message)); 
+        THIS.allFinishDailyReadings = JSON.parse(JSON.stringify(res.message));
         THIS.allFinishDailyReadingsCount = (THIS.allFinishDailyReadings).length;
-        
+
         THIS.isFinishDailyReadingsFound = true;
       }
     });
   }
 
-  public soldOut(reading: any){
+  public soldOut(reading: any) {
     let THIS = this;
     THIS.commonService.showLoading();
     let body = new FormData();
@@ -68,19 +68,41 @@ export class FinishDailyReadingsPage {
     let headers = new Headers({});
     let options = new RequestOptions({ headers: headers });
 
-    THIS.API_SERVICE.dailyReadingOrSoldout(body, options, 'soldout',function (err, res) {
-        if (err) {
-          THIS.commonService.showErrorAlert('ERROR!: ' + err.message);
+    THIS.API_SERVICE.dailyReadingOrSoldout(body, options, 'soldout', function (err, res) {
+      if (err) {
+        THIS.commonService.showErrorAlert('ERROR!: ' + err.message);
+        THIS.navCtrl.setRoot('FinishDailyReadingsPage');
+      } else {
+        if (THIS.commonService.isSuccess(res.status)) {
+          THIS.commonService.showSucessAlert(res.message);
           THIS.navCtrl.setRoot('FinishDailyReadingsPage');
         } else {
-          if (THIS.commonService.isSuccess(res.status)) {
-            THIS.commonService.showSucessAlert(res.message);
-            THIS.navCtrl.setRoot('FinishDailyReadingsPage');
-          } else {
-            THIS.commonService.showErrorAlert('Fail to Sold Out');
-            THIS.navCtrl.setRoot('FinishDailyReadingsPage');
-          }
+          THIS.commonService.showErrorAlert('Fail to Sold Out');
+          THIS.navCtrl.setRoot('FinishDailyReadingsPage');
         }
-      });
+      }
+    });
   }
+
+  public getLatestDailyReadings(currentDate: any) {
+    let THIS = this;
+    THIS.API_SERVICE.getFinishDailyReadingsByDate(THIS.info.store_id, this.info.company_id, function (err, res) {
+      if (err) {
+        console.log("ERROR!: ", err.message);
+        THIS.isFinishDailyReadingsFound = false;
+      } else {
+        THIS.allFinishDailyReadings = JSON.parse(JSON.stringify(res.message));
+        THIS.allFinishDailyReadingsCount = (THIS.allFinishDailyReadings).length;
+
+        THIS.isFinishDailyReadingsFound = true;
+      }
+    });
+  }
+
+
+  public dateChanged(value: any) {
+    // console.log(); 
+    // this.getLatestDailyReadings(this.enterPackObject.enterDate);
+  }
+
 }

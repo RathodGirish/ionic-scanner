@@ -16,7 +16,8 @@
 
 <ion-content class="page-content" padding *ngIf="info != null">
   <h3 color="white" class='page-title' style="margin-top:1%;">Manage Pricebook</h3>
-  <span class='header-title'>By {{searchBy}}</span>
+  <span class='header-title'>By {{searchBy}} isItemSelected : {{isItemSelected}}</span>
+  <span class='header-title'>newDescriptionList.length : {{newDescriptionList.length}}</span>
   <div class="content-box">
     <form (ngSubmit)="sendToPOS($event, posForm.value, posForm.valid)" #posForm="ngForm">
       <ion-row>
@@ -81,7 +82,7 @@
                 {{ item.plu_no }}
               </ion-item>
 
-              <ion-item *ngIf="newDescriptionList.length <= 0" class='autocomplete-item radius-0'>
+              <ion-item *ngIf="newDescriptionList.length <= 0 && !isItemSelected" class='autocomplete-item radius-0'>
                 No data found
               </ion-item>
             </ion-list>
