@@ -11,7 +11,14 @@
 
 <ion-content padding>
 
+ <ion-card>
+  <ion-item>
+    <ion-label>Date</ion-label>
+    <ion-datetime displayFormat="MM/DD/YYYY" name="created" [(ngModel)]="soldoutObject.created" required></ion-datetime>
+  </ion-item>
+ </ion-card>
  <ng-container *ngIf="isFinishDailyReadingsFound == true">
+    
     <ion-card class="pad10" *ngFor="let reading of allFinishDailyReadings">
       <ion-row >
         <ion-col col-5 class="mrT10" >

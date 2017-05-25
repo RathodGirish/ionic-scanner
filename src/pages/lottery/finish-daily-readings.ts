@@ -13,7 +13,7 @@ import { APIService } from '../../providers/api-service';
 
 export class FinishDailyReadingsPage {
   info: any;
-  public scatchSearchObject = { "start_date": "", "end_date": "" };
+  public soldoutObject = { "created": "" };
   public isFinishDailyReadingsFound;
   public allFinishDailyReadings = [];
   public allFinishDailyReadingsCount = 0;
@@ -35,7 +35,8 @@ export class FinishDailyReadingsPage {
       THIS.navCtrl.setRoot('LoginPage');
     }
 
-    // let currentDate =THIS.commonService.getFormattedDateYMD(Date.now());
+    let currentDate =THIS.commonService.getFormattedDateYMD(Date.now());
+    THIS.soldoutObject.created = currentDate;
 
     THIS.API_SERVICE.getFinishDailyReadingsByDate(THIS.info.store_id,this.info.company_id, function (err, res) {
       if (err) {
@@ -60,6 +61,7 @@ export class FinishDailyReadingsPage {
     body.append('pack_no', reading.pack_no);
     body.append('status', 'Sold Out');
     body.append('today_reading', '0');
+    body.append('created', THIS.soldoutObject.created);
 
     console.log('body ' + JSON.stringify(body));
 
