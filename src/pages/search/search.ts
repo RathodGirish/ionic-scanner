@@ -106,8 +106,6 @@ export class SearchPage {
         console.log("THIS.isItemSelected :" + THIS.isItemSelected);
       } else {
         THIS.newDescriptionList = [];
-        
-        
       }
       
     } else {
