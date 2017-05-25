@@ -12,9 +12,9 @@ export class LoginPage {
   loading: Loading;
   // loginCredentials = { email: 'texonoil@gmail.com', password: 'tex@123', type: 'store' };
   // loginCredentials = { email: 'gettyrmg@gmail.com', password: 'test123', type: 'store' };
-  loginCredentials = { email: 'stateroad@gmail.com', password: 'test123', type: 'store' };
+  // loginCredentials = { email: 'stateroad@gmail.com', password: 'test123', type: 'store' };
   
-  // loginCredentials = { email: '', password: '', type: 'store' };
+  loginCredentials = { email: '', password: '', type: 'store' };
   typeList: any[] = [{ value: 1, text: 'option 1', checked: false }, { value: 2, text: 'option 2', checked: false }];
   constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private http: Http, public menuController: MenuController) {
   this.menuController.swipeEnable(false, 'sideMenu');

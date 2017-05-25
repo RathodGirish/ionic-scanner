@@ -73,19 +73,21 @@
                </button>
             </ion-item>-->
 
-            <ion-list *ngIf="showList" class='autocomplete-list'>
-              <ion-item *ngFor="let item of newDescriptionList" [hidden]="searchBy != 'Description'" class='autocomplete-item radius-0'
-                (click)="selectDesc($event, item,searchBy)">
-                {{ item.description }}
-              </ion-item>
-              <ion-item *ngFor="let item of newDescriptionList" [hidden]="searchBy != 'Barcode'" class='autocomplete-item radius-0' (click)="selectDesc($event, item,searchBy)">
-                {{ item.plu_no }}
-              </ion-item>
+            <ion-scroll>
+              <ion-list *ngIf="showList" class='autocomplete-list'>
+                <ion-item *ngFor="let item of newDescriptionList" [hidden]="searchBy != 'Description'" class='autocomplete-item radius-0'
+                  (click)="selectDesc($event, item,searchBy)">
+                  {{ item.description }}
+                </ion-item>
+                <ion-item *ngFor="let item of newDescriptionList" [hidden]="searchBy != 'Barcode'" class='autocomplete-item radius-0' (click)="selectDesc($event, item,searchBy)">
+                  {{ item.plu_no }}
+                </ion-item>
 
-              <ion-item *ngIf="newDescriptionList.length <= 0 && !isItemSelected" class='autocomplete-item radius-0'>
-                No data found
-              </ion-item>
-            </ion-list>
+                <ion-item *ngIf="newDescriptionList.length <= 0 && !isItemSelected" class='autocomplete-item radius-0'>
+                  No data found
+                </ion-item>
+              </ion-list>
+            </ion-scroll>
 
             <ion-item>
               <ion-label>Department : {{posObject.dName}}</ion-label>
