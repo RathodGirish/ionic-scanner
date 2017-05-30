@@ -55,8 +55,17 @@ export class AddItemPage {
 
   async scanBarcode() {
     const results = await this.barcode.scan();
+    let THIS = this;
     if (results.text) {
-      this.newPosObject.plu_no = results.text;
+      THIS.commonService.ConvertBarcode(results.text, THIS.info, function(barcodeError, barcodeNo){
+        // THIS.commonService.showAlert('barcodeNo ' + barcodeNo);
+        if(barcodeError){
+            THIS.showError('ERROR! :' + barcodeError);
+        } else {
+            THIS.newPosObject.plu_no = barcodeNo;
+        }
+      });
+      // this.newPosObject.plu_no = results.text;
     }
   }
 

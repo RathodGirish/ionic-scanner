@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, AlertController, IonicPage, NavParams, LoadingController } from 'ionic-angular';
 import { AuthService } from '../../providers/auth-service';
 import { APIService } from '../../providers/api-service';
+import { CommonService } from '../../providers/common-service';
 import { Http } from '@angular/http';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import 'rxjs/add/operator/map';
@@ -29,7 +30,16 @@ export class SearchPage {
 
   public selectedItem = { "item_id": "", "plu_no": "", "price": "", "description": "" };
 
-  constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, public navParams: NavParams, private http: Http, public loadingController: LoadingController, public API_SERVICE: APIService, private barcode: BarcodeScanner) {
+  constructor(
+    private nav: NavController, 
+    private auth: AuthService, 
+    private alertCtrl: AlertController, 
+    public navParams: NavParams, 
+    private http: Http, 
+    public loadingController: LoadingController, 
+    public API_SERVICE: APIService, 
+    public commonService: CommonService,
+    private barcode: BarcodeScanner) {
     let THIS = this;
     this.info = this.auth.getUserInfo();
     console.log(' info ' + JSON.stringify(this.info));
@@ -175,16 +185,24 @@ export class SearchPage {
   async scanBarcode() {
     const results = await this.barcode.scan();
     let THIS = this;
+
     if (results.text) {
-      const plu_no = '0' + results.text;
-      this.API_SERVICE.getScanneItemsByStoreId(this.info.store_id,this.info.company_id, plu_no, function (err, res) {
-        if (err) {
-          THIS.showError('ERROR! :' + err);
-        }
-        else {
-          let i = JSON.parse(JSON.stringify(res.message));
-          alert("i :"+JSON.stringify(res.message));
-          THIS.selectDesc(null, i[0], THIS.searchBy);
+      // const plu_no = '0' + results.text;
+      THIS.commonService.ConvertBarcode(results.text, THIS.info, function(barcodeError, barcodeNo){
+        // THIS.commonService.showAlert('barcodeNo ' + barcodeNo);
+        if(barcodeError){
+            THIS.showError('Barcode : ' + barcodeError);
+        } else {
+          THIS.API_SERVICE.getScanneItemsByStoreId(THIS.info.store_id,THIS.info.company_id, barcodeNo, function (err, res) {
+            if (err != null) {
+              THIS.showError('ERROR! : ' + err);
+            } else if (res.message == null) {
+              THIS.showError('ERROR! : No Record Found');
+            } else {
+              let i = JSON.parse(JSON.stringify(res.message));
+              THIS.selectDesc(null, i[0], THIS.searchBy);
+            }
+          });
         }
       });
     }

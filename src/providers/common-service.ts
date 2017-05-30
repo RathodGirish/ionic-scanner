@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { AlertController, LoadingController, Loading } from 'ionic-angular';
 import 'rxjs/add/operator/map';
 
+declare function unescape(s:string): string;
+declare function escape(s:string): string;
+
 @Injectable()
 export class CommonService {
     loading: Loading;   
@@ -158,6 +161,107 @@ export class CommonService {
         } 
     } 
 
+    public ConvertBarcode(UPCE, userInfo, callback){
+        let UPCEString = "";
+        let ManufacturerNumber = "";
+        let ItemNumber = "";
+        let Msg = "";
+
+        if(userInfo.pos_type == 'ruby2' && userInfo.pos_subtype == 'ncc'){
+            callback(null, UPCE);
+        } 
+
+        if(this.isNumeric(UPCE)){
+            switch (UPCE.length){
+                case 6:
+                UPCEString = UPCE;	
+                break;
+            
+                case 7:
+                UPCEString = UPCE.substring(1, 6);	
+                break;
+                
+                case 8:
+                UPCEString = UPCE.substring(1, 7);
+                break;
+                
+                default :
+                alert("Wrong size UPCE message!");
+                // document.forms["UPC"].txtUPCE.value = "";
+                // document.forms["UPC"].txtUPCE.focus();
+                //return false;
+                
+            } //End Select
+
+            console.log(' UPCEString ' + UPCEString);
+            // break up the string into its 6 individual digits
+            var Digit1 = UPCEString.substr(0, 1);
+            var Digit2 = UPCEString.substr(1, 1);
+            var Digit3 = UPCEString.substr(2, 1);
+            var Digit4 = UPCEString.substr(3, 1);
+            var Digit5 = UPCEString.substr(4, 1);
+            var Digit6 = UPCEString.substr(5, 1);
+
+            switch (Digit6){
+                case "0":
+                ManufacturerNumber = ManufacturerNumber.concat(Digit1, Digit2, Digit6, "00");
+                    ItemNumber = ItemNumber.concat("00", Digit3, Digit4, Digit5);
+                break;
+                
+                case "1":
+                ManufacturerNumber = ManufacturerNumber.concat(Digit1, Digit2, Digit6, "00");
+                    ItemNumber = "00" + Digit3 + Digit4 + Digit5;
+                break;
+                
+                case "2":
+                ManufacturerNumber = Digit1 + Digit2 + Digit6 + "00";
+                    ItemNumber = "00" + Digit3 + Digit4 + Digit5;
+                break;
+                
+                case "3":
+                ManufacturerNumber = Digit1 + Digit2 + Digit3 + "00";
+                    ItemNumber = "000" + Digit4 + Digit5;	
+                break;
+                
+                case "4":
+                    ManufacturerNumber = Digit1 + Digit2 + Digit3 + Digit4 + "0";
+                    ItemNumber = "0000" + Digit5;
+                break;
+                
+                default:
+                ManufacturerNumber = ManufacturerNumber.concat(Digit1, Digit2, Digit3, Digit4, Digit5);
+                    ItemNumber = ItemNumber.concat("0000", Digit6);
+                break;
+                
+            } //End Select
+
+            // put the number system digit "0" together with the manufacturer code and Item number
+            Msg = Msg.concat("0", ManufacturerNumber, ItemNumber);
+            let CheckChar = this.CalcCheckDigit(Msg);
+            //return(Msg + CheckChar);	// put the pieces together and return
+            // if (!isNaN(CheckChar)){
+            //     document.forms["UPC"].txtUPCA.value = Msg.concat(CheckChar);
+            //     document.forms["UPC"].txtChk.value = CheckChar;
+            // } //End If isNaN
+
+            let barcode = Msg.concat(CheckChar);
+            if(userInfo.pos_type == 'ruby2' && userInfo.pos_subtype == 'gilbarco'){
+                barcode = barcode.substr(0, 11);
+            } else if(userInfo.pos_type == 'ruby2' && (userInfo.pos_subtype == null || userInfo.pos_subtype == '')){
+                barcode = '00' + barcode;
+            }
+            console.log('barcode ' + barcode + ' \n UPCE ' + UPCE);
+            console.log('CheckChar ' + CheckChar);
+            callback(null, barcode);
+        } //End If is numeric
+        else {
+            alert("UPCs must contain numeric data only!");
+            // document.forms["UPC"].txtUPCE.value = "";
+            // document.forms["UPC"].txtUPCE.focus();
+            callback("UPCs must contain numeric data only!", null);
+        }
+    }
+
     public ConvertUPCE2A(){
 
         let UPCE = "02835727";
@@ -167,87 +271,88 @@ export class CommonService {
         let ItemNumber = "";
         let Msg = "";
 
-            if(this.isNumeric(UPCE)){
-                switch (UPCE.length){
-                    case 6:
-                    UPCEString = UPCE;	
-                    break;
+        if(this.isNumeric(UPCE)){
+            switch (UPCE.length){
+                case 6:
+                UPCEString = UPCE;	
+                break;
+            
+                case 7:
+                UPCEString = UPCE.substring(1, 6);	
+                break;
                 
-                    case 7:
-                    UPCEString = UPCE.substring(1, 6);	
-                    break;
-                    
-                    case 8:
-                    UPCEString = UPCE.substring(0, 8);
-                    break;
-                    
-                    default :
-                    alert("Wrong size UPCE message!");
-                    // document.forms["UPC"].txtUPCE.value = "";
-                    // document.forms["UPC"].txtUPCE.focus();
-                    //return false;
-                    
-                } //End Select
+                case 8:
+                UPCEString = UPCE.substring(1, 7);
+                break;
                 
-                // break up the string into its 6 individual digits
-                var Digit1 = UPCEString.substr(0, 1);
-                var Digit2 = UPCEString.substr(1, 1);
-                var Digit3 = UPCEString.substr(2, 1);
-                var Digit4 = UPCEString.substr(3, 1);
-                var Digit5 = UPCEString.substr(4, 1);
-                var Digit6 = UPCEString.substr(5, 1);
-
-                switch (Digit6){
-                    case "0":
-                    ManufacturerNumber = ManufacturerNumber.concat(Digit1, Digit2, Digit6, "00");
-                        ItemNumber = ItemNumber.concat("00", Digit3, Digit4, Digit5);
-                    break;
-                    
-                    case "1":
-                    ManufacturerNumber = ManufacturerNumber.concat(Digit1, Digit2, Digit6, "00");
-                        ItemNumber = "00" + Digit3 + Digit4 + Digit5;
-                    break;
-                    
-                    case "2":
-                    ManufacturerNumber = Digit1 + Digit2 + Digit6 + "00";
-                        ItemNumber = "00" + Digit3 + Digit4 + Digit5;
-                    break;
-                    
-                    case "3":
-                    ManufacturerNumber = Digit1 + Digit2 + Digit3 + "00";
-                        ItemNumber = "000" + Digit4 + Digit5;	
-                    break;
-                    
-                    case "4":
-                        ManufacturerNumber = Digit1 + Digit2 + Digit3 + Digit4 + "0";
-                        ItemNumber = "0000" + Digit5;
-                    break;
-                    
-                    default:
-                    ManufacturerNumber = ManufacturerNumber.concat(Digit1, Digit2, Digit3, Digit4, Digit5);
-                        ItemNumber = ItemNumber.concat("0000", Digit6);
-                    break;
-                    
-                } //End Select
-
-                // put the number system digit "0" together with the manufacturer code and Item number
-                Msg = Msg.concat("0", ManufacturerNumber, ItemNumber);
-                let CheckChar = this.CalcCheckDigit(Msg);
-                //return(Msg + CheckChar);	// put the pieces together and return
-                //if (!isNaN(CheckChar)){
-                    // document.forms["UPC"].txtUPCA.value = Msg.concat(CheckChar);
-                    // document.forms["UPC"].txtChk.value = CheckChar;
-                //} //End If isNaN
-
-                console.log('Msg.concat(CheckChar) ' + Msg.concat(CheckChar) + ' \n UPCE ' + UPCE);
-                console.log('CheckChar ' + CheckChar);
-            } //End If is numeric
-            else {
-                alert("UPCs must contain numeric data only!");
+                default :
+                alert("Wrong size UPCE message!");
                 // document.forms["UPC"].txtUPCE.value = "";
                 // document.forms["UPC"].txtUPCE.focus();
-            }
+                //return false;
+                
+            } //End Select
+
+            console.log(' UPCEString ' + UPCEString);
+            // break up the string into its 6 individual digits
+            var Digit1 = UPCEString.substr(0, 1);
+            var Digit2 = UPCEString.substr(1, 1);
+            var Digit3 = UPCEString.substr(2, 1);
+            var Digit4 = UPCEString.substr(3, 1);
+            var Digit5 = UPCEString.substr(4, 1);
+            var Digit6 = UPCEString.substr(5, 1);
+
+            switch (Digit6){
+                case "0":
+                ManufacturerNumber = ManufacturerNumber.concat(Digit1, Digit2, Digit6, "00");
+                    ItemNumber = ItemNumber.concat("00", Digit3, Digit4, Digit5);
+                break;
+                
+                case "1":
+                ManufacturerNumber = ManufacturerNumber.concat(Digit1, Digit2, Digit6, "00");
+                    ItemNumber = "00" + Digit3 + Digit4 + Digit5;
+                break;
+                
+                case "2":
+                ManufacturerNumber = Digit1 + Digit2 + Digit6 + "00";
+                    ItemNumber = "00" + Digit3 + Digit4 + Digit5;
+                break;
+                
+                case "3":
+                ManufacturerNumber = Digit1 + Digit2 + Digit3 + "00";
+                    ItemNumber = "000" + Digit4 + Digit5;	
+                break;
+                
+                case "4":
+                    ManufacturerNumber = Digit1 + Digit2 + Digit3 + Digit4 + "0";
+                    ItemNumber = "0000" + Digit5;
+                break;
+                
+                default:
+                ManufacturerNumber = ManufacturerNumber.concat(Digit1, Digit2, Digit3, Digit4, Digit5);
+                    ItemNumber = ItemNumber.concat("0000", Digit6);
+                break;
+                
+            } //End Select
+
+            // put the number system digit "0" together with the manufacturer code and Item number
+            Msg = Msg.concat("0", ManufacturerNumber, ItemNumber);
+            let CheckChar = this.CalcCheckDigit(Msg);
+            //return(Msg + CheckChar);	// put the pieces together and return
+            // if (!isNaN(CheckChar)){
+            //     document.forms["UPC"].txtUPCA.value = Msg.concat(CheckChar);
+            //     document.forms["UPC"].txtChk.value = CheckChar;
+            // } //End If isNaN
+
+            console.log('Msg.concat(CheckChar) ' + Msg.concat(CheckChar) + ' \n UPCE ' + UPCE);
+            console.log('CheckChar ' + CheckChar);
+        } //End If is numeric
+        else {
+            alert("UPCs must contain numeric data only!");
+            // document.forms["UPC"].txtUPCE.value = "";
+            // document.forms["UPC"].txtUPCE.focus();
         }
+    }
 
     public CalcCheckDigit(strMsg){
         // calculate the check digit - note UPCE and UPCA check digits are the same
@@ -266,7 +371,7 @@ export class CommonService {
     }
 
     public charFromCharCode(charCode) { 
-        return '%' + charCode.toString(16); 
+        return unescape('%' + charCode.toString(16)); 
     } 
 
     public isEven(y) { 
@@ -276,6 +381,8 @@ export class CommonService {
     public isOdd(y) { 
         return !this.isEven(y); 
     } 
+
+    
 
 }
 

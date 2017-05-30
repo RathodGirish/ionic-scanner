@@ -75,7 +75,7 @@ export class APIService {
         .subscribe(
         data => {
           console.log("barcode_items data :" + JSON.stringify(data));
-          alert("JSON.stringify(data) :" + JSON.stringify(data))
+          // alert("JSON.stringify(data) :" + JSON.stringify(data))
           return callback(null, data);
         },
         err => {

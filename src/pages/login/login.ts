@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, AlertController, LoadingController, Loading, IonicPage, MenuController } from 'ionic-angular';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { AuthService } from '../../providers/auth-service';
+import { CommonService } from '../../providers/common-service';
 
 @IonicPage()
 @Component({
@@ -16,9 +17,15 @@ export class LoginPage {
   
   loginCredentials = { email: '', password: '', type: 'store' };
   typeList: any[] = [{ value: 1, text: 'option 1', checked: false }, { value: 2, text: 'option 2', checked: false }];
-  constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private http: Http, public menuController: MenuController) {
-  this.menuController.swipeEnable(false, 'sideMenu');
-
+  constructor(
+    private nav: NavController, 
+    private auth: AuthService, 
+    private alertCtrl: AlertController, 
+    private loadingCtrl: LoadingController, 
+    private http: Http, 
+    public commonService: CommonService,
+    public menuController: MenuController) {
+    this.menuController.swipeEnable(false, 'sideMenu');
   }
 
   public createAccount() {
