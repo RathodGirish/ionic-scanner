@@ -16,8 +16,7 @@
 
 <ion-content class="page-content" padding *ngIf="info != null">
   <h3 color="white" class='page-title' style="margin-top:1%;">Manage Pricebook</h3>
-  <span class='header-title'>By {{searchBy}} isItemSelected : {{isItemSelected}}</span>
-  <span class='header-title'>newDescriptionList.length : {{newDescriptionList.length}}</span>
+  <span class='header-title'>By {{searchBy}}</span>
   <div class="content-box">
     <form (ngSubmit)="sendToPOS($event, posForm.value, posForm.valid)" #posForm="ngForm">
       <ion-row>

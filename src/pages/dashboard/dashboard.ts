@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,MenuController } from 'ionic-angular';
+import { CommonService } from '../../providers/common-service';
 
 @IonicPage()
 @Component({
@@ -8,8 +9,12 @@ import { IonicPage, NavController, NavParams,MenuController } from 'ionic-angula
 })
 export class Dashboard {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public menuController: MenuController) {
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams, 
+    public commonService: CommonService,
+    public menuController: MenuController) {
     this.menuController.swipeEnable(true, 'sideMenu');
+    this.commonService.ConvertUPCE2A();
   }
 
   ionViewDidLoad() {
