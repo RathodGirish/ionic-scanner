@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,MenuController } from 'ionic-angular';
 import { CommonService } from '../../providers/common-service';
 
+/*
+TODO : To Dashboard Component Page
+Method : Dashboard
+*/
 @IonicPage()
 @Component({
   selector: 'page-dashboard',
@@ -21,6 +25,10 @@ export class Dashboard {
     console.log('ionViewDidLoad Dashboard');
   }
 
+  /*
+  TODO : To Redirect Page to specific page.
+  Method : redirectPage
+  */
   public redirectPage(type : any){
     if(type=='priceBook'){ 
        this.navCtrl.setRoot('PricebookPage');

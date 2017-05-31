@@ -5,6 +5,11 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { APIService } from '../../providers/api-service';
 import { CommonService } from '../../providers/common-service';
 
+
+/*
+TODO : To Add New Item Component Page.
+Method : AddItemPage
+*/
 @IonicPage()
 @Component({
   selector: 'page-add-item',
@@ -16,12 +21,21 @@ export class AddItemPage {
   public showList: boolean = false;
   public departmentList = [];
   public newDepartmentList = [];
-  public selectedItem_dept_Id :string;
-  constructor(private barcode: BarcodeScanner, public navCtrl: NavController, public navParams: NavParams, private auth: AuthService, private alertCtrl: AlertController, public API_SERVICE: APIService, public commonService: CommonService) {
+  public selected_dept_Id :string;
+
+  constructor(
+    private barcode: BarcodeScanner, 
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    private auth: AuthService, 
+    private alertCtrl: AlertController, 
+    public API_SERVICE: APIService, 
+    public commonService: CommonService) {
+
     let THIS = this;
     this.info = this.auth.getUserInfo();
     if (this.info == null) {
-      this.showError('Please login first');
+      this.commonService.showErrorAlert('Please login first');
       this.navCtrl.setRoot('LoginPage');
     }
 
@@ -43,16 +57,10 @@ export class AddItemPage {
     console.log('ionViewDidLoad Item');
   }
 
-  public showError(text) {
-    let alert = this.alertCtrl.create({
-      title: 'Fail',
-      subTitle: text,
-      buttons: ['OK']
-    });
-    alert.present(prompt);
-  }
-
-
+  /*
+  TODO : To Scan barcode image.
+  Method : scanBarcode
+  */
   async scanBarcode() {
     const results = await this.barcode.scan();
     let THIS = this;
@@ -60,7 +68,7 @@ export class AddItemPage {
       THIS.commonService.ConvertBarcode(results.text, THIS.info, function(barcodeError, barcodeNo){
         // THIS.commonService.showAlert('barcodeNo ' + barcodeNo);
         if(barcodeError){
-            THIS.showError('ERROR! :' + barcodeError);
+            THIS.commonService.showErrorAlert('ERROR! :' + barcodeError);
         } else {
             THIS.newPosObject.plu_no = barcodeNo;
         }
@@ -69,6 +77,10 @@ export class AddItemPage {
     }
   }
 
+  /*
+  TODO : To Search Department.
+  Method : searchDepartment
+  */
   public searchDepartment(ev: any) {
     let val = ev.target.value;
     let THIS = this;
@@ -85,27 +97,39 @@ export class AddItemPage {
     }
   }
 
+  /*
+  TODO : To Select Department on click.
+  Method : selectDepartment
+  */
   public selectDepartment(event: any, dep: any) {
     event.stopPropagation();
     this.initializeDepartmentList();
     this.newPosObject.r_grocery_department_id = dep.department_name;
-    this.selectedItem_dept_Id = dep.dept_id;
-    console.log("selectedItem_dept_Id : "+this.selectedItem_dept_Id);
+    this.selected_dept_Id = dep.dept_id;
+    console.log("selected_dept_Id : "+this.selected_dept_Id);
   }
 
+  /*
+  TODO : To Initialize Departments with blank array.
+  Method : initializeDepartmentList
+  */
   public initializeDepartmentList() {
     this.newDepartmentList = [];
   }
 
+  /*
+  TODO : To Add New Item Function.
+  Method : addItem
+  */
   public addItem(event: any, pos: any, isValid: boolean) {
     event.preventDefault();
     let THIS = this;
     
-    pos.r_grocery_department_id = THIS.selectedItem_dept_Id;
+    pos.r_grocery_department_id = THIS.selected_dept_Id;
     // alert(' pos ' + JSON.stringify(pos) + ' isValid ' + isValid);
 
     if (isValid) {
-      this.API_SERVICE.addItem(this.info.store_id,this.info.company_id, pos.plu_no, pos.description,this.selectedItem_dept_Id,pos.new_price,pos.new_price,pos.save_to, function (err, res) {
+      this.API_SERVICE.addItem(this.info.store_id,this.info.company_id, pos.plu_no, pos.description, this.selected_dept_Id, pos.price, pos.plu_tax, pos.save_to, function (err, res) {
         if (err) {
           console.log("ERROR!: ", err);
           THIS.commonService.showErrorAlert('ERROR!: ' + err);
@@ -114,7 +138,7 @@ export class AddItemPage {
             THIS.commonService.showSucessAlert(res.message);
             THIS.navCtrl.setRoot('AddItemPage');
           } else {
-            THIS.showError('Fail to Add Item');
+            THIS.commonService.showErrorAlert('Fail to Add Item');
           }
         }
       });

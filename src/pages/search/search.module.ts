@@ -3,6 +3,10 @@ import { IonicPageModule } from 'ionic-angular';
 import { SearchPage } from './search';
 import { HttpModule } from '@angular/http';
 
+/*
+TODO : To Seach Module.
+Method : SearchModule
+*/
 @NgModule({
   declarations: [
     SearchPage,

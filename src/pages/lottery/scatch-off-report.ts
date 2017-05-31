@@ -5,6 +5,10 @@ import { AuthService } from '../../providers/auth-service';
 import { CommonService } from '../../providers/common-service';
 import { APIService } from '../../providers/api-service';
 
+/*
+TODO : ScatchOffReport Component Page
+Method : ScatchOffReportPage
+*/
 @IonicPage()
 @Component({
   selector: 'page-scatch-off-report',
@@ -12,20 +16,20 @@ import { APIService } from '../../providers/api-service';
 })
 
 export class ScatchOffReportPage {
-  info: any;
-  isDataFound;
+  public info: any;
+  public isDataFound;
   public scatchSearchObject = { "start_date": "", "end_date": "" };
   public records = [];
   public sumOfTicketSoldAmount = 0;
   public sumOfTicketSoldCount = 0;
-  public prevStartDate = "";  
-  public prevEndDate = "";  
+  public prevStartDate = "";
+  public prevEndDate = "";
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private auth: AuthService,
-    private alertCtrl: AlertController,
+    public auth: AuthService,
+    public alertCtrl: AlertController,
     public commonService: CommonService,
     public API_SERVICE: APIService) {
 
@@ -42,6 +46,10 @@ export class ScatchOffReportPage {
     THIS.getScatchOffReading();
   }
 
+  /*
+  TODO : To Get Scatch Off Reading Function
+  Method : getScatchOffReading
+  */
   public getScatchOffReading() {
     let THIS = this;
     THIS.prevStartDate = THIS.scatchSearchObject.start_date;
@@ -50,7 +58,7 @@ export class ScatchOffReportPage {
     THIS.records = [];
     THIS.sumOfTicketSoldAmount = null;
     THIS.sumOfTicketSoldCount = null;
-    THIS.API_SERVICE.getScatchReport(THIS.info.company_id,THIS.scatchSearchObject.start_date,THIS.scatchSearchObject.end_date, THIS.info.store_id, function (err, res) {
+    THIS.API_SERVICE.getScatchReport(THIS.info.company_id, THIS.scatchSearchObject.start_date, THIS.scatchSearchObject.end_date, THIS.info.store_id, function (err, res) {
       THIS.commonService.hideSimpleLoading();
       if (err) {
         console.log("ERROR!: ", err.message);
@@ -67,10 +75,14 @@ export class ScatchOffReportPage {
     });
   }
 
-  public dateChanged(value: any){
+  /*
+  TODO : Call on date change event
+  Method : dateChanged
+  */
+  public dateChanged(value: any) {
     let THIS = this;
     let diff: any = <any>(new Date(THIS.scatchSearchObject.start_date).getTime()) - <any>(new Date(THIS.scatchSearchObject.end_date).getTime());
-    if(diff <= 0){
+    if (diff <= 0) {
       THIS.getScatchOffReading();
     } else {
       THIS.commonService.showAlert('End date should greater than start date');

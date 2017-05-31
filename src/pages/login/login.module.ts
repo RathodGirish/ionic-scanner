@@ -4,6 +4,10 @@ import { LoginPage } from './login';
 import {HttpModule} from '@angular/http';
 
 
+/*
+TODO : To Login Module.
+Method : LoginModule
+*/
 @NgModule({
   declarations: [
     LoginPage,

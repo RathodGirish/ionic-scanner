@@ -8,6 +8,11 @@ import { AddGamePage } from '../addGame/add-game';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { APIService } from '../../providers/api-service';
 
+
+/*
+TODO : To Activate Pack Component Page.
+Method : ActivatePackPage
+*/
 @IonicPage()
 @Component({
   selector: 'page-activate',
@@ -15,7 +20,7 @@ import { APIService } from '../../providers/api-service';
 })
 
 export class ActivatePackPage {
-  info: any;
+  public info: any;
   public ActivatePackObject = { "ticketCode": "", "activateDate": "", "scan_ticket_code": "", "status": "active", "bin_no": "" };
 
   public packs = [];
@@ -23,23 +28,22 @@ export class ActivatePackPage {
   public sumOfPacks = 0;
   public isPacksFound;
 
-  constructor(private barcode: BarcodeScanner,
+  constructor(public barcode: BarcodeScanner,
     public navCtrl: NavController,
     public navParams: NavParams,
-    private auth: AuthService,
-    private alertCtrl: AlertController,
+    public auth: AuthService,
+    public alertCtrl: AlertController,
     public commonService: CommonService,
     public API_SERVICE: APIService) {
+
     let THIS = this;
     this.info = this.auth.getUserInfo();
     console.log(' this.info ' + JSON.stringify(this.info));
-    // let THIS = this;
     if (this.info == null) {
       this.commonService.showErrorAlert('Please login first');
       this.navCtrl.setRoot('LoginPage');
     }
     let currentDate = this.commonService.getFormattedDateYMD(Date.now());
-    // currentDate = '2017-05-23';
     this.ActivatePackObject.activateDate = currentDate;
     THIS.API_SERVICE.getLatestPackByDate(this.info.store_id, this.info.company_id, currentDate, GLOBAL_VARIABLE.ACTIVATE_PACK_STATUS, function (err, res) {
       if (err) {
@@ -60,6 +64,10 @@ export class ActivatePackPage {
     console.log('ionViewDidLoad Activate');
   }
 
+  /*
+  TODO : To Activate Pack Function.
+  Method : ActivatePack
+  */
   public ActivatePack() {
     let THIS = this;
     THIS.commonService.showLoading();
@@ -102,6 +110,10 @@ export class ActivatePackPage {
 
   }
 
+  /*
+  TODO : To Scan Barcode Image.
+  Method : scanBarcode
+  */
   async scanBarcode() {
     const results = await this.barcode.scan();
     if (results.text) {
@@ -110,35 +122,37 @@ export class ActivatePackPage {
     // alert(' results.text ' + results.text );
   }
 
-  public removeGameById(item : any){
+  /*
+  TODO : To Remove Game By Id Function.
+  Method : removeGameById
+  */
+  public removeGameById(item: any) {
     let THIS = this;
-    
-
     let body = new FormData();
     body.append('id', item.id);
-    THIS.commonService.showConfirmDialog('Remove Game', 'Are you sure to remove this record?', function(confirmresult){
+    THIS.commonService.showConfirmDialog('Remove Game', 'Are you sure to remove this record?', function (confirmresult) {
       console.log('confirmresult ' + JSON.stringify(confirmresult));
-      if(confirmresult == true){
+      if (confirmresult == true) {
         let headers = new Headers({});
         let options = new RequestOptions({ headers: headers });
         THIS.commonService.showLoading();
         THIS.API_SERVICE.removeGameById(body, options, function (err, res) {
-            if (err) {
-              console.log("ERROR!: ", err);
-              THIS.commonService.showErrorAlert('ERROR!: ' + err.message);
+          if (err) {
+            console.log("ERROR!: ", err);
+            THIS.commonService.showErrorAlert('ERROR!: ' + err.message);
+            THIS.navCtrl.setRoot('ActivatePackPage');
+          } else {
+            if (THIS.commonService.isSuccess(res.status)) {
+              THIS.commonService.showSucessAlert('Game Removed Successfully');
               THIS.navCtrl.setRoot('ActivatePackPage');
             } else {
-              if (THIS.commonService.isSuccess(res.status)) {
-                THIS.commonService.showSucessAlert('Game Removed Successfully');
-                THIS.navCtrl.setRoot('ActivatePackPage');
-              } else {
-                THIS.commonService.showErrorAlert('Fail to Remove Game');
-                THIS.navCtrl.setRoot('ActivatePackPage');
-              }
+              THIS.commonService.showErrorAlert('Fail to Remove Game');
+              THIS.navCtrl.setRoot('ActivatePackPage');
             }
-          });
+          }
+        });
       }
-      
+
     });
   }
 

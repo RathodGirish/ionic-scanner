@@ -19,12 +19,12 @@ export class AuthService {
   currentUser: User;
   constructor( @Inject(Http) private http: Http) { }
 
+  /*
+  TODO : To Login User
+  Method : login
+  */
   public login(credentials: any, callback) {
-    alert('credentials :'+JSON.stringify(credentials));
-    alert('credentials with out json stringify :'+credentials);
-    alert('credentials direct :'+credentials.email + ' pass :'+credentials.password);
     if (credentials.email === null || credentials.password === null) {
-      alert("credentials empty");
       return Observable.throw("Please insert credentials");
     } else {
       let headers = new Headers({});
@@ -49,6 +49,10 @@ export class AuthService {
     }
   }
 
+  /*
+  TODO : To Registert User
+  Method : register
+  */
   public register(credentials) {
     if (credentials.email === null || credentials.password === null) {
       return Observable.throw("Please insert credentials");
@@ -61,17 +65,29 @@ export class AuthService {
     }
   }
 
+  /*
+  TODO : To Get User Information from localstorage
+  Method : getUserInfo
+  */
   public getUserInfo(): User {
     // return this.currentUser;
     return JSON.parse(localStorage.getItem('currentUser'))
   }
 
+  /*
+  TODO : To Set User Information to localstorage
+  Method : setCurrentUser
+  */
   public setCurrentUser(user: any, email: string) {
     this.currentUser = user;
     this.currentUser.email = email;
     localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
   }
 
+  /*
+  TODO : To logout user and expire session.
+  Method : logout
+  */
   public logout() {
     return Observable.create(observer => {
       this.currentUser = null;

@@ -3,6 +3,10 @@ import { IonicPageModule } from 'ionic-angular';
 import { AddGamePage } from './add-game';
 import { HttpModule } from '@angular/http';
 
+/*
+TODO : To Add New Game Module.
+Method : AddGameModule
+*/
 @NgModule({
   declarations: [
     AddGamePage,

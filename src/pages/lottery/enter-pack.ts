@@ -6,6 +6,10 @@ import { CommonService } from '../../providers/common-service';
 import { APIService } from '../../providers/api-service';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
+/*
+TODO : EnterPack Component Page
+Method : EnterPackPage
+*/
 @IonicPage()
 @Component({
   selector: 'page-enter-pack',
@@ -21,9 +25,9 @@ export class EnterPackPage {
   public allDailyReadingsCount = 0;
   public allTodaySold = 0;
 
-  constructor(private barcode: BarcodeScanner,
+  constructor(public barcode: BarcodeScanner,
     public navCtrl: NavController,
-    private auth: AuthService,
+    public auth: AuthService,
     public commonService: CommonService,
     public API_SERVICE: APIService) {
 
@@ -42,6 +46,10 @@ export class EnterPackPage {
 
   }
 
+  /*
+  TODO : To Enter Pack Function
+  Method : enterPack
+  */
   public enterPack() {
     let THIS = this;
     THIS.commonService.showLoading();
@@ -85,6 +93,10 @@ export class EnterPackPage {
     });
   }
 
+  /*
+  TODO : To Get Latest Daily Readings
+  Method : getLatestDailyReadings
+  */
   public getLatestDailyReadings(currentDate: any) {
     let THIS = this;
     THIS.API_SERVICE.getDailyReadingsByDate(THIS.info.store_id, this.info.company_id, currentDate, function (err, res) {
@@ -103,6 +115,10 @@ export class EnterPackPage {
     });
   }
 
+  /*
+  TODO : Scan Barcode Images
+  Method : scanBarcode
+  */
   async scanBarcode() {
     const results = await this.barcode.scan();
     if (results.text) {
@@ -111,11 +127,18 @@ export class EnterPackPage {
     alert(results.text);
   }
 
+  /*
+  TODO : Go to FinishDailyReadingsPage
+  Method : finishDailyReading
+  */
   public finishDailyReading() {
     this.navCtrl.setRoot('FinishDailyReadingsPage');
   }
 
-
+  /*
+  TODO : Call on date change event
+  Method : dateChanged
+  */
   public dateChanged(value: any) {
     // console.log(); 
     //this.getLatestDailyReadings(this.enterPackObject.enterDate);

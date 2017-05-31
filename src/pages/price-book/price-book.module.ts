@@ -2,7 +2,10 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { PricebookPage } from './price-book';
 
-
+/*
+TODO : To Pricebook Module.
+Method : PriceBookModule
+*/
 @NgModule({
   declarations: [
     PricebookPage,
@@ -14,4 +17,4 @@ import { PricebookPage } from './price-book';
     PricebookPage
   ]
 })
-export class HomeModule {}
+export class PriceBookModule {}

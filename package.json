@@ -1,5 +1,5 @@
 {
-    "name": "ionic-hello-world",
+    "name": "my-app",
     "version": "0.0.0",
     "author": "Ionic Framework",
     "homepage": "http://ionicframework.com/",
@@ -53,7 +53,7 @@
         "cordova-plugin-device"
     ],
     "cordovaPlatforms": [],
-    "description": "devdactic-simpleLogin: An Ionic project",
+    "description": "my-app: An Ionic project",
     "cordova": {
         "plugins": {
             "cordova-plugin-console": {},

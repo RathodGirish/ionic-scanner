@@ -5,6 +5,11 @@ import { AuthService } from '../../providers/auth-service';
 import { CommonService } from '../../providers/common-service';
 import { APIService } from '../../providers/api-service';
 
+
+/*
+TODO : FinishDailyReadings Component Page
+Method : FinishDailyReadingsPage
+*/
 @IonicPage()
 @Component({
   selector: 'page-finish-daily-readings',
@@ -12,7 +17,7 @@ import { APIService } from '../../providers/api-service';
 })
 
 export class FinishDailyReadingsPage {
-  info: any;
+  public info: any;
   public soldoutObject = { "created": "" };
   public isFinishDailyReadingsFound;
   public allFinishDailyReadings = [];
@@ -21,8 +26,8 @@ export class FinishDailyReadingsPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private auth: AuthService,
-    private alertCtrl: AlertController,
+    public auth: AuthService,
+    public alertCtrl: AlertController,
     public commonService: CommonService,
     public API_SERVICE: APIService) {
 
@@ -51,6 +56,10 @@ export class FinishDailyReadingsPage {
     });
   }
 
+  /*
+  TODO : Sold Out Item Function
+  Method : soldOut
+  */
   public soldOut(reading: any) {
     let THIS = this;
     THIS.commonService.showLoading();
@@ -84,6 +93,10 @@ export class FinishDailyReadingsPage {
     });
   }
 
+  /*
+  TODO : To Get Latest Daily Readings Function
+  Method : getLatestDailyReadings
+  */
   public getLatestDailyReadings(currentDate: any) {
     let THIS = this;
     THIS.API_SERVICE.getFinishDailyReadingsByDate(THIS.info.store_id, this.info.company_id, function (err, res) {
@@ -99,7 +112,10 @@ export class FinishDailyReadingsPage {
     });
   }
 
-
+  /*
+  TODO : Call on date change event
+  Method : dateChanged
+  */
   public dateChanged(value: any) {
     // console.log(); 
     // this.getLatestDailyReadings(this.enterPackObject.enterDate);

@@ -3,7 +3,10 @@ import { IonicPageModule } from 'ionic-angular';
 import { ConfirmPackPage } from './confirm-pack';
 // import { AddGameModule } from './add-game.module';
 
-
+/*
+TODO : To Confirm Pack Module.
+Method : ConfirmPackModule
+*/
 @NgModule({
   declarations: [
     ConfirmPackPage

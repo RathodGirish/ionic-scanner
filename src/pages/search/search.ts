@@ -7,6 +7,11 @@ import { Http } from '@angular/http';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import 'rxjs/add/operator/map';
 
+
+/*
+TODO : Search Component Page
+Method : SearchPage
+*/
 @IonicPage()
 @Component({
   selector: 'page-search',
@@ -31,15 +36,16 @@ export class SearchPage {
   public selectedItem = { "item_id": "", "plu_no": "", "price": "", "description": "" };
 
   constructor(
-    private nav: NavController, 
-    private auth: AuthService, 
-    private alertCtrl: AlertController, 
-    public navParams: NavParams, 
-    private http: Http, 
-    public loadingController: LoadingController, 
-    public API_SERVICE: APIService, 
+    public nav: NavController,
+    public auth: AuthService,
+    public alertCtrl: AlertController,
+    public navParams: NavParams,
+    public http: Http,
+    public loadingController: LoadingController,
+    public API_SERVICE: APIService,
     public commonService: CommonService,
-    private barcode: BarcodeScanner) {
+    public barcode: BarcodeScanner) {
+
     let THIS = this;
     this.info = this.auth.getUserInfo();
     console.log(' info ' + JSON.stringify(this.info));
@@ -49,29 +55,29 @@ export class SearchPage {
     });
     loader.present();
     if (this.info == null) {
-      this.showError('Please login first');
+      this.commonService.showErrorAlert('Please login first');
       this.nav.setRoot('LoginPage');
     }
 
-    this.API_SERVICE.getDepartmentsByStoreId(parseInt(this.info.store_id),parseInt(this.info.company_id), function (err, res) {
-        if (err) {
-          console.log("ERROR!: ", err);
-        }
-        else {
-          console.log("res Department :" + res);
-          THIS.departmentList = res.message;
-        }
-      });
+    this.API_SERVICE.getDepartmentsByStoreId(parseInt(this.info.store_id), parseInt(this.info.company_id), function (err, res) {
+      if (err) {
+        console.log("ERROR!: ", err);
+      }
+      else {
+        // THIS.commonService.showAlert("res Department :" + JSON.stringify(res.message));
+        THIS.departmentList = res.message;
+      }
+    });
 
-    this.API_SERVICE.getGroceryItemsByStoreId(this.info.store_id,parseInt(this.info.company_id), function (err, res) {
-        if (err) {
-          console.log("ERROR!: ", err);
-        }
-        else {
-          console.log("res Items :" + res);
-          THIS.descriptionList = res.message;
-        }
-      });
+    this.API_SERVICE.getGroceryItemsByStoreId(this.info.store_id, parseInt(this.info.company_id), function (err, res) {
+      if (err) {
+        console.log("ERROR!: ", err);
+      }
+      else {
+        console.log("res Items :" + res);
+        THIS.descriptionList = res.message;
+      }
+    });
     this.searchBy = this.navParams.get('searchBy');
     if (this.searchBy == 'Barcode') {
       loader.dismiss();
@@ -82,24 +88,35 @@ export class SearchPage {
     this.initializeDescriptionItems();
   }
 
+
+  
+  /*
+  TODO : To Get DepartmentName By Id Function
+  Method : getDepartmentNameByid
+  */
   public getDepartmentNameByid(department_id: any) {
     let THIS = this;
     let deptName = "";
+
     THIS.departmentList.filter((d) => {
-      if (d.number == department_id) {
+      if (d.dept_id == department_id) {
         deptName = d.department_name;
       }
     });
     return deptName;
   }
 
+  /*
+  TODO : To Search Description Function
+  Method : searchDescription
+  */
   public searchDescription(ev: any, searchBy: any) {
     let val = ev.target.value;
     let THIS = this;
     this.showList = true;
     if (val && val.trim() != '') {
       console.log("descriptionList :" + THIS.descriptionList);
-      if(THIS.descriptionList && THIS.descriptionList != null){
+      if (THIS.descriptionList && THIS.descriptionList != null) {
         this.newDescriptionList = THIS.descriptionList.filter((item) => {
           if (searchBy == 'Barcode') {
             return (item.plu_no.toLowerCase().indexOf(val.toLowerCase()) > -1);
@@ -109,7 +126,7 @@ export class SearchPage {
           }
         });
 
-        if(!THIS.newDescriptionList || THIS.newDescriptionList != null){
+        if (!THIS.newDescriptionList || THIS.newDescriptionList != null) {
           THIS.isItemSelected = 0;
         }
         console.log("newDescriptionList :" + THIS.newDescriptionList);
@@ -117,35 +134,38 @@ export class SearchPage {
       } else {
         THIS.newDescriptionList = [];
       }
-      
+
     } else {
       this.showList = false;
     }
   }
 
+  /*
+  TODO : To Select Description Function
+  Method : selectDesc
+  */
   public selectDesc(event: any, item: any, searchBy: any) {
-
+    let THIS = this;
     if (event != null) {
       event.stopPropagation();
     }
-    this.initializeDescriptionItems();
-    this.isItemSelected = 1;
-    this.selectedItem = item;
+    THIS.initializeDescriptionItems();
+    THIS.isItemSelected = 1;
+    THIS.selectedItem = item;
     if (searchBy == 'Barcode') {
-      this.posObject.plu_no = item.plu_no;
+      THIS.posObject.plu_no = item.plu_no;
     } else {
-      this.posObject.description = item.description;
+      // THIS.posObject.description = item.description;
     }
+    THIS.posObject.description = item.description;
     let department_id = item.dept_id;
-    this.posObject.dName = this.getDepartmentNameByid(department_id);
+    THIS.posObject.dName = this.getDepartmentNameByid(department_id);
   }
 
-  public logout() {
-    this.auth.logout().subscribe(succ => {
-      this.nav.setRoot('LoginPage');
-    });
-  }
-
+  /*
+  TODO : To Data from URL
+  Method : GetDataByURL
+  */
   public GetDataByURL(url, callback) {
     this.http
       .get(url)
@@ -160,6 +180,10 @@ export class SearchPage {
       });
   }
 
+  /*
+  TODO : To Send POS and save in database
+  Method : sendToPOS
+  */
   public sendToPOS(event: any, pos: any, isValid: boolean) {
     event.preventDefault();
     let THIS = this;
@@ -168,39 +192,44 @@ export class SearchPage {
       this.API_SERVICE.updateItem(this.selectedItem.item_id, pos.new_rice, pos.update_inventory, function (err, res) {
         if (err) {
           console.log("ERROR!: ", err);
-          THIS.showError('ERROR!: ' + err);
+          THIS.commonService.showErrorAlert('ERROR!: ' + err);
         }
         else {
           if (res.status == 1) {
-            THIS.showSucess('POS Updated Successfully');
+            THIS.commonService.showSucessAlert('POS Updated Successfully');
             THIS.nav.setRoot('PricebookPage');
           } else {
-            THIS.showError('Fail to Update POS');
+            THIS.commonService.showErrorAlert('Fail to Update POS');
           }
         }
       });
     }
   }
 
+  /*
+  TODO : To Scan Barcode Image
+  Method : scanBarcode
+  */
   async scanBarcode() {
     const results = await this.barcode.scan();
     let THIS = this;
 
     if (results.text) {
       // const plu_no = '0' + results.text;
-      THIS.commonService.ConvertBarcode(results.text, THIS.info, function(barcodeError, barcodeNo){
+      THIS.commonService.ConvertBarcode(results.text, THIS.info, function (barcodeError, barcodeNo) {
         // THIS.commonService.showAlert('barcodeNo ' + barcodeNo);
-        if(barcodeError){
-            THIS.showError('Barcode : ' + barcodeError);
+        if (barcodeError) {
+          THIS.commonService.showErrorAlert('Barcode : ' + barcodeError);
         } else {
-          THIS.API_SERVICE.getScanneItemsByStoreId(THIS.info.store_id,THIS.info.company_id, barcodeNo, function (err, res) {
+          THIS.API_SERVICE.getScanneItemsByStoreId(THIS.info.store_id, THIS.info.company_id, barcodeNo, function (err, res) {
             if (err != null) {
-              THIS.showError('ERROR! : ' + err);
+              THIS.commonService.showErrorAlert('ERROR! : ' + err);
             } else if (res.message == null) {
-              THIS.showError('ERROR! : No Record Found');
+              THIS.commonService.showErrorAlert('ERROR! : No Record Found');
             } else {
               let i = JSON.parse(JSON.stringify(res.message));
               THIS.selectDesc(null, i[0], THIS.searchBy);
+              // THIS.commonService.showAlert(' i ' + JSON.stringify(i));
             }
           });
         }
@@ -208,25 +237,12 @@ export class SearchPage {
     }
   }
 
+  /*
+  TODO : To Initialize DescriptionItems
+  Method : initializeDescriptionItems
+  */
   public initializeDescriptionItems() {
     this.newDescriptionList = [];
   }
 
-  public showError(text) {
-    let alert = this.alertCtrl.create({
-      title: 'Fail',
-      subTitle: text,
-      buttons: ['OK']
-    });
-    alert.present(prompt);
-  }
-
-  public showSucess(text) {
-    let alert = this.alertCtrl.create({
-      title: 'Success',
-      subTitle: text,
-      buttons: ['OK']
-    });
-    alert.present(prompt);
-  }
 }

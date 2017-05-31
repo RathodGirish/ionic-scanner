@@ -5,27 +5,39 @@ import 'rxjs/add/operator/map';
 import { API_URL } from './api-url';
 import { CommonService } from './common-service';
 
+
+/*
+API services
+*/
 @Injectable()
 export class APIService {
   constructor( @Inject(Http) private http: Http, public commonService: CommonService) { }
 
 
-  public getAllStates(){
+  /*
+  TODO : To get all states
+  Method : getAllStates
+  */
+  public getAllStates() {
     return [
-      {"code": "AL"}, {"code": "AK"}, {"code": "AS"}, {"code": "AZ"}, {"code": "AR"}, {"code": "CA"}, {"code": "CO"}, {"code": "CT"}, {"code": "DE"}, {"code": "DC"}, {"code": "FL"},{"code": "GA"}, {"code": "GU"}, {"code": "HI"}, {"code": "ID"}, {"code": "IL"}, {"code": "IN"}, {"code": "IA"}, {"code": "KS"}, {"code": "KY"}, {"code": "LA"}, {"code": "ME"}, {"code": "MD"}, {"code": "MH"}, {"code": "MA"},  {"code": "MI"}, {"code": "FM"}, {"code": "MN"}, {"code": "MS"}, {"code": "MO"}, {"code": "MT"}, {"code": "NE"}, {"code": "NV"}, {"code": "NH"}, {"code": "NJ"}, {"code": "NM"}, {"code": "NY"}, {"code": "NC"}, {"code": "ND"}, {"code": "MP"}, {"code": "OH"}, {"code": "OK"}, {"code": "OR"}, {"code": "PW"}, {"code": "PA"}, {"code": "PR"}, {"code": "RI"}, {"code": "SC"}, {"code": "SD"}, {"code": "TN"}, {"code": "TX"}, {"code": "UT"}, {"code": "VT"}, {"code": "VA"}, {"code": "VI"}, {"code": "WA"}, {"code": "WV"}, {"code": "WI"}, {"code": "WY"}
+      { "code": "AL" }, { "code": "AK" }, { "code": "AS" }, { "code": "AZ" }, { "code": "AR" }, { "code": "CA" }, { "code": "CO" }, { "code": "CT" }, { "code": "DE" }, { "code": "DC" }, { "code": "FL" }, { "code": "GA" }, { "code": "GU" }, { "code": "HI" }, { "code": "ID" }, { "code": "IL" }, { "code": "IN" }, { "code": "IA" }, { "code": "KS" }, { "code": "KY" }, { "code": "LA" }, { "code": "ME" }, { "code": "MD" }, { "code": "MH" }, { "code": "MA" }, { "code": "MI" }, { "code": "FM" }, { "code": "MN" }, { "code": "MS" }, { "code": "MO" }, { "code": "MT" }, { "code": "NE" }, { "code": "NV" }, { "code": "NH" }, { "code": "NJ" }, { "code": "NM" }, { "code": "NY" }, { "code": "NC" }, { "code": "ND" }, { "code": "MP" }, { "code": "OH" }, { "code": "OK" }, { "code": "OR" }, { "code": "PW" }, { "code": "PA" }, { "code": "PR" }, { "code": "RI" }, { "code": "SC" }, { "code": "SD" }, { "code": "TN" }, { "code": "TX" }, { "code": "UT" }, { "code": "VT" }, { "code": "VA" }, { "code": "VI" }, { "code": "WA" }, { "code": "WV" }, { "code": "WI" }, { "code": "WY" }
     ];
   }
 
-  public getDepartmentsByStoreId(storeId, company_id, callback) { 
+  /*
+  TODO : To get all Departments by storeId
+  Method : getDepartmentsByStoreId
+  */
+  public getDepartmentsByStoreId(storeId, company_id, callback) {
     if (storeId === null) {
       return Observable.throw("Please pass store ID");
     } else if (company_id === null) {
       return Observable.throw("Please pass company ID");
     }
     else {
-    console.log("" + API_URL.BASE_API_URL + API_URL.GET_DEPARTMENT_BY_STORE_ID + "&store_id=" + storeId+ "&company_id=" + company_id);
+      console.log("" + API_URL.BASE_API_URL + API_URL.GET_DEPARTMENT_BY_STORE_ID + "&store_id=" + storeId + "&company_id=" + company_id);
       this.http
-        .get("" + API_URL.BASE_API_URL + API_URL.GET_DEPARTMENT_BY_STORE_ID + "&store_id=" + storeId+ "&company_id=" + company_id)
+        .get("" + API_URL.BASE_API_URL + API_URL.GET_DEPARTMENT_BY_STORE_ID + "&store_id=" + storeId + "&company_id=" + company_id)
         .map(res => res.json())
         .subscribe(
         data => {
@@ -38,17 +50,21 @@ export class APIService {
     }
   }
 
-  public getGroceryItemsByStoreId(storeId,company_id, callback) {
+  /*
+  TODO : To get all GroceryItems by storeId
+  Method : getGroceryItemsByStoreId
+  */
+  public getGroceryItemsByStoreId(storeId, company_id, callback) {
     if (storeId === null) {
       return Observable.throw("Please pass store ID");
-    } 
-   else if (company_id === null) {
+    }
+    else if (company_id === null) {
       return Observable.throw("Please pass Company ID");
-    } 
+    }
     else {
-      console.log("getGroceryItemsByStoreId : " + API_URL.BASE_API_URL + API_URL.GET_GROCERY_ITEM_BY_STORE_ID + "&store_id=" + storeId+ "&company_id=" + company_id);
+      console.log("getGroceryItemsByStoreId : " + API_URL.BASE_API_URL + API_URL.GET_GROCERY_ITEM_BY_STORE_ID + "&store_id=" + storeId + "&company_id=" + company_id);
       this.http
-        .get("" + API_URL.BASE_API_URL + API_URL.GET_GROCERY_ITEM_BY_STORE_ID + "&store_id=" + storeId+ "&company_id=" + company_id)
+        .get("" + API_URL.BASE_API_URL + API_URL.GET_GROCERY_ITEM_BY_STORE_ID + "&store_id=" + storeId + "&company_id=" + company_id)
         .map(res => res.json())
         .subscribe(
         data => {
@@ -61,16 +77,20 @@ export class APIService {
     }
   }
 
-  public getScanneItemsByStoreId(storeId,company_id, plu_no, callback) {
+  /*
+  TODO : To get all ScanneItems by storeId
+  Method : getScanneItemsByStoreId
+  */
+  public getScanneItemsByStoreId(storeId, company_id, plu_no, callback) {
     if (storeId === null) {
       return Observable.throw("Please pass store ID");
-    } else if(company_id === null){
+    } else if (company_id === null) {
       return Observable.throw("Please pass Company ID");
     }
     else {
-      console.log("getScanneItemsByStoreId : " + API_URL.BASE_API_URL + API_URL.GET_SCANNE_ITEM_BY_STORE_ID + "&store_id=" + storeId+ "&company_id=" + company_id + "&plu_no=" + plu_no);
+      console.log("getScanneItemsByStoreId : " + API_URL.BASE_API_URL + API_URL.GET_SCANNE_ITEM_BY_STORE_ID + "&store_id=" + storeId + "&company_id=" + company_id + "&plu_no=" + plu_no);
       this.http
-        .get("" + API_URL.BASE_API_URL + API_URL.GET_SCANNE_ITEM_BY_STORE_ID + "&store_id=" + storeId+ "&company_id=" + company_id + "&plu_no=" + plu_no)
+        .get("" + API_URL.BASE_API_URL + API_URL.GET_SCANNE_ITEM_BY_STORE_ID + "&store_id=" + storeId + "&company_id=" + company_id + "&plu_no=" + plu_no)
         .map(res => res.json())
         .subscribe(
         data => {
@@ -84,6 +104,10 @@ export class APIService {
     }
   }
 
+  /*
+  TODO : To Update Item
+  Method : updateItem
+  */
   public updateItem(itemId, price, inventory, callback) {
     if (itemId === null) {
       return Observable.throw("Please pass item ID");
@@ -108,6 +132,10 @@ export class APIService {
     }
   }
 
+  /*
+  TODO : To Add New Item
+  Method : addItem
+  */
   public addItem(store_id, company_id, plu_no, description, r_grocery_department_id, price, plu_tax, save_to, callback) {
     let THIS = this;
     console.log("store_id :" + store_id + " plu_no :" + plu_no + " description :" + description + " r_grocery_department_id :" + r_grocery_department_id + " price :" + price + " plu_tax :" + plu_tax);
@@ -160,10 +188,14 @@ export class APIService {
     }
   }
 
-  public getLatestPackByDate(store_id,company_id,date, status, callback) {
-    console.log("getLatestPackByDate : " + API_URL.BASE_API_URL + API_URL.GET_LATEST_PACK_BY_DATE + "&store_id=" + store_id+ "&company_id=" + company_id+ "&date=" + date + "&status=" + status);
+  /*
+  TODO : To Get LatestPack by Date
+  Method : getLatestPackByDate
+  */
+  public getLatestPackByDate(store_id, company_id, date, status, callback) {
+    console.log("getLatestPackByDate : " + API_URL.BASE_API_URL + API_URL.GET_LATEST_PACK_BY_DATE + "&store_id=" + store_id + "&company_id=" + company_id + "&date=" + date + "&status=" + status);
     this.http
-      .get("" + API_URL.BASE_API_URL + API_URL.GET_LATEST_PACK_BY_DATE + "&store_id=" + store_id+ "&company_id=" + company_id+ "&date=" + date + "&status=" + status)
+      .get("" + API_URL.BASE_API_URL + API_URL.GET_LATEST_PACK_BY_DATE + "&store_id=" + store_id + "&company_id=" + company_id + "&date=" + date + "&status=" + status)
       .map(res => res.json())
       .subscribe(
       data => {
@@ -180,8 +212,12 @@ export class APIService {
       });
   }
 
-  public getDailyReadingsByDate(store_id, company_id, reading_date, callback){
-    let URL = API_URL.BASE_API_URL + API_URL.GET_DAILY_READING_BY_DATE + "&store_id=" + store_id+ "&company_id=" + company_id+ "&reading_date=" + reading_date;
+  /*
+  TODO : To Get DailyReadings by Date
+  Method : getDailyReadingsByDate
+  */
+  public getDailyReadingsByDate(store_id, company_id, reading_date, callback) {
+    let URL = API_URL.BASE_API_URL + API_URL.GET_DAILY_READING_BY_DATE + "&store_id=" + store_id + "&company_id=" + company_id + "&reading_date=" + reading_date;
 
     console.log(' URL ' + URL);
 
@@ -204,8 +240,12 @@ export class APIService {
       });
   }
 
-  public getFinishDailyReadingsByDate(store_id, company_id, callback){
-      let URL = API_URL.BASE_API_URL + API_URL.GET_DAILY_FINISH_READING_BY_DATE + "&store_id=" + store_id+ "&company_id=" + company_id;
+  /*
+  TODO : To Get FinishDailyReadings by Date
+  Method : getFinishDailyReadingsByDate
+  */
+  public getFinishDailyReadingsByDate(store_id, company_id, callback) {
+    let URL = API_URL.BASE_API_URL + API_URL.GET_DAILY_FINISH_READING_BY_DATE + "&store_id=" + store_id + "&company_id=" + company_id;
 
     console.log("getFinishDailyReadingsByDate : " + URL);
     this.http
@@ -223,13 +263,17 @@ export class APIService {
       err => {
         console.log("ERROR!: ", err);
         return callback(err, null);
-      });  
+      });
   }
 
-  public getScatchReport(company_id,start_date, end_date, storeId, callback) {
-    console.log("getScatchReport : " + API_URL.BASE_API_URL + API_URL.GET_SCATCH_REPORT + "&company_id=" + company_id+ "&start_date=" + start_date + "&end_date=" + end_date + "&store_id=" + storeId)
+  /*
+  TODO : To Get ScatchReport
+  Method : getScatchReport
+  */
+  public getScatchReport(company_id, start_date, end_date, storeId, callback) {
+    console.log("getScatchReport : " + API_URL.BASE_API_URL + API_URL.GET_SCATCH_REPORT + "&company_id=" + company_id + "&start_date=" + start_date + "&end_date=" + end_date + "&store_id=" + storeId)
     this.http
-      .get("" + API_URL.BASE_API_URL + API_URL.GET_SCATCH_REPORT + "&company_id=" + company_id+ "&start_date=" + start_date + "&end_date=" + end_date + "&store_id=" + storeId)
+      .get("" + API_URL.BASE_API_URL + API_URL.GET_SCATCH_REPORT + "&company_id=" + company_id + "&start_date=" + start_date + "&end_date=" + end_date + "&store_id=" + storeId)
       .map(res => res.json())
       .subscribe(
       data => {
@@ -245,6 +289,10 @@ export class APIService {
       });
   }
 
+  /*
+  TODO : To Confirm Pack
+  Method : confirmPack
+  */
   public confirmPack(body, options, callback) {
     this.http
       .post(API_URL.BASE_API_URL + API_URL.CONFIRM_PACK, body, options)
@@ -265,6 +313,10 @@ export class APIService {
       );
   }
 
+  /*
+  TODO : To Activate Pack
+  Method : activePack
+  */
   public activePack(body, options, callback) {
     this.http
       .post(API_URL.BASE_API_URL + API_URL.ACTIVATE_PACK, body, options)
@@ -284,6 +336,10 @@ export class APIService {
       );
   }
 
+  /*
+  TODO : To Add New Game
+  Method : addGame
+  */
   public addGame(body, options, callback) {
     this.http
       .post(API_URL.BASE_API_URL + API_URL.ADD_NEW_GAME, body, options)
@@ -304,7 +360,11 @@ export class APIService {
       );
   }
 
-   public removeGameById(body, options, callback) {
+  /*
+  TODO : To Remove Game by Id
+  Method : removeGameById
+  */
+  public removeGameById(body, options, callback) {
     this.http
       .post(API_URL.BASE_API_URL + API_URL.REMOVE_GAME_BY_ID, body, options)
       .map(res => res.json())
@@ -323,10 +383,14 @@ export class APIService {
       );
   }
 
+  /*
+  TODO : To Update status dailyReading Or Soldout
+  Method : dailyReadingOrSoldout
+  */
   public dailyReadingOrSoldout(body, options, type, callback) {
     let URL = "";
-    URL = (type == 'dailyreading')? API_URL.LOTTERY_DAILY_READING : API_URL.SOLD_OUT; 
-    console.log(' URL ' + URL + ' | body ' + body );
+    URL = (type == 'dailyreading') ? API_URL.LOTTERY_DAILY_READING : API_URL.SOLD_OUT;
+    console.log(' URL ' + URL + ' | body ' + body);
 
     this.http
       .post(API_URL.BASE_API_URL + URL, body, options)
@@ -344,7 +408,7 @@ export class APIService {
         console.log("ERROR!: ", err);
         return callback(err, null);
       }
-    );
+      );
   }
 
 }
