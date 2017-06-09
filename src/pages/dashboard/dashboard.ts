@@ -18,7 +18,6 @@ export class Dashboard {
     public commonService: CommonService,
     public menuController: MenuController) {
     this.menuController.swipeEnable(true, 'sideMenu');
-   
   }
 
   ionViewDidLoad() {

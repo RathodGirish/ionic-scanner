@@ -5,7 +5,6 @@ import 'rxjs/add/operator/map';
 import { API_URL } from './api-url';
 import { CommonService } from './common-service';
 
-
 /*
 API services
 */

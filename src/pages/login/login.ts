@@ -3,6 +3,7 @@ import { NavController, AlertController, LoadingController, Loading, IonicPage, 
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { AuthService } from '../../providers/auth-service';
 import { CommonService } from '../../providers/common-service';
+import { API_URL } from '../../providers/api-url';
 
 /*
 TODO : To Login Component Page.
@@ -48,7 +49,7 @@ export class LoginPage {
     let headers = new Headers({});
     let options = new RequestOptions({ headers: headers });
     THIS.http
-      .post('http://192.169.176.227/backofficeweb/?data=login', body, options)
+      .post(API_URL.BASE_API_URL + API_URL.LOGIN, body, options)
       .map(res => res.json())
       .subscribe(
       data => {

@@ -7,6 +7,23 @@
     cursor: pointer;
 }
 
+.toolbar-content-md, .header-md, .toolbar-background-md{
+    background-color: #333;
+}
+
+.toolbar-title-md, .bar-button-default-md, .bar-button-clear-md-default, .bar-button-md-default{
+    color: #fff;
+}
+
+.logo-image{
+    margin: 0 auto;
+    display: block;
+}
+
+.background-black{
+    background-color: #333;
+}
+
 .menu-inner{
     .content, .item-block {
         background-color: map-get($colors, dark);
