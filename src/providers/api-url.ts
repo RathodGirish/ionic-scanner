@@ -10,8 +10,6 @@ export const API_URL = Object.freeze({
     GET_DAILY_READING_BY_DATE: "?action=getDailyReadings",
     GET_DAILY_FINISH_READING_BY_DATE: "?action=getFinishDailyReadings",
 
-    
-
     UPDATE_ITEM: '?action=updateiteam',
 
     LOGIN: '?data=login',
