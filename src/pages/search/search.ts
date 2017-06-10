@@ -65,6 +65,7 @@ export class SearchPage {
       }
       else {
         // THIS.commonService.showAlert("res Department :" + JSON.stringify(res.message));
+        console.log(' departmentList ' + JSON.stringify(THIS.departmentList));
         THIS.departmentList = res.message;
       }
     });
@@ -74,7 +75,7 @@ export class SearchPage {
         console.log("ERROR!: ", err);
       }
       else {
-        console.log("res Items :" + res);
+        // console.log("res Items :" + res);
         THIS.descriptionList = res.message;
       }
     });
@@ -99,7 +100,7 @@ export class SearchPage {
     let deptName = "";
 
     THIS.departmentList.filter((d) => {
-      if (d.dept_id == department_id) {
+      if (d.number == department_id) {
         deptName = d.department_name;
       }
     });

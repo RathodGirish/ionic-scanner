@@ -203,9 +203,13 @@ form .label-ios,form .datetime-ios {
     border-style: ridge;
 }
 
+
+
 .page-content {
     background: #CCCCCC;
-
+    .list-md .scroll-content{
+        height: 130px;
+    }
     .logo-row {
         padding-top: 50px;
         padding-bottom: 20px;
